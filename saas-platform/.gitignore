@@ -16,3 +16,4 @@
 /data/feeds/
 /uploads/*
 !/uploads/.htaccess
+__pycache__/

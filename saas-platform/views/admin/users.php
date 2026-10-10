@@ -1,0 +1,8 @@
+<div class="page-head"><div><h1>Χρήστες</h1><p><?= $count ?> από <?= $limit ?> χρήστες του πακέτου.</p></div><div class="actions"><?php if ($staffFeature && $count < $limit): ?><a class="btn btn-primary" href="/admin/users/new"><?= icon('plus') ?>Νέος χρήστης</a><?php endif; ?></div></div>
+<?php if (!$staffFeature): ?><div class="alert info"><?= icon('info') ?><div>Οι επιπλέον χρήστες προσωπικού δεν περιλαμβάνονται στο πακέτο σας.</div></div><?php endif; ?>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Χρήστης</th><th>Ρόλος</th><th>Πρόσβαση</th><th>Τελευταία σύνδεση</th><th>Κατάσταση</th><th></th></tr></thead><tbody>
+<?php foreach ($rows as $u): $perms = ShopUsers::permissions($u); ?><tr><td><b><?= e($u['name']) ?></b><div class="sub"><?= e($u['email']) ?></div></td><td><?= e(ShopUsers::ROLES[$u['role']] ?? $u['role']) ?></td>
+<td class="sub" style="max-width:340px"><?= $u['role'] === 'owner' ? 'Πλήρης' : e(implode(', ', array_map(fn($m) => ShopUsers::MODULES[$m], $perms))) ?></td><td class="num"><?= fmt_date($u['last_login_at'], true) ?></td><td><?= status_badge($u['status'] === 'active' ? 'active' : 'inactive') ?></td>
+<td class="actions"><?php if ($u['role'] !== 'owner' && ShopUsers::canManage($user, $u)): ?><a class="btn btn-sm" href="/admin/users/<?= $u['id'] ?>"><?= icon('edit') ?></a>
+<form method="post" action="/admin/users/<?= $u['id'] ?>/delete" style="display:inline"><?= csrf_field() ?><button class="btn btn-sm btn-ghost" data-confirm="Διαγραφή του χρήστη <?= e($u['email']) ?>;" data-confirm-type="ΔΙΑΓΡΑΦΗ">✕</button></form><?php endif; ?></td></tr><?php endforeach; ?>
+</tbody></table></div></div>

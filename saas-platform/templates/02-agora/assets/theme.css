@@ -1,0 +1,102 @@
+/* Agora — search-first marketplace (electronics/tech). Dense grid, white cards on cool grey, signal orange. */
+:root{--f-display:"Sofia Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--radius:10px;--radius-sm:7px;--radius-btn:8px;--wrap:1380px;--hdr-h:68px;--sp:clamp(28px,4vw,48px);--shadow:0 12px 32px rgba(13,26,58,.12)}
+body{font-size:14.5px}
+h1,h2,h3{font-weight:800;letter-spacing:0;line-height:1.02}
+.sec-head h2{text-transform:uppercase;font-size:clamp(24px,2.6vw,34px)}
+.sec-link{color:var(--c-accent)}
+.btn{min-height:46px;font-weight:600;border-radius:8px}
+.btn--ghost{border-color:var(--c-line);border-width:1px}
+.btn--ghost:hover{background:var(--c-surface);color:var(--c-text);border-color:var(--c-text)}
+
+/* Header: navy bars, prominent search, category bar + mega */
+.hdr{background:var(--c-primary);color:#fff}
+.hdr-util{background:color-mix(in srgb,var(--c-primary) 85%,#000);color:#C6CEE4}
+.hdr-main{background:var(--c-primary)}
+.hdr-main .logo-text{color:#fff;font:900 26px/1 var(--f-display);text-transform:uppercase}
+.hdr-main .logo-text::before{content:"";display:inline-block;width:26px;height:26px;border-radius:6px;background:var(--c-accent);margin-right:10px;vertical-align:-5px}
+.hdr .icon-btn{color:#fff}
+.hdr .icon-btn:hover{background:var(--c-secondary)}
+.hdr .icon-btn .lbl{display:block;font-size:11px}
+@media (min-width:961px){.hdr .hdr-actions .icon-btn{flex-direction:column;gap:2px;padding:6px 10px}}
+.hdr-search input{background:#fff;color:var(--c-text);border:0;border-radius:8px 0 0 8px;min-height:46px}
+.hdr-search button{background:var(--c-accent);border-radius:0 8px 8px 0;width:54px;padding:0;display:grid;place-items:center}
+.hdr-search:focus-within{box-shadow:0 0 0 3px var(--c-accent);border-radius:8px}
+.hdr-cats{background:#fff;color:var(--c-text);border:0;box-shadow:0 1px 0 var(--c-line)}
+.allcats{background:var(--c-text)}
+.nav--bar > li > a{font-size:14px;font-weight:500}
+.nav--bar > li:last-child > a{color:var(--c-accent);font-weight:600}
+.mega{color:var(--c-text)}
+.mega-h{font:800 17px/1 var(--f-display);text-transform:uppercase}
+.badge-count{background:var(--c-accent);color:#fff}
+
+/* Hero: bento tiles */
+.hero-bento{padding-top:16px}
+.tile{background:#fff;box-shadow:0 1px 2px rgba(13,26,58,.06)}
+.tile--main{background:var(--c-primary)}
+.tile--main h1{font-weight:800;max-width:12ch}
+.tile--main .eyebrow{color:#C6CEE4}
+.tile--main .tile-art img{background:color-mix(in srgb,#fff 6%,transparent);mix-blend-mode:normal}
+.tile--a{background:var(--c-accent);color:#fff}
+.tile--a .eyebrow,.tile--a .price-was{color:rgba(255,255,255,.8)}
+.tile--a .price-off{color:#fff}
+.tile b{font-family:var(--f-display);font-weight:800;font-size:24px;text-transform:none}
+.benefits{border:0;padding-block:12px}
+.benefits-grid{gap:12px}
+.benefit{background:#fff;border-radius:8px;padding:14px 16px}
+.benefit-ic{background:var(--c-background);width:40px;height:40px}
+
+/* Categories: circular icon rail */
+.cat-grid{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(128px,1fr);overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory}
+.cat-tile{background:#fff;border-radius:10px;padding:14px 10px;text-align:center;justify-items:center;border:1px solid transparent;transition:border-color .15s;scroll-snap-align:start}
+.cat-tile:hover{border-color:var(--c-accent)}
+.cat-img{width:76px;height:76px;aspect-ratio:1;border-radius:50%}
+.cat-name{font:700 15px/1.2 var(--f-body)}
+.cat-count{font-size:12px}
+
+/* Cards: compact marketplace */
+.grid-products{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.listing-body .grid-products{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pc{background:#fff;border-radius:10px;padding:12px;border:1px solid transparent;transition:border-color .15s,box-shadow .15s}
+.pc:hover{border-color:var(--c-line);box-shadow:0 8px 24px rgba(13,26,58,.08)}
+.pc-media{aspect-ratio:1;border-radius:7px;background:var(--c-background)}
+.pc-badges{top:20px;left:20px}
+.pc-badge{border-radius:4px}
+.pc-badge--sale{background:var(--c-accent)}
+.pc-badge--new{background:var(--c-primary);color:#fff}
+.pc-wish{top:18px;right:18px;width:34px;height:34px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.pc-title{font-size:14px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.price-now{font:800 22px/1 var(--f-display)}
+.pc-add{width:42px;height:42px;min-height:42px;padding:0;justify-content:center;border:0;border-radius:8px;background:var(--c-accent);color:#fff}
+.pc-add span{display:none}
+.pc-add:hover{background:color-mix(in srgb,var(--c-accent) 85%,#000);color:#fff}
+@media (max-width:1200px){.grid-products{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:960px){.grid-products,.listing-body .grid-products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.grid-products,.listing-body .grid-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pc{padding:8px}}
+
+/* Listing: filter sidebar in a card */
+.listing-head h1{text-transform:uppercase}
+.listing-bar{background:#fff;border:0;border-radius:10px;padding:10px 14px}
+.filters{background:#fff;border-radius:10px;padding:8px 16px 16px}
+.fgroup summary{font-size:14px}
+.chip{background:#fff;border-color:var(--c-line);border-radius:8px}
+
+/* PDP: white panels */
+.pdp{background:transparent;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.pdp-gallery,.pdp-info{background:#fff;border-radius:10px;padding:16px}
+.gal-main{aspect-ratio:1;background:var(--c-background);border-radius:7px}
+@media (min-width:901px){.pdp-gallery{grid-template-columns:76px minmax(0,1fr);align-items:start}.gal-thumbs{flex-direction:column;grid-row:1;grid-column:1}.gal-main{grid-column:2}}
+.pdp-title{text-transform:none;font-size:clamp(26px,2.8vw,38px)}
+.pdp-price .price-now{font-size:38px}
+.btn--buy{background:var(--c-accent)}
+.opt-val input:checked+span{background:#fff;color:var(--c-text);border-color:var(--c-accent);box-shadow:0 0 0 1px var(--c-accent)}
+.pdp-details{background:#fff;border-radius:10px;padding:8px 20px;max-width:none}
+.acc summary{font:800 20px/1.1 var(--f-display);text-transform:uppercase}
+.summary,.co-step{background:#fff;border:0}
+.radio-card:has(input:checked){border-color:var(--c-accent);background:#FFF6F2}
+.co-step .n{background:var(--c-accent)}
+.news{background:var(--c-primary);color:#fff}
+.news p{color:#C6CEE4}
+.news a{color:#fff}
+.story-img{border-radius:10px}
+.ftr{background:var(--c-primary)}
+.ftr-col h2{font:800 15px/1 var(--f-display)}

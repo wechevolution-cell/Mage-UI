@@ -1,0 +1,6 @@
+<div class="page-head"><div><h1>Blog</h1><p>Άρθρα με TL;DR, πίνακα περιεχομένων, FAQ και πηγές — για SEO και μηχανές απαντήσεων (AEO/GEO).</p></div><div class="actions"><a class="btn btn-primary" href="/admin/posts/new"><?= icon('plus') ?>Νέο άρθρο</a></div></div>
+<div class="card"><div class="table-wrap">
+<?php if (!$rows): ?><div class="empty"><h3>Δεν υπάρχουν άρθρα</h3><p>Γράψτε ή εισάγετε άρθρο από Markdown.</p><a class="btn btn-primary" href="/admin/posts/new">Νέο άρθρο</a></div><?php else: ?>
+<table class="table"><thead><tr><th>Τίτλος</th><th>Κατηγορία</th><th>Κατάσταση</th><th>Δημοσίευση</th><th></th></tr></thead><tbody>
+<?php foreach ($rows as $p): ?><tr><td><a class="title" href="/admin/posts/<?= $p['id'] ?>"><?= e($p['title']) ?></a><div class="sub mono">/blog/<?= e($p['slug']) ?>/</div></td><td><?= e($p['category'] ?? '—') ?></td><td><?= status_badge($p['status'] === 'published' && $p['published_at'] > now() ? 'scheduled' : $p['status']) ?></td><td class="num"><?= fmt_date($p['published_at'], true) ?></td>
+<td class="actions"><a class="btn btn-sm" href="/admin/posts/<?= $p['id'] ?>"><?= icon('edit') ?></a></td></tr><?php endforeach; ?></tbody></table><?php endif; ?></div></div>

@@ -1,0 +1,69 @@
+/* Karat — dark luxe jewelry & watches. Deep black, warm gold, Garamond, spotlight hero, macro imagery. */
+:root{--f-display:"EB Garamond",Garamond,Georgia,serif;--f-body:"Open Sans","Segoe UI",system-ui,sans-serif;--radius:0px;--radius-sm:0px;--radius-btn:0px;--wrap:1320px;--hdr-h:76px;--c-line:color-mix(in srgb,var(--c-accent) 26%,transparent);--c-soft:var(--c-surface);--shadow:0 30px 60px rgba(0,0,0,.5);color-scheme:dark}
+body{font-weight:300;letter-spacing:.01em}
+h1,h2,h3{font-weight:400;letter-spacing:.01em}
+em{font-style:italic;color:var(--c-accent)}
+.eyebrow{color:var(--c-accent);letter-spacing:.32em;font-size:11px}
+.btn{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;min-height:50px}
+.btn--ghost{border-color:var(--c-accent);color:var(--c-accent)}
+.btn--ghost:hover{background:var(--c-accent);color:var(--c-background)}
+input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{background:var(--c-surface);border-color:var(--c-line);color:var(--c-text)}
+input:focus,select:focus,textarea:focus{border-color:var(--c-accent)}
+.chip{background:transparent;border-color:var(--c-line)}
+.hdr{background:color-mix(in srgb,var(--c-background) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--c-line)}
+.logo-text{font:400 30px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase;color:var(--c-accent)}
+.hdr-row{border-top:1px solid var(--c-line)}
+.hdr-row .nav > li > a{font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:400;padding:14px 18px}
+.nav .sub{background:var(--c-surface)}
+.badge-count{background:var(--c-accent);color:var(--c-background)}
+.offcanvas-panel,.drawer-panel,.search-panel,.popup-box,.suggest,.mega,.cookie-box{background:var(--c-surface);color:var(--c-text)}
+.hero-spot h1{font-size:clamp(40px,6vw,84px);max-width:16ch}
+.glow{background:radial-gradient(circle,color-mix(in srgb,var(--c-accent) 38%,transparent),transparent 62%)}
+.spot-art img{border-radius:50%;box-shadow:0 0 0 1px var(--c-line)}
+.benefits{border-color:var(--c-line)}
+.benefit-ic{background:transparent;border:1px solid var(--c-line);color:var(--c-accent)}
+.sec-head{justify-content:center;flex-direction:column;align-items:center;text-align:center}
+.sec-head h2{font-size:clamp(32px,4vw,52px)}
+.cat-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.cat-img{aspect-ratio:1;background:var(--c-surface)}
+.cat-tile{text-align:center;justify-items:center}
+.cat-name{font:400 22px/1.2 var(--f-display);letter-spacing:.06em}
+.grid-products{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px}
+.pc{text-align:center}
+.pc-media{aspect-ratio:1;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c-accent) 16%,var(--c-surface)),var(--c-surface) 70%)}
+.pc-badge{background:var(--c-accent);color:var(--c-background);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.pc-wish{background:var(--c-surface);color:var(--c-accent)}
+.pc-body{justify-items:center}
+.pc-title{font:400 20px/1.3 var(--f-display);letter-spacing:.02em}
+.price-now{color:var(--c-accent);font-weight:400;letter-spacing:.04em}
+.pc-foot{flex-direction:column}
+.pc-add{border-color:var(--c-line);color:var(--c-accent);border-radius:0;letter-spacing:.16em;text-transform:uppercase;font-size:11px;opacity:0;transition:opacity .3s}
+.pc:hover .pc-add,.pc:focus-within .pc-add{opacity:1}
+.pc-add:hover{background:var(--c-accent);color:var(--c-background)}
+@media (hover:none){.pc-add{opacity:1}}
+@media (max-width:720px){.grid-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.story-img,.banner{border:1px solid var(--c-line)}
+.banner{background:var(--c-surface)}
+.news{background:var(--c-surface);border:1px solid var(--c-line)}
+.summary,.co-step,.card-box,.pdp-details .acc{background:var(--c-surface)}
+.co-step{border-color:var(--c-line)}
+.radio-card{border-color:var(--c-line)}
+.radio-card:has(input:checked){border-color:var(--c-accent);background:color-mix(in srgb,var(--c-accent) 8%,var(--c-surface))}
+.co-step .n,.sl-img b{background:var(--c-accent);color:var(--c-background)}
+.listing-head{text-align:center;justify-items:center}
+.gal-main{aspect-ratio:1;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c-accent) 16%,var(--c-surface)),var(--c-surface) 70%)}
+.gal-thumb[aria-current=true]{border-color:var(--c-accent)}
+.pdp-title{font-size:clamp(32px,4vw,52px)}
+.pdp-price .price-now{color:var(--c-accent);font-size:30px;font-weight:400}
+.opt-val input:checked+span{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-background)}
+.acc summary{font-weight:400;letter-spacing:.04em}
+.pagination [aria-current]{background:var(--c-accent);color:var(--c-background);border-color:var(--c-accent)}
+.ftr{background:#070707;border-top:1px solid var(--c-line)}
+.ftr .logo-text{color:var(--c-accent)}
+.toast{background:var(--c-accent);color:var(--c-background)}
+.ph{background:linear-gradient(135deg,var(--c-surface),#2a2622)}
+.ftr{color:var(--c-muted)}
+.ftr a:hover{color:var(--c-accent)}
+.ftr-col h2{color:var(--c-text)}
+.ftr-social a{border-color:var(--c-line);color:var(--c-accent)}
+.ftr-bottom{border-color:var(--c-line)}

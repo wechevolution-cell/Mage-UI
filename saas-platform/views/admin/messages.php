@@ -1,0 +1,4 @@
+<div class="page-head"><div><h1>Μηνύματα επικοινωνίας</h1><p>Από τη φόρμα επικοινωνίας (με προστασία CSRF, honeypot, έλεγχο χρόνου και όριο ανά IP).</p></div></div>
+<div class="grid"><?php if (!$rows): ?><div class="card"><div class="empty">Δεν υπάρχουν μηνύματα.</div></div><?php endif; ?>
+<?php foreach ($rows as $m): ?><div class="card"><div class="hd"><div><h3><?= e($m['subject'] ?: 'Χωρίς θέμα') ?> <?= !$m['read_at'] ? '<span class="badge b-info plain">νέο</span>' : '' ?></h3><p><?= e($m['name']) ?> · <a href="mailto:<?= e($m['email']) ?>"><?= e($m['email']) ?></a> · <?= e($m['phone']) ?> · <?= fmt_date($m['created_at'], true) ?></p></div>
+<form method="post" action="/admin/messages/<?= $m['id'] ?>/delete"><?= csrf_field() ?><button class="btn btn-sm btn-ghost" data-confirm="Διαγραφή μηνύματος;">✕</button></form></div><div class="bd"><p style="white-space:pre-wrap;margin:0"><?= e($m['message']) ?></p></div></div><?php endforeach; ?></div>

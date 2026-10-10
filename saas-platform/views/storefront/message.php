@@ -1,0 +1,1 @@
+<div class="wrap page-pad notfound"><?php if (!empty($code)): ?><p class="eyebrow"><?= (int) $code ?></p><?php endif; ?><h1 class="page-title"><?= e($heading) ?></h1><p><?= e($text) ?></p><p><a class="btn btn--primary" href="/">Αρχική σελίδα</a></p></div>

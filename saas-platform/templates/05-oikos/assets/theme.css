@@ -1,0 +1,57 @@
+/* Oikos — architectural furniture & décor. Light grotesk, generous whitespace, grid lines, room hotspots. */
+:root{--f-display:"Fira Sans","Segoe UI",system-ui,sans-serif;--f-body:"Fira Sans","Segoe UI",system-ui,sans-serif;--radius:2px;--radius-sm:2px;--radius-btn:2px;--wrap:1480px;--hdr-h:84px;--sp:clamp(56px,9vw,128px);--shadow:0 16px 40px rgba(31,36,33,.10)}
+body{font-weight:400;font-size:15px}
+h1,h2,h3{font-weight:300;letter-spacing:-.025em;line-height:1.05}
+.eyebrow{letter-spacing:.3em;font-weight:500;font-size:11px}
+.btn{font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:12px;min-height:50px;padding:0 28px}
+.hdr{border-bottom:1px solid var(--c-line)}
+.hdr.scrolled{box-shadow:none}
+.logo-text{font:500 20px/1 var(--f-display);letter-spacing:.32em;text-transform:uppercase}
+.hdr-nav .nav > li > a{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;padding:10px 14px}
+.nav .sub{border-radius:2px}
+.hero-room{min-height:min(84vh,820px)}
+.room-panel{border-radius:2px;max-width:560px;box-shadow:var(--shadow)}
+.room-panel h1{font-weight:300;font-size:clamp(34px,4.6vw,64px)}
+.spot-dot{background:var(--c-background)}
+.spot-dot::after{background:var(--c-accent)}
+.spot-dot{animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c-background) 70%,transparent)}100%{box-shadow:0 0 0 18px transparent}}
+.benefits{border-block:1px solid var(--c-line);padding-block:28px}
+.benefit-ic{background:transparent;border:1px solid var(--c-line);border-radius:2px}
+.sec-head{border-bottom:1px solid var(--c-line);padding-bottom:18px}
+.sec-head h2{font-size:clamp(32px,4.4vw,60px)}
+.sec-link{font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.cat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-left:1px solid var(--c-line)}
+.cat-tile{border-right:1px solid var(--c-line);border-bottom:1px solid var(--c-line);padding:20px;gap:14px}
+.cat-img{aspect-ratio:3/2;border-radius:2px}
+.cat-name{font:300 26px/1.1 var(--f-display);display:flex;justify-content:space-between}
+.cat-go{display:block;position:absolute;right:20px;bottom:24px}
+@media (max-width:800px){.cat-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.cat-grid{grid-template-columns:1fr}}
+.grid-products{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-left:1px solid var(--c-line);border-top:1px solid var(--c-line)}
+.listing-body .grid-products{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pc{border-right:1px solid var(--c-line);border-bottom:1px solid var(--c-line);padding:20px}
+.pc-media{aspect-ratio:1;border-radius:2px;background:var(--c-surface)}
+.pc-badges{top:30px;left:30px}
+.pc-wish{top:28px;right:28px}
+.pc-title{font-size:17px;font-weight:400}
+.price-now{font-weight:500}
+.pc-add{border:0;border-radius:2px;padding:0;min-height:36px;background:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.pc-add:hover{background:none;color:var(--c-accent)}
+@media (max-width:960px){.grid-products,.listing-body .grid-products{grid-template-columns:repeat(2,minmax(0,1fr))}.pc{padding:12px}.pc-badges{top:20px;left:20px}.pc-wish{top:18px;right:18px}}
+.story{border-top:1px solid var(--c-line);padding-top:40px}
+.story-copy h2{font-size:clamp(32px,4vw,56px)}
+.news{background:transparent;border:1px solid var(--c-line)}
+.listing-head h1{font-size:clamp(44px,7vw,104px);font-weight:300}
+.listing-bar{border-color:var(--c-line)}
+.pdp{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (min-width:901px){.gal-thumbs{display:none}.gal-stack{display:grid;grid-template-columns:1fr 1fr;gap:12px}.gal-extra{aspect-ratio:1;background:var(--c-surface);overflow:hidden}.gal-extra img{width:100%;height:100%;object-fit:cover}}
+.gal-main{aspect-ratio:4/3;background:var(--c-surface)}
+.pdp-title{font-weight:300;font-size:clamp(32px,4vw,56px)}
+.pdp-info{border-left:1px solid var(--c-line);padding-left:clamp(16px,3vw,40px)}
+@media (max-width:900px){.pdp-info{border:0;padding:0}}
+.specs th{font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.acc summary{font-weight:300;font-size:22px}
+.summary{background:var(--c-surface)}
+.ftr{background:var(--c-primary)}
+.ftr-col h2{letter-spacing:.24em;font-weight:500}

@@ -25,7 +25,7 @@ final class Router
                 if (!in_array($method, $methods, true)) { $allowed = true; continue; }
                 $params = array_filter($m, 'is_string', ARRAY_FILTER_USE_KEY);
                 if ($method === 'POST') csrf_check();
-                $h(...$params);
+                $h(...array_values($params));
                 return true;
             }
         }

@@ -1,0 +1,59 @@
+/* Iasis — clinical, trust-led pharmacy & wellness. Calm teal, crisp white cards, strong search, need-based navigation. */
+:root{--f-display:"Literata",Georgia,serif;--f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;--radius:14px;--radius-sm:10px;--radius-btn:10px;--wrap:1320px;--hdr-h:72px;--sp:clamp(36px,5vw,72px);--shadow:0 10px 30px rgba(11,59,71,.08)}
+body{font-size:16px}
+h1,h2,h3{font-weight:600;letter-spacing:-.01em}
+.eyebrow{color:var(--c-accent);text-transform:none;letter-spacing:.02em;font-size:14px;font-weight:600}
+.btn{border-radius:10px;font-weight:600}
+.hdr{background:#fff}
+.hdr-util{background:var(--c-secondary);color:var(--c-primary)}
+.logo-text{font:600 24px/1 var(--f-display);color:var(--c-primary)}
+.logo-text::before{content:"+";display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--c-accent);color:#fff;margin-right:10px;font:700 20px/1 var(--f-body);vertical-align:-2px}
+.hdr-search input{border-radius:12px 0 0 12px;background:var(--c-background);border-color:transparent}
+.hdr-search button{background:var(--c-accent);border-radius:0 12px 12px 0}
+.hdr-cats{border-color:#E3ECEE}
+.allcats{background:var(--c-accent)}
+.badge-count{background:var(--c-accent)}
+.hero-clin{background:linear-gradient(135deg,var(--c-secondary),#EEF7F4)}
+.hero-clin h1{font-size:clamp(34px,4.8vw,62px);color:var(--c-primary)}
+.big-search input{border-radius:12px;border-color:transparent;box-shadow:0 2px 10px rgba(11,59,71,.08)}
+.clin-art img{border-radius:20px}
+.needs a{box-shadow:0 2px 10px rgba(11,59,71,.06);color:var(--c-primary)}
+.needs a .ic:first-child{color:var(--c-accent)}
+.benefits{border:0;background:#fff}
+.benefit-ic{background:var(--c-secondary);color:var(--c-accent)}
+.cat-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.cat-tile{background:#fff;border:1px solid #E3ECEE;border-radius:14px;padding:14px;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:2px 14px}
+.cat-img{width:72px;height:72px;border-radius:12px;grid-row:span 2}
+.cat-name{font:600 17px/1.2 var(--f-body)}
+.pc{background:#fff;border:1px solid #E3ECEE;border-radius:14px;padding:12px;transition:box-shadow .2s}
+.pc:hover{box-shadow:var(--shadow)}
+.pc-media{aspect-ratio:1;background:#fff;border-radius:10px}
+.pc-media img{object-fit:contain;padding:6px}
+.pc-badge--sale{background:var(--c-accent)}
+.pc-brand{color:var(--c-accent);font-weight:600;letter-spacing:.04em}
+.pc-title{font-weight:600}
+.price-now{color:var(--c-primary);font-size:18px}
+.pc-foot{flex-direction:column;align-items:stretch}
+.pc-add{width:100%;justify-content:center;border:0;background:var(--c-accent);color:#fff;border-radius:10px;min-height:42px}
+.pc-add:hover{background:color-mix(in srgb,var(--c-accent) 85%,#000);color:#fff}
+@media (max-width:720px){.pc-add span{display:inline}.pc-add{width:100%}}
+.banner{border-radius:16px}
+.story{background:#fff;border-radius:20px;padding:clamp(20px,4vw,48px);border:1px solid #E3ECEE}
+.news{background:var(--c-primary);color:#fff}
+.news p{color:#c6dde2}
+.news a{color:#fff}
+.listing-bar{background:#fff;border:1px solid #E3ECEE;border-radius:12px;padding:8px 14px}
+.filters{background:#fff;border:1px solid #E3ECEE;border-radius:14px;padding:4px 16px 16px}
+.gal-main{background:#fff;border:1px solid #E3ECEE}
+.gal-main img{object-fit:contain}
+.pdp-info{background:#fff;border:1px solid #E3ECEE;border-radius:16px;padding:clamp(18px,3vw,28px)}
+.pdp-title{font-size:clamp(28px,3.2vw,42px);color:var(--c-primary)}
+.pdp-perks .ic{color:var(--c-accent)}
+.acc{background:#fff;border:1px solid #E3ECEE;border-radius:12px;padding:0 18px;margin-bottom:10px}
+.acc summary{font-family:var(--f-body);font-weight:700}
+.summary{background:#fff;border:1px solid #E3ECEE}
+.co-step{background:#fff;border-color:#E3ECEE}
+.co-step .n{background:var(--c-accent)}
+.radio-card:has(input:checked){border-color:var(--c-accent);background:#F0FAF8}
+.tldr{border-left-color:var(--c-accent)}
+.ftr{background:var(--c-primary)}

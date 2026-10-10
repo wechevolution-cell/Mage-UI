@@ -11,7 +11,7 @@ class Client:
         self.csrf = None
 
     def req(self, method, path, data=None, files=None, headers=None, follow=True):
-        url = self.base + path
+        url = self.base + urllib.parse.quote(path, safe='/?=&%:+,;[]@!$\'()*~')
         hdrs = {'User-Agent': 'e2e'}
         if self.host: hdrs['Host'] = self.host
         if headers: hdrs.update(headers)

@@ -14,6 +14,7 @@ final class Orders
         $lines = Cart::lines($db, $shop);
         if (!$lines) return ['ok' => false, 'error' => 'Το καλάθι σας είναι άδειο.'];
         $errors = [];
+        if (($in['shipping_zone'] ?? '') === 'pickup') $in['shipping_method'] = 'pickup';
         $email = mb_strtolower(trim((string) ($in['email'] ?? '')));
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = 'Συμπληρώστε έγκυρο email.';
         foreach (['first_name' => 'Όνομα', 'last_name' => 'Επώνυμο', 'phone' => 'Τηλέφωνο', 'address' => 'Διεύθυνση', 'city' => 'Πόλη', 'postcode' => 'Τ.Κ.'] as $f => $label) {
@@ -26,7 +27,8 @@ final class Orders
         if (empty($pay[$method]['enabled'])) $errors['payment_method'] = 'Επιλέξτε τρόπο πληρωμής.';
         $ship = ShopSettings::get($db, 'shipping');
         $zone = (string) ($in['shipping_zone'] ?? 'mainland');
-        $smethod = ($in['shipping_method'] ?? 'courier') === 'pickup' && !empty($ship['pickup']['enabled']) ? 'pickup' : 'courier';
+        $smethod = (($in['shipping_method'] ?? '') === 'pickup' || $zone === 'pickup') && !empty($ship['pickup']['enabled']) ? 'pickup' : 'courier';
+        if ($smethod === 'pickup') { $in['shipping_method'] = 'pickup'; $zone = 'mainland'; }
         if ($smethod === 'courier' && empty($ship['zones'][$zone]['enabled'])) $errors['shipping_zone'] = 'Επιλέξτε περιοχή αποστολής.';
         $chk = ShopSettings::get($db, 'checkout');
         $totals = Cart::totals($db, $lines, $zone, $smethod, $method, !empty($in['gift_wrap']));

@@ -1,0 +1,7 @@
+<div class="page-head"><div><h1>Συνδρομητές</h1><p>Email από pop-ups, newsletter και ταμείο, με καταγραφή συγκατάθεσης GDPR και δυνατότητα διαγραφής.</p></div><div class="actions"><a class="btn" href="/admin/subscribers/export.csv"><?= icon('download') ?>Εξαγωγή CSV</a></div></div>
+<div class="card"><form class="toolbar" method="get"><input type="search" name="q" value="<?= e(in_str('q')) ?>" placeholder="Email" aria-label="Αναζήτηση"><button class="btn">Αναζήτηση</button></form>
+<div class="table-wrap"><table class="table"><thead><tr><th>Email</th><th>Πηγή</th><th>Συγκατάθεση</th><th>Ημερομηνία</th><th>Κατάσταση</th><th></th></tr></thead><tbody>
+<?php if (!$rows): ?><tr><td colspan="6" class="empty">Δεν υπάρχουν συνδρομητές.</td></tr><?php endif; ?>
+<?php foreach ($rows as $s): ?><tr><td><?= e($s['email']) ?></td><td><?= e($s['source']) ?></td><td><?= $s['consent'] ? '<span class="badge b-ok" title="' . e($s['consent_text']) . '">Ναι · ' . fmt_date($s['consent_at']) . '</span>' : '<span class="badge b-muted">Όχι</span>' ?></td><td class="num"><?= fmt_date($s['created_at'], true) ?></td><td><?= $s['unsubscribed_at'] ? '<span class="badge b-muted">Διαγράφηκε από λίστα</span>' : '<span class="badge b-ok">Ενεργός</span>' ?></td>
+<td class="actions"><form method="post" action="/admin/subscribers/<?= $s['id'] ?>/delete"><?= csrf_field() ?><button class="btn btn-sm btn-ghost" data-confirm="Οριστική διαγραφή του <?= e($s['email']) ?>;">✕</button></form></td></tr><?php endforeach; ?>
+</tbody></table></div><?php include __DIR__ . '/_pager.php'; ?></div>

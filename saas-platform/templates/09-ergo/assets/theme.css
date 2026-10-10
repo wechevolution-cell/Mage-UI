@@ -1,0 +1,75 @@
+/* Ergo — industrial SKU-first commerce (tools, hardware, auto parts). Monochrome + safety yellow, mono specs, dense. */
+:root{--f-display:"Sofia Sans Semi Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Sofia Sans","Segoe UI",system-ui,sans-serif;--f-mono:"Roboto Mono",ui-monospace,Menlo,monospace;--radius:3px;--radius-sm:3px;--radius-btn:3px;--wrap:1440px;--hdr-h:70px;--sp:clamp(28px,4vw,52px)}
+body{font-size:15px}
+h1,h2,h3{font-weight:800;text-transform:uppercase;letter-spacing:.005em;line-height:1}
+.eyebrow{font-family:var(--f-mono);font-weight:500;letter-spacing:.06em;color:var(--c-text);background:var(--c-accent);padding:4px 8px}
+.btn{font:800 15px/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em;min-height:48px;border-radius:3px}
+.btn--primary{color:var(--c-button-text)}
+.btn--ghost{border-width:2px}
+.hdr{background:#fff}
+.hdr-util{background:var(--c-primary);color:#d9d9d4;position:relative}
+.hdr-util::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:repeating-linear-gradient(-45deg,var(--c-accent) 0 14px,var(--c-primary) 14px 28px)}
+.hdr-util .wrap{padding-top:4px}
+.logo-text{font:800 26px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.logo-text::after{content:"";display:inline-block;width:10px;height:10px;background:var(--c-accent);margin-left:4px}
+.hdr-search input{border:2px solid var(--c-primary);border-right:0;border-radius:3px 0 0 3px;font-family:var(--f-mono);font-size:14px}
+.hdr-search button{background:var(--c-accent);color:var(--c-primary);border:2px solid var(--c-primary);border-radius:0 3px 3px 0}
+.hdr-cats{background:var(--c-primary);border:0}
+.hdr-cats .nav > li > a{color:#fff;font:700 14px/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em}
+.hdr-cats .nav > li > a:hover{color:var(--c-accent);background:none}
+.allcats{background:var(--c-accent);color:var(--c-primary)}
+.badge-count{background:var(--c-accent);color:var(--c-primary)}
+.mega-h{font:800 16px/1 var(--f-display);text-transform:uppercase}
+.hero-search{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:clamp(20px,4vw,48px);margin-top:16px}
+.hero-search h1{font-size:clamp(34px,5vw,68px)}
+.big-search input{border:2px solid var(--c-primary);font-family:var(--f-mono)}
+.big-search .btn{min-height:56px}
+.chip{border-radius:3px;border:2px solid var(--c-primary);font-weight:700;text-transform:uppercase;font-size:13px}
+.chip:hover{background:var(--c-accent)}
+.search-art img{border-radius:3px;border:2px solid var(--c-primary)}
+.benefits{background:var(--c-accent);border:0}
+.benefit{color:var(--c-primary)}
+.benefit b{font:800 16px/1 var(--f-display);text-transform:uppercase}
+.benefit-ic{background:var(--c-primary);color:var(--c-accent);border-radius:3px}
+.sec-head{border-bottom:3px solid var(--c-primary);padding-bottom:10px}
+.sec-head h2{font-size:clamp(24px,2.8vw,34px)}
+.cat-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.cat-tile{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:10px;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:4px 12px}
+.cat-img{width:64px;height:64px;aspect-ratio:1;grid-row:span 2;border-radius:2px}
+.cat-name{font:800 16px/1.1 var(--f-display);text-transform:uppercase}
+.cat-count{font-family:var(--f-mono);font-size:12px}
+.grid-products{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pc{background:#fff;border:2px solid #d9d9d4;border-radius:3px;padding:10px;transition:border-color .15s}
+.pc:hover{border-color:var(--c-primary)}
+.pc-media{aspect-ratio:4/3;border-radius:2px;background:#f2f2ee}
+.pc-badge{border-radius:2px;font-family:var(--f-mono);font-weight:500}
+.pc-badge--sale{background:var(--c-accent);color:var(--c-primary)}
+.pc-brand{font-family:var(--f-mono);font-size:11px}
+.pc-title{font:700 15px/1.25 var(--f-body)}
+.pc-specs li{font-family:var(--f-mono);font-size:11px;border:1px solid #d9d9d4;background:#fafaf8;border-radius:2px}
+.price-now{font:800 22px/1 var(--f-display)}
+.pc-add{border:2px solid var(--c-primary);border-radius:3px;background:var(--c-accent);color:var(--c-primary);font-weight:800;text-transform:uppercase}
+.pc-add:hover{background:var(--c-primary);color:var(--c-accent)}
+@media (max-width:960px){.grid-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.listing-head h1{font-size:clamp(30px,4vw,52px)}
+.listing-bar{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:8px 12px}
+.filters{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:4px 14px 14px}
+.fgroup summary{text-transform:uppercase;font-family:var(--f-display)}
+.pdp-gallery,.pdp-info{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:16px}
+.gal-main{aspect-ratio:4/3;background:#f2f2ee;border-radius:2px}
+.pdp-meta{font-family:var(--f-mono);font-size:13px}
+.pdp-title{font-size:clamp(28px,3vw,40px)}
+.specs th,.specs td{font-family:var(--f-mono);font-size:13px}
+.specs tr:nth-child(odd){background:#f6f6f2}
+.acc summary{text-transform:uppercase;font-weight:800}
+.pdp-details{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:4px 18px;max-width:none}
+.opt-val span{border-radius:3px;border-width:2px;font-family:var(--f-mono)}
+.opt-val input:checked+span{background:var(--c-accent);color:var(--c-primary);border-color:var(--c-primary)}
+.summary,.co-step{background:#fff;border:2px solid var(--c-primary)}
+.co-step .n{background:var(--c-accent);color:var(--c-primary)}
+.news{background:var(--c-primary);color:#fff;border-radius:3px}
+.news p{color:#cfcfca}
+.news a{color:var(--c-accent)}
+.ftr{background:var(--c-primary);position:relative}
+.ftr::before{content:"";display:block;height:8px;background:repeating-linear-gradient(-45deg,var(--c-accent) 0 16px,var(--c-primary) 16px 32px)}
+.ftr-col h2{font:800 15px/1 var(--f-display);color:var(--c-accent)}

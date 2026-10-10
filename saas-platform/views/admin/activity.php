@@ -1,0 +1,4 @@
+<div class="page-head"><div><h1>Ιστορικό ενεργειών</h1><p>Καταγραφή όλων των ενεργειών στο κατάστημά σας.</p></div></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Πότε</th><th>Ποιος</th><th>Ενέργεια</th><th>Οντότητα</th><th>IP</th><th>Αποτέλεσμα</th></tr></thead><tbody>
+<?php foreach ($rows as $r): ?><tr><td class="num"><?= fmt_date($r['created_at'], true) ?></td><td><?= e($r['actor_name']) ?><?= $r['impersonator_id'] ? ' <span class="badge b-warn plain">υποστήριξη</span>' : '' ?></td><td><code><?= e($r['action']) ?></code></td><td class="sub"><?= e($r['entity_type']) ?> <?= e($r['entity_id']) ?></td><td class="mono"><?= e($r['ip']) ?></td><td><?= status_badge($r['outcome']) ?></td></tr><?php endforeach; ?>
+</tbody></table></div><?php include __DIR__ . '/_pager.php'; ?></div>

@@ -1,0 +1,1 @@
+<nav class="tabs" aria-label="Ρυθμίσεις"><?php foreach ($tabs['items'] as $href => $label): ?><a href="<?= e($href) ?>"<?= $tabs['active'] === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?></a><?php endforeach; ?></nav>

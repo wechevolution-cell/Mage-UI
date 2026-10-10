@@ -1,0 +1,1 @@
+<?php if (!empty($crumbs)): ?><nav class="crumbs" aria-label="Breadcrumb"><ol><?php foreach ($crumbs as $i => [$label, $href]): $last = $i === count($crumbs) - 1; ?><li><?= !$last && $href ? '<a href="' . e($href) . '">' . e($label) . '</a>' : '<span aria-current="page">' . e($label) . '</span>' ?></li><?php endforeach; ?></ol></nav><?php endif; ?>

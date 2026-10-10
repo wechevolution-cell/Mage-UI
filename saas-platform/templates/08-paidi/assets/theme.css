@@ -1,0 +1,58 @@
+/* Paidi — illustrated & joyful kids/toys. Rounded type, pastel blocks, blobs and waves, big friendly buttons. */
+:root{--f-display:"Comfortaa","Arial Rounded MT Bold",system-ui,sans-serif;--f-body:"Ubuntu","Segoe UI",system-ui,sans-serif;--radius:22px;--radius-sm:14px;--radius-btn:999px;--wrap:1300px;--hdr-h:84px;--p1:#FFD6A5;--p2:#CAFFBF;--p3:#9BF6FF;--p4:#BDB2FF;--p5:#FFC6FF;--p6:#FDFFB6}
+h1,h2,h3{font-weight:700;letter-spacing:-.01em}
+.btn{min-height:54px;font-weight:700;box-shadow:0 4px 0 color-mix(in srgb,var(--c-button-bg) 70%,#000);transition:transform .15s,box-shadow .15s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--c-button-bg) 70%,#000)}
+.btn--ghost{box-shadow:none;border-width:2px}
+input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:14px;border-width:2px}
+.hdr{background:transparent;padding-top:10px}
+.hdr--pill .pill{background:#fff;border:3px solid var(--c-primary);box-shadow:0 6px 0 var(--c-primary)}
+.logo-text{font:700 24px/1 var(--f-display);color:var(--c-primary)}
+.hdr--pill .nav > li > a{border-radius:999px;font-weight:700;font-family:var(--f-display);font-size:14px}
+.hdr--pill .nav > li:nth-child(5n+1) > a:hover{background:var(--p1)}.hdr--pill .nav > li:nth-child(5n+2) > a:hover{background:var(--p2)}.hdr--pill .nav > li:nth-child(5n+3) > a:hover{background:var(--p3)}.hdr--pill .nav > li:nth-child(5n+4) > a:hover{background:var(--p4)}.hdr--pill .nav > li:nth-child(5n+5) > a:hover{background:var(--p5)}
+.badge-count{background:var(--c-accent)}
+.hero-ill{background:var(--p3)}
+.hero-ill h1{font-size:clamp(38px,5.6vw,78px);color:var(--c-primary)}
+.hero-ill p{color:var(--c-primary)}
+.blob--1{fill:var(--p1);opacity:.9}.blob--2{fill:var(--p5);opacity:.9}
+.ill-circle{border-color:#fff;box-shadow:0 10px 0 var(--c-primary)}
+.ill-mini{border-color:#fff}
+.benefits{border:0}
+.benefit{background:#fff;border:2px solid var(--c-primary);border-radius:20px;padding:14px;box-shadow:0 4px 0 var(--c-primary)}
+.benefit-ic{background:var(--p6)}
+.sec-head h2{font-size:clamp(28px,3.6vw,44px)}
+.cat-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px;text-align:center}
+.cat-tile{justify-items:center}
+.cat-img{border-radius:50%;aspect-ratio:1;width:84%;border:4px solid #fff;box-shadow:0 0 0 3px var(--c-primary)}
+.cat-tile:nth-child(6n+1) .cat-img{background:var(--p1)}.cat-tile:nth-child(6n+2) .cat-img{background:var(--p2)}.cat-tile:nth-child(6n+3) .cat-img{background:var(--p3)}.cat-tile:nth-child(6n+4) .cat-img{background:var(--p4)}.cat-tile:nth-child(6n+5) .cat-img{background:var(--p5)}.cat-tile:nth-child(6n) .cat-img{background:var(--p6)}
+.cat-tile:hover .cat-img{transform:rotate(-4deg)}
+.cat-name{font:700 18px/1.2 var(--f-display)}
+.pc{background:#fff;border-radius:24px;padding:10px;border:2px solid color-mix(in srgb,var(--c-primary) 14%,transparent);transition:transform .25s}
+.pc:hover{transform:rotate(-1deg) translateY(-4px)}
+.pc-media{aspect-ratio:1;border-radius:18px}
+.pc:nth-child(6n+1) .pc-media{background:var(--p1)}.pc:nth-child(6n+2) .pc-media{background:var(--p2)}.pc:nth-child(6n+3) .pc-media{background:var(--p3)}.pc:nth-child(6n+4) .pc-media{background:var(--p4)}.pc:nth-child(6n+5) .pc-media{background:var(--p5)}.pc:nth-child(6n) .pc-media{background:var(--p6)}
+.pc-badge{border-radius:999px}
+.pc-body{padding:10px 6px 4px}
+.pc-title{font-weight:500}
+.price-now{font:700 20px/1 var(--f-display);color:var(--c-primary)}
+.pc-add{width:46px;height:46px;min-height:46px;padding:0;justify-content:center;border:0;background:var(--c-accent);color:#fff;box-shadow:0 3px 0 color-mix(in srgb,var(--c-accent) 65%,#000)}
+.pc-add span{display:none}
+.pc-add:hover{background:var(--c-accent);color:#fff;transform:scale(1.08)}
+.banner{border-radius:24px;border:3px solid var(--c-primary)}
+.story{background:var(--p6);border-radius:28px;padding:clamp(20px,4vw,48px)}
+.story-img{border-radius:40% 60% 55% 45% / 45% 40% 60% 55%}
+.news{background:var(--p4);border-radius:28px;border:3px solid var(--c-primary);box-shadow:0 8px 0 var(--c-primary)}
+.listing-head{background:var(--p2);border-radius:28px;padding:clamp(20px,4vw,40px);margin-top:12px}
+.chip{border-width:2px;font-weight:700}
+.filters{background:#fff;border-radius:22px;padding:4px 16px 16px;border:2px solid color-mix(in srgb,var(--c-primary) 14%,transparent)}
+.gal-main{border-radius:28px;background:var(--p3)}
+.pdp-info{background:#fff;border-radius:28px;padding:clamp(20px,3vw,32px);border:3px solid var(--c-primary);box-shadow:0 8px 0 var(--c-primary)}
+.opt-val span{border-radius:999px;border-width:2px;font-weight:700}
+.acc{background:#fff;border:2px solid color-mix(in srgb,var(--c-primary) 14%,transparent);border-radius:18px;padding:0 18px;margin-bottom:10px}
+.summary{background:var(--p6);border:2px solid var(--c-primary)}
+.co-step{background:#fff;border-width:2px;border-color:color-mix(in srgb,var(--c-primary) 20%,transparent)}
+.radio-card{border-radius:16px;border-width:2px}
+.drawer-panel{border-radius:28px 0 0 28px}
+.tabbar{background:#fff;border-top:3px solid var(--c-primary)}
+.tabbar [aria-current]{color:var(--c-accent)}
+.ftr{background:var(--c-primary);border-radius:40px 40px 0 0}
