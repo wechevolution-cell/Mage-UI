@@ -114,16 +114,44 @@ function db_update(PDO $db, string $table, array $data, string $where, array $pa
     }
     return db_exec($db, "UPDATE $table SET " . implode(', ', $sets) . " WHERE $where", array_merge(array_values($data), $params))->rowCount();
 }
+/**
+ * Nestable transactions. The outermost level issues BEGIN IMMEDIATE (SQLite write lock) and COMMIT;
+ * inner levels use SAVEPOINTs, so a failing inner unit (e.g. one import row) is rolled back on its own
+ * while the surrounding batch continues. Depth is tracked per connection because PDO::inTransaction()
+ * does not see transactions opened with a raw BEGIN.
+ */
+final class TxDepth { public static array $d = []; }
+function db_begin(PDO $db): void
+{
+    $k = spl_object_id($db);
+    $n = TxDepth::$d[$k] ?? 0;
+    $db->exec($n === 0 ? 'BEGIN IMMEDIATE' : 'SAVEPOINT sp' . $n);
+    TxDepth::$d[$k] = $n + 1;
+}
+function db_commit(PDO $db): void
+{
+    $k = spl_object_id($db);
+    $n = (TxDepth::$d[$k] ?? 1) - 1;
+    TxDepth::$d[$k] = max(0, $n);
+    $db->exec($n <= 0 ? 'COMMIT' : 'RELEASE sp' . $n);
+}
+function db_rollback(PDO $db): void
+{
+    $k = spl_object_id($db);
+    $n = (TxDepth::$d[$k] ?? 1) - 1;
+    TxDepth::$d[$k] = max(0, $n);
+    if ($n <= 0) $db->exec('ROLLBACK');
+    else { $db->exec('ROLLBACK TO sp' . $n); $db->exec('RELEASE sp' . $n); }
+}
 function db_tx(PDO $db, callable $fn): mixed
 {
-    if ($db->inTransaction()) return $fn($db);
-    $db->exec('BEGIN IMMEDIATE');
+    db_begin($db);
     try {
         $r = $fn($db);
-        $db->exec('COMMIT');
+        db_commit($db);
         return $r;
     } catch (Throwable $e) {
-        $db->exec('ROLLBACK');
+        db_rollback($db);
         throw $e;
     }
 }

@@ -43,7 +43,9 @@ final class Importer
     /** Stage the uploaded file: parse headers + rows into import_rows. */
     public static function stage(PDO $db, array $shop, array $file, int $userId): array
     {
-        if (($file['error'] ?? 1) !== UPLOAD_ERR_OK) return ['ok' => false, 'error' => 'Δεν ανέβηκε αρχείο.'];
+        $err = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+        if (in_array($err, [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true)) return ['ok' => false, 'error' => 'Το αρχείο υπερβαίνει το όριο του server (upload_max_filesize = ' . ini_get('upload_max_filesize') . '). Αυξήστε το από το hPanel → PHP Configuration ή χωρίστε το αρχείο.'];
+        if ($err !== UPLOAD_ERR_OK) return ['ok' => false, 'error' => 'Δεν ανέβηκε αρχείο.'];
         if ($file['size'] > 50 * 1024 * 1024) return ['ok' => false, 'error' => 'Μέγιστο μέγεθος αρχείου 50 MB.'];
         $ext = strtolower(pathinfo((string) $file['name'], PATHINFO_EXTENSION));
         if (!in_array($ext, ['csv', 'txt', 'xml'], true)) return ['ok' => false, 'error' => 'Επιτρέπονται αρχεία CSV ή XML.'];
@@ -59,7 +61,7 @@ final class Importer
         try {
             $count = 0;
             $headers = [];
-            $db->exec('BEGIN IMMEDIATE');
+            db_begin($db);
             $ins = $db->prepare('INSERT INTO import_rows(import_id, row_no, data, status) VALUES(?,?,?,\'pending\')');
             $max = Shops::storedLimit($shop) + 5000;
             foreach (($type === 'xml' ? self::readXml($path) : self::readCsv($path)) as $row) {
@@ -69,9 +71,9 @@ final class Importer
                 if ($count > $max) throw new RuntimeException('Το αρχείο υπερβαίνει τις ' . $max . ' γραμμές.');
                 $ins->execute([$importId, $count, je($row)]);
             }
-            $db->exec('COMMIT');
+            db_commit($db);
         } catch (Throwable $e) {
-            if ($db->inTransaction()) $db->exec('ROLLBACK');
+            db_rollback($db);
             db_update($db, 'imports', ['status' => 'failed'], 'id = ?', [$importId]);
             self::log($db, $importId, 'error', 'Αποτυχία ανάγνωσης: ' . $e->getMessage());
             return ['ok' => false, 'error' => 'Το αρχείο δεν διαβάστηκε: ' . $e->getMessage(), 'import_id' => $importId];
@@ -119,10 +121,12 @@ final class Importer
         $r = new XMLReader();
         if (!$r->open($path, null, LIBXML_NONET | LIBXML_COMPACT)) throw new RuntimeException('Μη έγκυρο XML');
         $names = ['product', 'item', 'offer', 'entry', 'προϊόν'];
-        while (@$r->read()) {
+        $more = @$r->read();
+        while ($more) {
             if ($r->nodeType === XMLReader::ELEMENT && in_array(strtolower($r->localName), $names, true)) {
                 $xml = $r->readOuterXml();
                 $node = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NONET);
+                $more = @$r->next(); // jump past this product's subtree to its next sibling
                 if (!$node) continue;
                 $row = [];
                 foreach ($node->attributes() as $k => $v) $row[(string) $k] = trim((string) $v);
@@ -139,8 +143,9 @@ final class Importer
                 }
                 foreach ($node->children('g', true) as $child) { $row[$child->getName()] = trim((string) $child); }
                 if ($row) yield $row;
-                $r->next();
+                continue;
             }
+            $more = @$r->read();
         }
         $r->close();
     }
@@ -224,12 +229,12 @@ final class Importer
         $rows = db_all($db, "SELECT * FROM import_rows WHERE import_id = ? AND status = 'pending' ORDER BY row_no LIMIT ?", [$importId, $batch]);
         $c = ['created' => 0, 'updated' => 0, 'skipped' => 0, 'errors' => 0, 'activated' => 0, 'quota' => 0];
         $imageQueue = [];
-        $db->exec('BEGIN IMMEDIATE');
+        db_begin($db);
         foreach ($rows as $r) {
             if (microtime(true) - $t0 > $timeBudget) break;
             $m = self::mapRow(jd($r['data']), $map);
             try {
-                $res = self::upsert($db, $shop, $m, $opts);
+                $res = db_tx($db, fn() => self::upsert($db, $shop, $m, $opts));
                 $c[$res['action']]++;
                 if (!empty($res['activated'])) $c['activated']++;
                 if (!empty($res['quota_blocked'])) { $c['quota']++; }
@@ -242,7 +247,7 @@ final class Importer
                 self::log($db, $importId, 'error', $e->getMessage(), (int) $r['row_no']);
             }
         }
-        $db->exec('COMMIT');
+        db_commit($db);
         if (!empty($opts['download_images'])) {
             foreach ($imageQueue as $pid => $urls) {
                 if (microtime(true) - $t0 > $timeBudget + 10) break;

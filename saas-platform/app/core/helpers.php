@@ -161,11 +161,28 @@ function csrf_valid(): bool
 function csrf_check(): void
 {
     if (!csrf_valid()) {
+        // Body larger than post_max_size: PHP drops $_POST entirely, so explain instead of "form expired".
+        $len = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+        $max = ini_bytes((string) ini_get('post_max_size'));
+        if ($len > 0 && $max > 0 && $len > $max) {
+            $msg = 'Το αρχείο είναι μεγαλύτερο από το όριο του server (post_max_size = ' . ini_get('post_max_size') . '). Αυξήστε το όριο ή χωρίστε το αρχείο.';
+            if (wants_json()) json_out(['ok' => false, 'error' => $msg], 413);
+            http_response_code(413);
+            echo View::render('system/error', ['code' => 413, 'title' => 'Πολύ μεγάλο αρχείο', 'message' => $msg]);
+            exit;
+        }
         if (wants_json()) json_out(['ok' => false, 'error' => 'Η φόρμα έληξε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.'], 419);
         http_response_code(419);
         echo View::render('system/error', ['code' => 419, 'title' => 'Η φόρμα έληξε', 'message' => 'Για λόγους ασφαλείας η φόρμα έληξε. Επιστρέψτε, ανανεώστε τη σελίδα και δοκιμάστε ξανά.']);
         exit;
     }
+}
+
+function ini_bytes(string $v): int
+{
+    $v = trim($v);
+    $n = (int) $v;
+    return match (strtolower(substr($v, -1))) { 'g' => $n << 30, 'm' => $n << 20, 'k' => $n << 10, default => $n };
 }
 
 /* ---------- strings ---------- */
