@@ -16,7 +16,7 @@
   <div class="field"><label>Ενεργοποίηση</label><select name="trigger_type"><option value="delay">Μετά από καθυστέρηση</option><option value="exit"<?= ($p['trigger_type'] ?? '') === 'exit' ? ' selected' : '' ?>>Πρόθεση εξόδου (desktop)</option><option value="scroll"<?= ($p['trigger_type'] ?? '') === 'scroll' ? ' selected' : '' ?>>Μετά από scroll 50%</option></select></div>
   <div class="field"><label>Καθυστέρηση (δευτερόλεπτα)</label><input type="number" min="0" max="120" name="delay_seconds" value="<?= (int) ($p['delay_seconds'] ?? 8) ?>"></div>
   <div class="field"><label>Επανεμφάνιση μετά από (ημέρες)</label><input type="number" min="0" max="365" name="frequency_days" value="<?= (int) ($p['frequency_days'] ?? 7) ?>"></div>
-  <div class="field"><label>Από</label><input type="datetime-local" name="starts_at" value="<?= e($p['starts_at'] ? date('Y-m-d\TH:i', strtotime($p['starts_at'])) : '') ?>"></div>
-  <div class="field"><label>Έως</label><input type="datetime-local" name="ends_at" value="<?= e($p['ends_at'] ? date('Y-m-d\TH:i', strtotime($p['ends_at'])) : '') ?>"></div>
+  <div class="field"><label>Από</label><input type="datetime-local" name="starts_at" value="<?= e(!empty($p['starts_at']) ? date('Y-m-d\TH:i', strtotime($p['starts_at'])) : '') ?>"></div>
+  <div class="field"><label>Έως</label><input type="datetime-local" name="ends_at" value="<?= e(!empty($p['ends_at']) ? date('Y-m-d\TH:i', strtotime($p['ends_at'])) : '') ?>"></div>
 </div></div></div></form>
 <?php if ($p): ?><form method="post" action="/admin/popups/<?= $p['id'] ?>/delete"><?= csrf_field() ?><button class="btn btn-danger" data-confirm="Διαγραφή pop-up;"><?= icon('trash') ?>Διαγραφή</button></form><?php endif; ?>

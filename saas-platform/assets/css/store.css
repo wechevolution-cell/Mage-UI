@@ -60,7 +60,7 @@ button{cursor:pointer}
 .icon-btn:hover{background:var(--c-soft);color:inherit}
 .icon-btn .lbl{display:none}
 .badge-count{position:absolute;top:4px;right:2px;min-width:18px;height:18px;border-radius:9px;background:var(--c-accent);color:var(--c-button-text);font:700 11px/18px var(--f-body);text-align:center;padding:0 5px}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{width:100%;min-width:0;min-height:48px;padding:10px 14px;border:1px solid var(--c-line);border-radius:var(--radius-sm);background:var(--c-background);font-size:16px;transition:border-color .15s,box-shadow .15s}
+input[type=text],input:not([type]),input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{width:100%;min-width:0;min-height:48px;padding:10px 14px;border:1px solid var(--c-line);border-radius:var(--radius-sm);background:var(--c-background);font-size:16px;transition:border-color .15s,box-shadow .15s}
 textarea{min-height:120px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--c-text);box-shadow:0 0 0 3px color-mix(in srgb,var(--c-accent) 20%,transparent)}
 [aria-invalid=true]{border-color:var(--c-bad)!important}

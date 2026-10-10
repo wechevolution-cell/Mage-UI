@@ -45,7 +45,7 @@ $optNames = $variants ? implode(' / ', array_keys(jd($variants[0]['options']))) 
       <div class="rep"><?php foreach ($attributes as $a): ?><div class="rep-row" style="--cols:2"><input data-name="attributes[__i__][name]" value="<?= e($a['name']) ?>" placeholder="Όνομα (π.χ. Υλικό)" aria-label="Όνομα"><input data-name="attributes[__i__][value]" value="<?= e($a['value']) ?>" placeholder="Τιμή (π.χ. Βαμβάκι)" aria-label="Τιμή"><button type="button" class="btn rm" aria-label="Αφαίρεση">✕</button></div><?php endforeach; ?></div></div>
       <template><div class="rep-row" style="--cols:2"><input data-name="attributes[__i__][name]" placeholder="Όνομα (π.χ. Υλικό)" aria-label="Όνομα"><input data-name="attributes[__i__][value]" placeholder="Τιμή (π.χ. Βαμβάκι)" aria-label="Τιμή"><button type="button" class="btn rm" aria-label="Αφαίρεση">✕</button></div></template>
     </div>
-    <div class="card"><div class="hd"><h2>Αποστολή</h2></div><div class="bd"><div class="fg" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    <div class="card"><div class="hd"><h2>Αποστολή</h2></div><div class="bd"><div class="fg fg4">
       <div class="field"><label>Βάρος (kg)</label><input name="weight" inputmode="decimal" value="<?= e($v('weight')) ?>"></div><div class="field"><label>Μήκος (cm)</label><input name="length" inputmode="decimal" value="<?= e($v('length')) ?>"></div>
       <div class="field"><label>Πλάτος (cm)</label><input name="width" inputmode="decimal" value="<?= e($v('width')) ?>"></div><div class="field"><label>Ύψος (cm)</label><input name="height" inputmode="decimal" value="<?= e($v('height')) ?>"></div>
     </div></div></div>

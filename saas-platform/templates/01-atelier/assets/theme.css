@@ -7,7 +7,7 @@ em{font-style:italic;color:var(--c-secondary)}
 .btn{min-height:52px;padding:0 30px;font:500 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;border-width:1px}
 .btn--primary:hover{background:var(--c-secondary);color:var(--c-button-text)}
 .btn--ghost{border-color:var(--c-text)}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:0;border-width:0 0 1px;padding-inline:0;background:transparent}
+input[type=text],input:not([type]),input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:0;border-width:0 0 1px;padding-inline:0;background:transparent}
 input:focus,select:focus,textarea:focus{box-shadow:none;border-color:var(--c-text)}
 .qty{border-radius:0}.qty button{border-radius:0}
 .chip{border-radius:0;text-transform:uppercase;font-size:11px;letter-spacing:.14em}

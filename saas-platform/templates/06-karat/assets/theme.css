@@ -7,7 +7,7 @@ em{font-style:italic;color:var(--c-accent)}
 .btn{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;min-height:50px}
 .btn--ghost{border-color:var(--c-accent);color:var(--c-accent)}
 .btn--ghost:hover{background:var(--c-accent);color:var(--c-background)}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{background:var(--c-surface);border-color:var(--c-line);color:var(--c-text)}
+input[type=text],input:not([type]),input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{background:var(--c-surface);border-color:var(--c-line);color:var(--c-text)}
 input:focus,select:focus,textarea:focus{border-color:var(--c-accent)}
 .chip{background:transparent;border-color:var(--c-line)}
 .hdr{background:color-mix(in srgb,var(--c-background) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--c-line)}

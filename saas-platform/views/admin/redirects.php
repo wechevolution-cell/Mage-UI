@@ -1,5 +1,5 @@
 <div class="page-head"><div><h1>Ανακατευθύνσεις</h1><p>301, 302, 307, 308, 410, 451 — ακριβής αντιστοίχιση ή regex με $1. Προστασία από βρόχους και αλυσίδες.</p></div></div>
-<form method="post" action="/admin/seo/redirects/save" class="card"><?= csrf_field() ?><div class="hd"><h2>Νέα ανακατεύθυνση</h2></div><div class="bd"><div class="fg" style="grid-template-columns:2fr 2fr 1fr 1fr">
+<form method="post" action="/admin/seo/redirects/save" class="card"><?= csrf_field() ?><div class="hd"><h2>Νέα ανακατεύθυνση</h2></div><div class="bd"><div class="fg fg-redir">
   <div class="field"><label>Από (διαδρομή ή regex)</label><input name="source" required value="<?= e($prefill['source']) ?>" placeholder="/old-url/"></div>
   <div class="field"><label>Προς</label><input name="target" value="<?= e($prefill['target']) ?>" placeholder="/new-url/ ή https://…"></div>
   <div class="field"><label>Κωδικός</label><select name="code"><?php foreach (Redirects::CODES as $c => $l): ?><option value="<?= $c ?>"<?= $prefill['code'] === $c ? ' selected' : '' ?>><?= e($l) ?></option><?php endforeach; ?></select></div>

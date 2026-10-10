@@ -89,8 +89,8 @@ final class SuperAdminController
             ]],
         ];
         $me = self::$me;
-        $topRight = '<a class="btn btn-sm btn-ghost" href="/superadmin/account">' . icon('user') . e($me['name']) . '</a>'
-            . '<form method="post" action="/superadmin/logout">' . csrf_field() . '<button class="btn btn-sm">' . icon('logout') . 'Έξοδος</button></form>';
+        $topRight = '<a class="btn btn-sm btn-ghost" href="/superadmin/account" aria-label="Ο λογαριασμός μου">' . icon('user') . '<span class="hide-sm">' . e($me['name']) . '</span></a>'
+            . '<form method="post" action="/superadmin/logout">' . csrf_field() . '<button class="btn btn-sm">' . icon('logout') . '<span class="hide-sm">Έξοδος</span></button></form>';
         echo View::page('superadmin/' . $view, $data + ['me' => $me, 'title' => $title, 'nav' => $nav, 'scope' => 'sa',
             'brand' => setting_get(DB::platform(), 'platform_name', 'wechevo e-shop'), 'brandSub' => 'Super Admin', 'crumbs' => array_merge([['Super Admin', '/superadmin/']], $crumbs),
             'topRight' => $topRight, 'sideFoot' => 'v' . APP_VERSION], 'layouts/admin');
@@ -206,7 +206,12 @@ final class SuperAdminController
     private static function shopShow(int $id): void
     {
         $shop = Shops::find($id);
-        if (!$shop || $shop['status'] === 'deleted') { self::notFound(); return; }
+        if ($shop && $shop['status'] === 'deleted') {
+            // Audit entries and old notifications still link here: explain instead of a bare 404.
+            flash('warn', 'Το κατάστημα «' . $shop['name'] . '» έχει διαγραφεί οριστικά' . ($shop['deleted_at'] ? ' (' . fmt_date($shop['deleted_at']) . ')' : '') . '. Το ιστορικό του παραμένει στο αρχείο καταγραφής.');
+            redirect('/superadmin/audit?shop=' . $id);
+        }
+        if (!$shop) { self::notFound(); return; }
         Subscriptions::refreshShopStatus($id);
         $shop = Shops::find($id);
         $p = DB::platform();

@@ -1,6 +1,6 @@
 <div class="page-head"><div><h1>Templates</h1><p>10 έτοιμα templates. Ενεργοποιήστε/απενεργοποιήστε τα και ορίστε σε ποια πακέτα διατίθενται. Τα templates είναι μόνο παρουσίαση — όλα χρησιμοποιούν το ίδιο σχήμα δεδομένων.</p></div></div>
 <form method="post" action="/superadmin/templates/save" class="grid"><?= csrf_field() ?>
-  <div class="tpl-grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+  <div class="tpl-grid" style="grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))">
   <?php foreach ($templates as $t): $m = $t['manifest']; $tk = $m['tokens'] ?? []; $ap = jd($t['allowed_plans'], []); ?>
     <div class="card">
       <div class="sw" style="display:flex;height:70px;border-radius:10px 10px 0 0;overflow:hidden"><?php foreach (['background', 'surface', 'primary', 'accent', 'secondary'] as $c): ?><span style="flex:1;background:<?= e($tk[$c] ?? '#eee') ?>"></span><?php endforeach; ?></div>

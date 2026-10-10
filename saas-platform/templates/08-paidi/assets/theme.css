@@ -4,7 +4,7 @@ h1,h2,h3{font-weight:700;letter-spacing:-.01em}
 .btn{min-height:54px;font-weight:700;box-shadow:0 4px 0 color-mix(in srgb,var(--c-button-bg) 70%,#000);transition:transform .15s,box-shadow .15s}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--c-button-bg) 70%,#000)}
 .btn--ghost{box-shadow:none;border-width:2px}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:14px;border-width:2px}
+input[type=text],input:not([type]),input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:14px;border-width:2px}
 .hdr{background:transparent;padding-top:10px}
 .hdr--pill .pill{background:#fff;border:3px solid var(--c-primary);box-shadow:0 6px 0 var(--c-primary)}
 .logo-text{font:700 24px/1 var(--f-display);color:var(--c-primary)}

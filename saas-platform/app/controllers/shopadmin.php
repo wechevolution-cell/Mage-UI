@@ -124,10 +124,10 @@ final class ShopAdmin
         $quota = Quota::status($db, self::$shop);
         $qcls = $quota['active'] >= $quota['limit'] ? 'full' : ($quota['pct'] >= 80 ? 'warn' : '');
         $u = self::$user;
-        $topRight = '<a class="quota-pill" href="/admin/products?status=active" title="Ενεργά προϊόντα / όριο πακέτου"><span class="bar ' . $qcls . '"><i data-quota-bar style="width:' . $quota['pct'] . '%"></i></span><span>ΕΝΕΡΓΑ: <span class="num" data-quota-text>' . $quota['active'] . ' / ' . $quota['limit'] . '</span></span></a>'
+        $topRight = '<a class="quota-pill" href="/admin/products?status=active" title="Ενεργά προϊόντα / όριο πακέτου"><span class="bar ' . $qcls . '"><i data-quota-bar style="width:' . $quota['pct'] . '%"></i></span><span><span class="hide-sm">ΕΝΕΡΓΑ: </span><span class="num" data-quota-text>' . $quota['active'] . ' / ' . $quota['limit'] . '</span></span></a>'
             . '<a class="btn btn-sm btn-ghost" href="/" target="_blank" rel="noopener">' . icon('eye') . '<span class="hide-sm">Κατάστημα</span></a>'
-            . '<a class="btn btn-sm btn-ghost" href="/admin/account">' . icon('user') . e($u['name']) . '</a>'
-            . '<form method="post" action="/admin/logout">' . csrf_field() . '<button class="btn btn-sm">' . icon('logout') . '</button></form>';
+            . '<a class="btn btn-sm btn-ghost" href="/admin/account" aria-label="Ο λογαριασμός μου">' . icon('user') . '<span class="hide-sm">' . e($u['name']) . '</span></a>'
+            . '<form method="post" action="/admin/logout">' . csrf_field() . '<button class="btn btn-sm" aria-label="Αποσύνδεση">' . icon('logout') . '</button></form>';
         $app = ShopSettings::get($db, 'appearance');
         $fav = !empty($app['favicon_id']) ? media_url(db_one($db, 'SELECT * FROM media WHERE id = ?', [$app['favicon_id']])) : null;
         echo View::page($view, $data + ['user' => $u, 'shop' => self::$shop, 'db' => $db, 'quota' => $quota, 'title' => $title, 'nav' => $nav, 'scope' => 'shop',

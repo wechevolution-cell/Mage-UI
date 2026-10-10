@@ -6,7 +6,7 @@ h1,h2,h3{font-weight:800;letter-spacing:-.01em}
 .btn{min-height:52px;font-weight:700;transition:transform .35s var(--spring),background .2s}
 .btn:hover{transform:translateY(-2px) scale(1.02)}
 .btn--ghost{border-width:2px}
-input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:16px;border-width:2px;background:var(--c-background)}
+input[type=text],input:not([type]),input[type=email],input[type=password],input[type=tel],input[type=number],input[type=search],select,textarea{border-radius:16px;border-width:2px;background:var(--c-background)}
 .chip{border-width:2px;font-weight:700;background:var(--c-surface)}
 
 /* Floating pill header */

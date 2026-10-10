@@ -6,7 +6,7 @@
 <div class="card"><form class="toolbar" method="get"><input type="search" name="q" value="<?= e(in_str('q')) ?>" placeholder="Αναζήτηση…" aria-label="Αναζήτηση"><button class="btn">Αναζήτηση</button></form>
 <div class="bd">
 <?php if (!$rows): ?><div class="empty">Δεν υπάρχουν εικόνες.</div><?php endif; ?>
-<div class="media-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+<div class="media-grid" style="grid-template-columns:repeat(auto-fill,minmax(min(180px,45%),1fr))">
 <?php foreach ($rows as $m): ?>
   <details class="card" style="overflow:hidden"<?= in_int('confirm') === (int) $m['id'] ? ' open' : '' ?>><summary style="list-style:none;cursor:pointer"><img src="<?= e(media_url($m, 400)) ?>" alt="<?= e($m['alt']) ?>" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block"><div style="padding:6px 8px;font-size:12px" class="muted"><?= (int) $m['width'] ?>×<?= (int) $m['height'] ?> · <?= number_format($m['size'] / 1024, 0) ?> KB<?= !$m['alt'] ? ' · <span style="color:var(--warn)">χωρίς alt</span>' : '' ?></div></summary>
     <form method="post" action="/admin/media/<?= $m['id'] ?>/update" enctype="multipart/form-data" class="form" style="padding:8px"><?= csrf_field() ?>
