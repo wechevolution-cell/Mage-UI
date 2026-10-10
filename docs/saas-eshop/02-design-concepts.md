@@ -1,6 +1,6 @@
 # Stage 3–5: Design concepts
 
-Status: **STOPPED. Waiting for the client to choose A, B or C (or a mix).**
+Status: **No single design is chosen.** The client confirmed that all templates ship and that the Super Admin picks a template per shop and controls access from the master admin. Next step: development.
 
 ## Decisions confirmed by the client
 | Topic | Decision |
@@ -59,7 +59,10 @@ Every template shares one data model and one component and behaviour core. Each 
 | 09 | Ergo | Hardware, auto parts, B2B-style (SKU-first, compatibility search) | B |
 | 10 | Iasis | Pharmacy & wellness (clinical, trust-led, strong search) | B |
 
-## What the choice decides
-The concept you pick becomes the **reference implementation**. It is built first, and its cart, checkout and interaction patterns become the platform defaults that the other 9 templates inherit and restyle. The two concepts you don't pick still become Templates 01–03 as shown above.
-
-**Which design would you like to implement? A / B / C**, or a mix such as "B + the cart from C".
+## Template control (client clarification)
+- All 10 templates ship. Nobody chooses one design for the whole platform.
+- The **Super Admin** assigns a template to each shop and can switch it at any time without data loss.
+- The Super Admin **enables or disables** each template globally and per plan, so a disabled template can't be assigned.
+- The Super Admin **enables or disables access**: shop status (active, locked, suspended), Shop Admin login, and feature modules per plan or per shop (feeds, imports, popups, staff, SEO).
+- Optional: let the Shop Admin pick between the templates the Super Admin allowed for that shop (off by default).
+- Concept B's interaction patterns (cart, checkout, search) become the shared engine default. Each template can restyle them.
