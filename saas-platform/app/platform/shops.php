@@ -48,7 +48,6 @@ final class Shops
     {
         $domain = self::normalizeDomain($domain);
         if (!self::validDomain($domain)) return ['ok' => false, 'error' => 'Μη έγκυρο domain.'];
-        if (App::isPlatformHost($domain)) return ['ok' => false, 'error' => 'Το domain χρησιμοποιείται από την πλατφόρμα.'];
         $p = DB::platform();
         if (db_val($p, 'SELECT 1 FROM shop_domains WHERE domain = ?', [$domain])) return ['ok' => false, 'error' => 'Το domain χρησιμοποιείται ήδη από άλλο κατάστημα.'];
         $hasAny = (int) db_val($p, 'SELECT COUNT(*) FROM shop_domains WHERE shop_id = ?', [$shopId]);

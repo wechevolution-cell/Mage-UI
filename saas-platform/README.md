@@ -56,6 +56,37 @@ https://shops.wechevo.com/data/config.php        → 403
 
 ---
 
+## 2b. One domain for everything (storefront + shop admin + Super Admin)
+
+You can run the main shop and both admin panels on a single domain, for example `myshop.gr`:
+
+| URL | What it is |
+|---|---|
+| `https://myshop.gr/` | the storefront (the shop) |
+| `https://myshop.gr/admin` | the shop's admin panel (owner and staff) |
+| `https://myshop.gr/superadmin` | the Super Admin (you: plans, templates, subscriptions, other shops) |
+
+**Steps on Hostinger:**
+
+1. Add `myshop.gr` to your Hostinger plan (hPanel → Websites → Add website, or Domains → Add domain). At your registrar, point its DNS to Hostinger, either with Hostinger's nameservers or with an `A` record for `@` and `www` set to the server IP.
+2. Take a backup if the domain's `public_html` is not empty. Then do §2 steps 2–4 in that folder (PHP 8.2+, upload and extract the ZIP).
+3. Install SSL for `myshop.gr` (hPanel → Security → SSL), then open `https://myshop.gr/`.
+4. In the setup wizard, set **Platform host(s)** to `myshop.gr`. The `www.` variant is accepted automatically. Then create your Super Admin account.
+5. You land in the Super Admin. Go to **Shops → New shop** and enter **`myshop.gr` as the shop's domain**, together with the plan, template and owner account. Tick *demo content* if you want sample products to start with.
+6. Open the shop and, on its **Domains** tab, set the SSL status to *active*. HTTP and `www` then redirect to `https://myshop.gr`.
+
+That's it: `/` and `/admin` now belong to the shop, and `/superadmin` stays yours.
+
+**How it behaves:**
+
+- Before a shop is assigned to the domain, `/` redirects to `/superadmin/`. If you ever delete that shop, the domain goes back to being Super Admin only.
+- The Super Admin and shop admin logins are separate, with separate sessions and cookies. A shop owner or staff member cannot open `/superadmin`.
+- If the shop is locked or suspended (for example when its subscription expires), the storefront shows the lock page, but **`/superadmin` keeps working**, so you can always renew or unlock it.
+- `robots.txt` adds `Disallow: /superadmin/`, and every admin page sends `noindex`. The page slugs `superadmin` and `cron` are reserved.
+- You can still add more customer shops later on their own domains (§3). They work exactly as before, and `/superadmin` on their domains ends in a 404.
+
+---
+
 ## 3. Connecting a customer's domain to a shop
 
 Every shop is served from the **same installation**. A request is routed by its host name, which is looked up in `shop_domains`.

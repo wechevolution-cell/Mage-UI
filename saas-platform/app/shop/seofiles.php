@@ -51,12 +51,14 @@ final class SeoFiles
         header('Content-Type: text/plain; charset=utf-8');
         $seo = ShopSettings::get($db, 'seo');
         $base = rtrim(base_url(), '/');
-        $out = ["User-agent: *", "Disallow: /admin/", "Disallow: /cart/", "Disallow: /checkout/", "Disallow: /account/", "Disallow: /order/", "Disallow: /api/", "Disallow: /*?*sort=", "Allow: /", ""];
+        $sa = App::isPlatformHost(host_without_port(req_host())) ? ['Disallow: /superadmin/'] : [];
+        $out = ["User-agent: *", "Disallow: /admin/", ...$sa, "Disallow: /cart/", "Disallow: /checkout/", "Disallow: /account/", "Disallow: /order/", "Disallow: /api/", "Disallow: /*?*sort=", "Allow: /", ""];
         $bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended'];
         foreach ($bots as $b) {
             $out[] = "User-agent: $b";
             $out[] = !empty($seo['allow_ai_bots']) ? 'Allow: /' : 'Disallow: /';
             $out[] = 'Disallow: /admin/';
+            foreach ($sa as $line) $out[] = $line;
             $out[] = '';
         }
         if (trim((string) $seo['robots_extra']) !== '') { $out[] = '# Custom'; $out[] = trim((string) $seo['robots_extra']); $out[] = ''; }

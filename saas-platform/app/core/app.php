@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-/** Request context + top-level dispatch: setup → platform host (Super Admin) → tenant host (shop). */
+/**
+ * Request context + top-level dispatch: setup → platform host (Super Admin) → tenant host (shop).
+ * A platform host may also be a shop's domain ("one domain"): then /superadmin/* goes to the Super Admin
+ * and every other path to that shop (storefront at /, shop admin at /admin).
+ */
 final class App
 {
     /** Resolved tenant for this request (null on the platform host). */
@@ -22,12 +26,16 @@ final class App
             return;
         }
         $host = host_without_port(req_host());
+        $res = null;
         if (self::isPlatformHost($host)) {
-            session_start_scoped('wsa');
-            SuperAdminController::dispatch($path);
-            return;
+            $res = self::isSuperAdminPath($path) ? null : Shops::resolveHost($host);
+            if (!$res) {
+                session_start_scoped('wsa');
+                SuperAdminController::dispatch($path);
+                return;
+            }
         }
-        $res = Shops::resolveHost($host);
+        $res ??= Shops::resolveHost($host);
         if (!$res) {
             http_response_code(404);
             security_headers();
@@ -48,7 +56,13 @@ final class App
     public static function isPlatformHost(string $host): bool
     {
         $hosts = array_map('strtolower', (array) Config::get('platform_hosts', []));
-        return in_array($host, $hosts, true);
+        $host = strtolower($host);
+        return in_array($host, $hosts, true) || (str_starts_with($host, 'www.') && in_array(substr($host, 4), $hosts, true));
+    }
+
+    public static function isSuperAdminPath(string $path): bool
+    {
+        return $path === '/superadmin' || str_starts_with($path, '/superadmin/');
     }
 
     public static function shopId(): int { return (int) (self::$shop['id'] ?? 0); }

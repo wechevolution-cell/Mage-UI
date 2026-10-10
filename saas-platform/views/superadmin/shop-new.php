@@ -19,7 +19,7 @@
     <section class="step-panel form" hidden>
       <h2>Domain & hosting</h2>
       <div class="fg">
-        <div class="field"><label for="w-domain">Domain *</label><input id="w-domain" name="domain" required placeholder="example.gr" value="<?= e(old('domain')) ?>"><span class="hint">Χωρίς https://. Η εκδοχή www και non-www εξυπηρετούνται αυτόματα. Για δοκιμές: <code>onoma.localhost</code></span></div>
+        <div class="field"><label for="w-domain">Domain *</label><input id="w-domain" name="domain" required placeholder="example.gr" value="<?= e(old('domain')) ?>"><span class="hint">Χωρίς https://. Η εκδοχή www και non-www εξυπηρετούνται αυτόματα. Για δοκιμές: <code>onoma.localhost</code>. Μπορείτε να δώσετε και το domain της πλατφόρμας (<code><?= e((string) (Config::get('platform_hosts')[0] ?? '')) ?></code>): τότε το κατάστημα εμφανίζεται στο <code>/</code>, η διαχείρισή του στο <code>/admin</code> και το Super Admin παραμένει στο <code>/superadmin</code>.</span></div>
         <div class="field"><label for="w-slug">Εσωτερικό αναγνωριστικό (slug)</label><input id="w-slug" name="slug" data-slug-from="#w-name" value="<?= e(old('slug')) ?>"></div>
         <div class="field"><label for="w-hs">Κατάσταση hosting</label><select id="w-hs" name="hosting_status"><option value="pending">Σε αναμονή</option><option value="active">Ενεργό</option></select></div>
         <div class="field"><label for="w-hn">Σημειώσεις hosting</label><input id="w-hn" name="hosting_notes" placeholder="π.χ. Hostinger parked domain, DNS A → IP" value="<?= e(old('hosting_notes')) ?>"></div>

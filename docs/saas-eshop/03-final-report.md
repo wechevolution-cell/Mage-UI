@@ -19,6 +19,7 @@
   - Migrations are tracked with `PRAGMA user_version`; WAL mode is on.
   - Accent-insensitive Greek search uses a `FOLD()` SQL function.
   - Transactions can nest, using savepoints.
+- **One-domain mode:** the platform domain can also be a shop's domain, giving the storefront at `/`, the shop admin at `/admin` and the Super Admin at `/superadmin`. The two logins use separate sessions, `/superadmin` keeps working while the shop is locked, robots.txt hides `/superadmin/`, and the `www.` variant is handled (README §2b).
 - **Setup wizard:** checks requirements, sets the platform host and creates the first Super Admin. There are no default credentials.
 - **Cron:** runs from the CLI or from an HTTP URL with a key. It handles subscription checks, the background import queue and feed refresh. Status is also refreshed on every request.
 
@@ -89,7 +90,7 @@
 | Suite | Result |
 |---|---|
 | `php -l` on every PHP file | 0 errors |
-| **Acceptance suite** `tests/acceptance.py --big` (on the dev install and on a **fresh install from the ZIP**) | **55/55** |
+| **Acceptance suite** `tests/acceptance.py --big` (on the dev install and on a **fresh install from the ZIP**) | **55/55**, now **65/65** with the one-domain checks |
 | Crawl `tests/sweep.py`: every Super Admin link (43), Shop Admin link (56) and about 32 storefront URLs × 10 template shops | no non-200/302, no PHP warnings in the log, 404 page returns 404 |
 | JSON-LD on home, listing and product pages of all 10 template shops | valid JSON, expected types |
 | Playwright `tests/shots.js` (storefront home/category/product/cart) and `tests/admin_shots.js` at 1440 and 390 | no JS errors, **no horizontal overflow at 390px** |

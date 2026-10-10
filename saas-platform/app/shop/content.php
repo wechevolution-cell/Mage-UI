@@ -13,7 +13,7 @@ final class Pages
         $title = trim((string) ($in['title'] ?? ''));
         if ($title === '') return ['ok' => false, 'error' => 'Ο τίτλος είναι υποχρεωτικός.'];
         $slug = slugify(($in['slug'] ?? '') !== '' ? $in['slug'] : $title, 80);
-        $reserved = ['admin', 'product', 'products', 'category', 'cart', 'checkout', 'account', 'search', 'blog', 'feed', 'api', 'wishlist', 'order', 'sitemap-xml', 'robots-txt', 'uploads', 'assets', 'templates', 'newsletter', 'unsubscribe'];
+        $reserved = ['admin', 'product', 'products', 'category', 'cart', 'checkout', 'account', 'search', 'blog', 'feed', 'api', 'wishlist', 'order', 'sitemap-xml', 'robots-txt', 'uploads', 'assets', 'templates', 'newsletter', 'unsubscribe', 'superadmin', 'cron'];
         if (in_array($slug, $reserved, true)) return ['ok' => false, 'error' => 'Το slug «' . $slug . '» είναι δεσμευμένο.'];
         if (db_val($db, 'SELECT 1 FROM pages WHERE slug = ? AND deleted_at IS NULL' . ($id ? ' AND id <> ?' : ''), $id ? [$slug, $id] : [$slug])) return ['ok' => false, 'error' => 'Υπάρχει ήδη σελίδα με αυτό το slug.'];
         $old = $id ? db_one($db, 'SELECT * FROM pages WHERE id = ?', [$id]) : null;

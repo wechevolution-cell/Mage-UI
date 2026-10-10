@@ -272,6 +272,52 @@ def main(big=False):
         t1 = time.time(); code, _, _ = o2.get('/admin/products?page=40'); dt2 = time.time() - t1
         check('admin product list page fast with 10k', code == 200 and dt2 < 2.0, f'{dt2:.2f}s')
 
+    # --- One domain: storefront at /, shop admin at /admin, Super Admin at /superadmin ---------------
+    import subprocess
+    php_cfg = lambda code: subprocess.run(['php', '-r', "define('ROOT','" + ROOT + "'); $_SERVER['HTTP_HOST']='127.0.0.1'; require ROOT.'/app/bootstrap.php'; " + code], capture_output=True, text=True).stdout
+    orig_hosts = php_cfg("echo json_encode(Config::get('platform_hosts'));")
+    php_cfg("$c = require Config::path(); $c['platform_hosts'][] = 'one.localhost'; Config::write($c);")
+    time.sleep(3)  # let the web server's OPcache revalidate config.php (revalidate_freq=2)
+    try:
+        code, h, _ = Client(host='one.localhost').get('/', follow=False)
+        check('one-domain: platform host without shop → Super Admin', code == 302 and '/superadmin/' in h.get('Location', ''), code)
+        sa1 = Client(host='one.localhost'); sa1.get('/superadmin/login'); sa1.post('/superadmin/login', {'email': SA[0], 'password': SA[1]})
+        s3 = create_shop(sa1, 'one.localhost', 1, '03-kipos')
+        check('one-domain: shop can use the platform domain', bool(s3))
+        v = Client(host='one.localhost')
+        code, _, t = v.get('/')
+        check('one-domain: / is the storefront', code == 200 and 'QA one.localhost' in t, code)
+        check('one-domain: /products/ storefront', v.get('/products/')[0] == 200)
+        code, _, t = v.get('/admin/login')
+        check('one-domain: /admin is the shop admin', code == 200 and 'Σύνδεση διαχείρισης' in t)
+        code, _, t = v.get('/superadmin/login')
+        check('one-domain: /superadmin is the Super Admin', code == 200 and 'Σύνδεση Super Admin' in t)
+        code, _, t = sa1.get('/superadmin/')
+        check('one-domain: Super Admin session works', code == 200 and 'Πίνακας ελέγχου' in t)
+        ow = owner('one.localhost')
+        code, _, t = ow.get('/admin/')
+        check('one-domain: shop owner session works', code == 200 and 'Πίνακας ελέγχου' in t)
+        code, h, _ = ow.get('/superadmin/', follow=False)
+        check('one-domain: shop owner cannot open Super Admin', code == 302 and '/superadmin/login' in h.get('Location', ''), code)
+        fresh_sa = Client(host='one.localhost'); fresh_sa.get('/superadmin/login'); fresh_sa.post('/superadmin/login', {'email': SA[0], 'password': SA[1]})
+        code, h, _ = fresh_sa.get('/admin/', follow=False)
+        check('one-domain: Super Admin session is not a shop admin session', code == 302 and '/admin/login' in h.get('Location', ''), code)
+        code, _, t = Client(host='www.one.localhost').get('/superadmin/login')
+        check('one-domain: www. variant reaches Super Admin', code == 200 and 'Σύνδεση Super Admin' in t)
+        t = v.get('/robots.txt')[2]
+        check('one-domain: robots.txt hides /superadmin/', 'Disallow: /superadmin/' in t)
+        sa1.get(f'/superadmin/shops/{s3}')
+        sa1.post(f'/superadmin/shops/{s3}/status', {'status': 'locked'})
+        check('one-domain: locked shop → storefront 503', Client(host='one.localhost').get('/')[0] == 503)
+        code, _, t = Client(host='one.localhost').get('/superadmin/login')
+        check('one-domain: Super Admin still reachable while shop locked', code == 200 and 'Σύνδεση Super Admin' in t)
+        sa1.post(f'/superadmin/shops/{s3}/delete', {'confirm_text': 'one.localhost'})
+        code, h, _ = Client(host='one.localhost').get('/', follow=False)
+        check('one-domain: after deleting the shop, / goes back to Super Admin', code == 302 and '/superadmin/' in h.get('Location', ''), code)
+    finally:
+        php_cfg("$c = require Config::path(); $c['platform_hosts'] = json_decode('" + orig_hosts.strip() + "', true); Config::write($c);")
+        time.sleep(3)
+
     cleanup(sa)
     check('cleanup: test shops deleted', not shop_id('qa1.localhost') and not shop_id('qa2.localhost'))
 
