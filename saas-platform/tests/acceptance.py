@@ -222,6 +222,8 @@ def main(big=False):
         n = q1(pdb(), 'SELECT COUNT(*) FROM notifications WHERE shop_id = ? AND dedupe_key LIKE ?', (s1, f'warn:%:{label}'))
         check(f'warning at {days} days', n == 1, n)
     check('status expiring', q1(pdb(), 'SELECT status FROM shops WHERE id = ?', (s1,)) == 'expiring')
+    owner_mails = q1(pdb(), "SELECT COUNT(*) FROM mail_log WHERE shop_id = ? AND to_email = 'owner@qa1.localhost' AND subject LIKE '%λήγει%'", (s1,))
+    check('owner emailed once per warning (3 emails)', owner_mails == 3, owner_mails)
     con.execute("UPDATE subscriptions SET end_date = date('now','localtime','-1 day') WHERE shop_id = ? AND status = 'active'", (s1,)); con.commit()
     products_before = q1(sdb(s1), 'SELECT COUNT(*) FROM products')
     code, _, text = Client(host='qa1.localhost').get('/')

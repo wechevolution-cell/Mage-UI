@@ -68,9 +68,25 @@ final class Subscriptions
         $threshold = null;
         foreach (self::WARN_DAYS as $t) { if ($days <= $t) $threshold = $t; }
         if ($threshold !== null) {
-            Notifications::create('expiring', $shopId, "Λήγει σε $days " . ($days === 1 ? 'ημέρα' : 'ημέρες') . ': ' . $shop['name'],
+            $isNew = Notifications::create('expiring', $shopId, "Λήγει σε $days " . ($days === 1 ? 'ημέρα' : 'ημέρες') . ': ' . $shop['name'],
                 'Η συνδρομή του καταστήματος λήγει στις ' . fmt_date($sub['end_date']) . '. Ανανεώστε από τη σελίδα του καταστήματος.', "warn:{$sub['id']}:$threshold");
+            if ($isNew) self::warnOwner($shop, $sub, $days);
         }
+    }
+
+    /** Email the shop owner once per warning threshold (10 / 3 / 1 days). Data and storefront are unaffected. */
+    private static function warnOwner(array $shop, array $sub, int $days): void
+    {
+        $to = $shop['email'] ?? '';
+        if (!$to && is_file(DB::shopPath((int) $shop['id']))) {
+            $to = (string) db_val(DB::shop((int) $shop['id']), "SELECT email FROM users WHERE role = 'owner' AND deleted_at IS NULL ORDER BY id LIMIT 1");
+        }
+        if (!$to || !filter_var($to, FILTER_VALIDATE_EMAIL)) return;
+        $when = $days <= 0 ? 'σήμερα' : "σε $days " . ($days === 1 ? 'ημέρα' : 'ημέρες');
+        Mailer::send($to, 'Η συνδρομή του e-shop σας λήγει ' . $when, Mailer::layout('Υπενθύμιση ανανέωσης',
+            '<p>Η συνδρομή του καταστήματος <b>' . e($shop['name']) . '</b> λήγει ' . $when . ' (' . e(fmt_date($sub['end_date'])) . ').</p>'
+            . '<p>Για να παραμείνει το κατάστημα ανοιχτό, επικοινωνήστε μαζί μας για ανανέωση. Τα προϊόντα, οι παραγγελίες και οι ρυθμίσεις σας δεν επηρεάζονται.</p>'),
+            ['shop_id' => (int) $shop['id']]);
     }
 
     /**

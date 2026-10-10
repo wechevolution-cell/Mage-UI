@@ -86,19 +86,50 @@ final class ImageUpload
         return ['ok' => true, 'media' => db_one($db, 'SELECT * FROM media WHERE id = ?', [$id])];
     }
 
+    /** http(s) URL whose host resolves only to public addresses (no loopback, private, link-local or reserved ranges). */
+    public static function publicHttpUrl(string $url): bool
+    {
+        if (!preg_match('#^https?://#i', $url)) return false;
+        $host = (string) parse_url($url, PHP_URL_HOST);
+        if ($host === '') return false;
+        $ips = filter_var(trim($host, '[]'), FILTER_VALIDATE_IP) ? [trim($host, '[]')] : (gethostbynamel($host) ?: []);
+        if (!$ips) return false;
+        foreach ($ips as $ip) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) return false;
+        }
+        return true;
+    }
+
     /** Download a remote image (imports). Only http(s), size-capped, then validated as an upload. */
     public static function fromUrl(PDO $db, int $shopId, string $url, string $alt = ''): array
     {
         if (!preg_match('#^https?://#i', $url)) return ['ok' => false, 'error' => 'Μη έγκυρο URL εικόνας'];
         $existing = db_one($db, 'SELECT * FROM media WHERE source_url = ?', [$url]);
         if ($existing) return ['ok' => true, 'media' => $existing];
-        $host = parse_url($url, PHP_URL_HOST);
-        $ip = $host ? gethostbyname($host) : '';
-        if (!$ip || !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) return ['ok' => false, 'error' => 'Μη επιτρεπτός διακομιστής εικόνας'];
+        // Follow at most 3 redirects manually, re-validating every hop so a public URL cannot bounce to an internal address.
+        $target = $url;
+        $in = null;
+        for ($hop = 0; $hop <= 3; $hop++) {
+            if (!self::publicHttpUrl($target)) return ['ok' => false, 'error' => 'Μη επιτρεπτός διακομιστής εικόνας'];
+            $ctx = stream_context_create(['http' => ['timeout' => 15, 'follow_location' => 0, 'ignore_errors' => true, 'user_agent' => 'wechevo-eshop-importer/1.0']]);
+            $in = @fopen($target, 'rb', false, $ctx);
+            if (!$in) return ['ok' => false, 'error' => 'Η εικόνα δεν κατέβηκε'];
+            $headers = stream_get_meta_data($in)['wrapper_data'] ?? [];
+            $status = 0; $location = null;
+            foreach ((array) $headers as $hl) {
+                if (preg_match('#^HTTP/\S+\s+(\d{3})#', (string) $hl, $m)) { $status = (int) $m[1]; $location = null; }
+                elseif (stripos((string) $hl, 'Location:') === 0) $location = trim(substr((string) $hl, 9));
+            }
+            if ($status >= 300 && $status < 400 && $location) {
+                fclose($in); $in = null;
+                $target = preg_match('#^https?://#i', $location) ? $location : (parse_url($target, PHP_URL_SCHEME) . '://' . parse_url($target, PHP_URL_HOST) . '/' . ltrim($location, '/'));
+                continue;
+            }
+            if ($status !== 200) { fclose($in); return ['ok' => false, 'error' => 'Η εικόνα δεν κατέβηκε (HTTP ' . $status . ')']; }
+            break;
+        }
+        if (!$in) return ['ok' => false, 'error' => 'Πάρα πολλές ανακατευθύνσεις'];
         $tmp = tempnam(ensure_dir(DATA_DIR . '/tmp'), 'img');
-        $ctx = stream_context_create(['http' => ['timeout' => 15, 'follow_location' => 1, 'max_redirects' => 3, 'user_agent' => 'wechevo-eshop-importer/1.0']]);
-        $in = @fopen($url, 'rb', false, $ctx);
-        if (!$in) { @unlink($tmp); return ['ok' => false, 'error' => 'Η εικόνα δεν κατέβηκε']; }
         $out = fopen($tmp, 'wb');
         $bytes = 0;
         while (!feof($in)) {
