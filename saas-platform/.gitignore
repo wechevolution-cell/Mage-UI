@@ -1,0 +1,18 @@
+# runtime data — never commit
+/data/*
+!/data/.htaccess
+!/data/shops/
+!/data/backups/
+!/data/imports/
+!/data/logs/
+!/data/mail/
+!/data/tmp/
+/data/shops/*
+/data/backups/*
+/data/imports/*
+/data/logs/*
+/data/mail/*
+/data/tmp/*
+/data/feeds/
+/uploads/*
+!/uploads/.htaccess

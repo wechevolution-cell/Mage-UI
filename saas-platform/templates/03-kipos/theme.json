@@ -1,0 +1,40 @@
+{
+  "name": "Kipos",
+  "industry": "Τρόφιμα, delicatessen & δώρα",
+  "description": "Playful color-block: floating pill header, οριζόντια ράφια, quick-add stepper, bundle builder, bottom tab bar.",
+  "version": "1.0.0",
+  "demo": "food",
+  "demo_palette": [
+    "#FFE07A",
+    "#BDE5C9",
+    "#D7CBF5",
+    "#FF8B6E",
+    "#BFDDF2",
+    "#F2E3C9"
+  ],
+  "fonts": {
+    "display": "M PLUS Rounded 1c",
+    "body": "Manrope"
+  },
+  "tokens": {
+    "primary": "#123A2B",
+    "secondary": "#BDE5C9",
+    "accent": "#FFE07A",
+    "background": "#F3F5EE",
+    "surface": "#FFFFFF",
+    "text": "#123A2B",
+    "muted": "#4F6A5E",
+    "button_bg": "#123A2B",
+    "button_text": "#FFFFFF",
+    "link": "#1D5240"
+  },
+  "layout": {
+    "header": "pill",
+    "hero": "stack",
+    "card": "rounded",
+    "grid": 4,
+    "product": "floating",
+    "radius": 28,
+    "mobile_tabbar": true
+  }
+}

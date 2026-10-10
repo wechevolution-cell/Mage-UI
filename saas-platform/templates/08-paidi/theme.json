@@ -1,0 +1,40 @@
+{
+  "name": "Paidi",
+  "industry": "Παιδικά & παιχνίδια",
+  "description": "Εικονογραφημένο & χαρούμενο: κυματιστές ενότητες, μεγάλα στρογγυλά κουμπιά, φίλτρα ηλικίας, φιλικό checkout.",
+  "version": "1.0.0",
+  "demo": "kids",
+  "demo_palette": [
+    "#FFD6A5",
+    "#CAFFBF",
+    "#9BF6FF",
+    "#BDB2FF",
+    "#FFC6FF",
+    "#FDFFB6"
+  ],
+  "fonts": {
+    "display": "Comfortaa",
+    "body": "Ubuntu"
+  },
+  "tokens": {
+    "primary": "#2D2A6E",
+    "secondary": "#FFD6A5",
+    "accent": "#FF6B6B",
+    "background": "#FFFBF3",
+    "surface": "#FFFFFF",
+    "text": "#2D2A6E",
+    "muted": "#6A6799",
+    "button_bg": "#FF6B6B",
+    "button_text": "#FFFFFF",
+    "link": "#4D47C3"
+  },
+  "layout": {
+    "header": "playful",
+    "hero": "illustrated",
+    "card": "playful",
+    "grid": 4,
+    "product": "floating",
+    "radius": 22,
+    "mobile_tabbar": true
+  }
+}

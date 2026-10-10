@@ -1,0 +1,40 @@
+{
+  "name": "Oikos",
+  "industry": "Έπιπλα & διακόσμηση",
+  "description": "Αρχιτεκτονικό: πολύς λευκός χώρος, γραμμές πλέγματος, room hero με hotspots, μεγάλες οριζόντιες κάρτες.",
+  "version": "1.0.0",
+  "demo": "furniture",
+  "demo_palette": [
+    "#DCDAD4",
+    "#CFD3CC",
+    "#D9D4CB",
+    "#C8CCC6",
+    "#E1DED7",
+    "#D2CFC6"
+  ],
+  "fonts": {
+    "display": "Fira Sans",
+    "body": "Fira Sans"
+  },
+  "tokens": {
+    "primary": "#1F2421",
+    "secondary": "#C9C4B8",
+    "accent": "#3F5A4C",
+    "background": "#EDEDEA",
+    "surface": "#F8F8F5",
+    "text": "#1F2421",
+    "muted": "#646A64",
+    "button_bg": "#1F2421",
+    "button_text": "#F8F8F5",
+    "link": "#3F5A4C"
+  },
+  "layout": {
+    "header": "architect",
+    "hero": "room",
+    "card": "architect",
+    "grid": 3,
+    "product": "wide",
+    "radius": 2,
+    "mobile_tabbar": false
+  }
+}

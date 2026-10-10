@@ -1,0 +1,41 @@
+{
+  "name": "Ergo",
+  "industry": "Εργαλεία, σιδηρικά & ανταλλακτικά",
+  "description": "SKU-first B2B ύφος: αναζήτηση κωδικού, πυκνή λίστα/πίνακας, τεχνικά χαρακτηριστικά, μονόχρωμο βιομηχανικό με κίτρινη έμφαση.",
+  "version": "1.0.0",
+  "demo": "hardware",
+  "demo_palette": [
+    "#E6E6E1",
+    "#DCDDD8",
+    "#E9E8E2",
+    "#D7D8D2",
+    "#E1E1DB",
+    "#ECEBE5"
+  ],
+  "fonts": {
+    "display": "Sofia Sans Semi Condensed",
+    "body": "Sofia Sans",
+    "mono": "Roboto Mono"
+  },
+  "tokens": {
+    "primary": "#1B1B1B",
+    "secondary": "#2E2E2E",
+    "accent": "#FFC400",
+    "background": "#ECECE8",
+    "surface": "#FFFFFF",
+    "text": "#1B1B1B",
+    "muted": "#5C5C57",
+    "button_bg": "#FFC400",
+    "button_text": "#1B1B1B",
+    "link": "#8A6A00"
+  },
+  "layout": {
+    "header": "utility",
+    "hero": "search",
+    "card": "spec",
+    "grid": 4,
+    "product": "three",
+    "radius": 3,
+    "mobile_tabbar": false
+  }
+}

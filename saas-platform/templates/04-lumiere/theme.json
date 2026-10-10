@@ -1,0 +1,40 @@
+{
+  "name": "Lumière",
+  "industry": "Καλλυντικά & ομορφιά",
+  "description": "Καθαρό, φωτεινό, ingredient-led: τοξωτές (arch) εικόνες, απαλά χρώματα, κεντρική πλοήγηση, κάρτες με λεπτομέρειες συστατικών.",
+  "version": "1.0.0",
+  "demo": "beauty",
+  "demo_palette": [
+    "#F1E2DE",
+    "#E9DDD8",
+    "#EFE6E1",
+    "#E4D6D2",
+    "#F3EAE6",
+    "#E8E0DA"
+  ],
+  "fonts": {
+    "display": "GFS Didot",
+    "body": "Noto Sans"
+  },
+  "tokens": {
+    "primary": "#2B2024",
+    "secondary": "#E8D5CF",
+    "accent": "#B5737A",
+    "background": "#F8F1EE",
+    "surface": "#FFFFFF",
+    "text": "#2B2024",
+    "muted": "#7A6A6E",
+    "button_bg": "#2B2024",
+    "button_text": "#FFFFFF",
+    "link": "#9C5A61"
+  },
+  "layout": {
+    "header": "split",
+    "hero": "arch",
+    "card": "soft",
+    "grid": 4,
+    "product": "split",
+    "radius": 18,
+    "mobile_tabbar": false
+  }
+}

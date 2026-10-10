@@ -1,0 +1,40 @@
+{
+  "name": "Agora",
+  "industry": "Ηλεκτρονικά & τεχνολογία",
+  "description": "Marketplace: αναζήτηση πρώτα, mega menu, bento hero, compact κάρτες με quick add, φίλτρα, σύγκριση.",
+  "version": "1.0.0",
+  "demo": "electronics",
+  "demo_palette": [
+    "#E7EBF2",
+    "#DDE3EE",
+    "#E2E6EE",
+    "#F2F4F8",
+    "#D9DFEA",
+    "#E9ECF3"
+  ],
+  "fonts": {
+    "display": "Sofia Sans Condensed",
+    "body": "IBM Plex Sans"
+  },
+  "tokens": {
+    "primary": "#0D1A3A",
+    "secondary": "#16275A",
+    "accent": "#FF5A1F",
+    "background": "#EEF1F6",
+    "surface": "#FFFFFF",
+    "text": "#0B1324",
+    "muted": "#586179",
+    "button_bg": "#FF5A1F",
+    "button_text": "#FFFFFF",
+    "link": "#E04A12"
+  },
+  "layout": {
+    "header": "market",
+    "hero": "bento",
+    "card": "compact",
+    "grid": 5,
+    "product": "three",
+    "radius": 8,
+    "mobile_tabbar": false
+  }
+}

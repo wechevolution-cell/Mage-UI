@@ -1,0 +1,40 @@
+{
+  "name": "Atelier",
+  "industry": "Μόδα & ένδυση",
+  "description": "Luxury editorial: μεγάλη serif τυπογραφία, ασύμμετρο πλέγμα, overlay μενού, side drawer καλάθι.",
+  "version": "1.0.0",
+  "demo": "fashion",
+  "demo_palette": [
+    "#D6CFC3",
+    "#C7CBC4",
+    "#D5CBC6",
+    "#C9C3B9",
+    "#BEC2C6",
+    "#D2C7B5"
+  ],
+  "fonts": {
+    "display": "Noto Serif Display",
+    "body": "Commissioner"
+  },
+  "tokens": {
+    "primary": "#151413",
+    "secondary": "#6A1F26",
+    "accent": "#6A1F26",
+    "background": "#ECEAE5",
+    "surface": "#E3E0D9",
+    "text": "#151413",
+    "muted": "#67635D",
+    "button_bg": "#151413",
+    "button_text": "#ECEAE5",
+    "link": "#6A1F26"
+  },
+  "layout": {
+    "header": "centered",
+    "hero": "editorial",
+    "card": "luxury",
+    "grid": 3,
+    "product": "split",
+    "radius": 0,
+    "mobile_tabbar": false
+  }
+}

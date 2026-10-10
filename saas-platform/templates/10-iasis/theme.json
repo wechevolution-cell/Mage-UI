@@ -1,0 +1,40 @@
+{
+  "name": "Iasis",
+  "industry": "Φαρμακείο & ευεξία",
+  "description": "Clinical & trust-led: καθαρό λευκό/τιρκουάζ, ισχυρή αναζήτηση, κατηγορίες ανάγκης, σαφείς πληροφορίες χρήσης.",
+  "version": "1.0.0",
+  "demo": "pharmacy",
+  "demo_palette": [
+    "#E3F1F1",
+    "#E8F0F7",
+    "#EDF5EF",
+    "#E1EEF3",
+    "#EEF3F6",
+    "#E6F2EF"
+  ],
+  "fonts": {
+    "display": "Literata",
+    "body": "Source Sans 3"
+  },
+  "tokens": {
+    "primary": "#0B3B47",
+    "secondary": "#D9EEF0",
+    "accent": "#0F9D8A",
+    "background": "#F6FAFB",
+    "surface": "#FFFFFF",
+    "text": "#10262C",
+    "muted": "#56707A",
+    "button_bg": "#0F9D8A",
+    "button_text": "#FFFFFF",
+    "link": "#0B7A6C"
+  },
+  "layout": {
+    "header": "clean",
+    "hero": "clinical",
+    "card": "clean",
+    "grid": 4,
+    "product": "three",
+    "radius": 12,
+    "mobile_tabbar": false
+  }
+}

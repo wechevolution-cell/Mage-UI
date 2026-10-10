@@ -1,0 +1,40 @@
+{
+  "name": "Karat",
+  "industry": "Κοσμήματα & ρολόγια",
+  "description": "Dark luxe: σκούρο φόντο, χρυσή έμφαση, spotlight hero, macro zoom, κεντρική τυπογραφία.",
+  "version": "1.0.0",
+  "demo": "jewelry",
+  "demo_palette": [
+    "#2A2622",
+    "#26231F",
+    "#302B26",
+    "#221F1C",
+    "#2E2A25",
+    "#1F1C19"
+  ],
+  "fonts": {
+    "display": "EB Garamond",
+    "body": "Open Sans"
+  },
+  "tokens": {
+    "primary": "#EDE6DA",
+    "secondary": "#2A2622",
+    "accent": "#C8A96A",
+    "background": "#0E0D0C",
+    "surface": "#1A1816",
+    "text": "#EDE6DA",
+    "muted": "#A39A8C",
+    "button_bg": "#C8A96A",
+    "button_text": "#0E0D0C",
+    "link": "#D8BC80"
+  },
+  "layout": {
+    "header": "dark",
+    "hero": "spotlight",
+    "card": "dark",
+    "grid": 3,
+    "product": "split",
+    "radius": 0,
+    "mobile_tabbar": false
+  }
+}

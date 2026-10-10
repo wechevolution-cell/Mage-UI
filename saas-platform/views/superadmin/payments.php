@@ -1,0 +1,9 @@
+<div class="page-head"><div><h1>Πληρωμές</h1><p>Payment Provider → Payment → Subscription → Shop. Στο V1 οι πληρωμές καταγράφονται χειροκίνητα.</p></div></div>
+<div class="card"><div class="hd"><h2>Πάροχοι πληρωμών</h2></div><div class="bd row-flex"><?php foreach ($providers as $p): ?><span class="badge <?= $p['enabled'] ? 'b-ok' : 'b-muted' ?>"><?= e($p['name']) ?> · <?= $p['enabled'] ? 'Ενεργός' : 'Έτοιμος για ενσωμάτωση' ?></span><?php endforeach; ?></div></div>
+<div class="card">
+  <form class="toolbar" method="get"><select name="status" data-autosubmit aria-label="Κατάσταση"><option value="">Όλες</option><?php foreach (['pending', 'paid', 'failed', 'refunded'] as $s): ?><option value="<?= $s ?>"<?= in_str('status') === $s ? ' selected' : '' ?>><?= e(status_label($s)) ?></option><?php endforeach; ?></select></form>
+  <div class="table-wrap"><table class="table"><thead><tr><th>#</th><th>Κατάστημα</th><th>Είδος</th><th class="r">Ποσό</th><th>Πάροχος</th><th>Κατάσταση</th><th>Ημερομηνία</th><th></th></tr></thead><tbody>
+  <?php if (!$rows): ?><tr><td colspan="8" class="empty">Δεν υπάρχουν πληρωμές.</td></tr><?php endif; ?>
+  <?php foreach ($rows as $r): ?><tr><td class="num">#<?= $r['id'] ?></td><td><a href="/superadmin/shops/<?= $r['shop_id'] ?>#payments"><?= e($r['shop_name']) ?></a></td><td><?= $r['kind'] === 'setup_fee' ? 'Setup fee' : 'Συνδρομή' ?></td><td class="r num"><?= money((float) $r['amount']) ?></td><td><?= e($r['provider_code']) ?></td><td><?= status_badge($r['status']) ?></td><td class="num"><?= fmt_date($r['paid_at'] ?: $r['created_at']) ?></td>
+  <td class="actions"><?php if ($r['status'] === 'pending'): ?><form method="post" action="/superadmin/payments/<?= $r['id'] ?>/paid"><?= csrf_field() ?><button class="btn btn-sm">Εξοφλήθηκε</button></form><?php endif; ?></td></tr><?php endforeach; ?>
+  </tbody></table></div></div>

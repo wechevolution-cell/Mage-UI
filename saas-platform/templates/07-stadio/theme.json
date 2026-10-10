@@ -1,0 +1,40 @@
+{
+  "name": "Stadio",
+  "industry": "Αθλητικά & outdoor",
+  "description": "Bold & δυναμικό: πλάγια condensed τυπογραφία, διαγώνιες ενότητες, έντονα χρώματα, size-first επιλογή.",
+  "version": "1.0.0",
+  "demo": "sports",
+  "demo_palette": [
+    "#E4E9E3",
+    "#E0E6EE",
+    "#EDE7DF",
+    "#DFE7E4",
+    "#E8E3EA",
+    "#E6E6E6"
+  ],
+  "fonts": {
+    "display": "Roboto Condensed",
+    "body": "Roboto"
+  },
+  "tokens": {
+    "primary": "#111111",
+    "secondary": "#1C1C1C",
+    "accent": "#2340FF",
+    "background": "#F2F2F0",
+    "surface": "#FFFFFF",
+    "text": "#111111",
+    "muted": "#5E5E5E",
+    "button_bg": "#2340FF",
+    "button_text": "#FFFFFF",
+    "link": "#2340FF"
+  },
+  "layout": {
+    "header": "bold",
+    "hero": "dynamic",
+    "card": "bold",
+    "grid": 4,
+    "product": "three",
+    "radius": 4,
+    "mobile_tabbar": false
+  }
+}
