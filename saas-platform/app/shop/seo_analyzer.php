@@ -13,7 +13,7 @@ final class SeoAnalyzer
         $title = (string) (($in['seo_title'] ?? '') ?: ($in['title'] ?? ''));
         $desc = (string) ($in['seo_description'] ?? '');
         $html = (string) ($in['content'] ?? '');
-        $text = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags($html), ENT_QUOTES, 'UTF-8')));
+        $text = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace("#<(br|/p|/h[1-6]|/li|/div|/td)[^>]*>#i", "$0 ", $html)), ENT_QUOTES, 'UTF-8')));
         $words = $text === '' ? 0 : count(preg_split('/\s+/u', $text));
         $foldText = str_fold($text);
         $first = str_fold(mb_substr($text, 0, 300));

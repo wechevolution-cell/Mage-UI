@@ -57,3 +57,4 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .radio-card:has(input:checked){border-color:var(--c-accent);background:#F0FAF8}
 .tldr{border-left-color:var(--c-accent)}
 .ftr{background:var(--c-primary)}
+.hero-clin h1{overflow-wrap:anywhere;hyphens:auto}@media (max-width:520px){.hero-clin .big-search{flex-wrap:wrap}.hero-clin .big-search .btn{width:100%}.needs{grid-template-columns:minmax(0,1fr)!important}}

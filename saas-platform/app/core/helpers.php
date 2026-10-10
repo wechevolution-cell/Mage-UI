@@ -204,7 +204,7 @@ function str_fold(string $s): string
 }
 function excerpt(?string $html, int $len = 160): string
 {
-    $t = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags((string) $html), ENT_QUOTES, 'UTF-8')));
+    $t = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace("#<(br|/p|/h[1-6]|/li|/div|/td)[^>]*>#i", "$0 ", (string) $html)), ENT_QUOTES, 'UTF-8')));
     return mb_strlen($t) > $len ? rtrim(mb_substr($t, 0, $len - 1)) . '…' : $t;
 }
 function random_token(int $bytes = 24): string { return rtrim(strtr(base64_encode(random_bytes($bytes)), '+/', '-_'), '='); }

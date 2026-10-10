@@ -53,6 +53,7 @@ input[type=text],input[type=email],input[type=password],input[type=tel],input[ty
 .pc:hover .pc-img{transform:scale(1.06) rotate(-2deg)}
 .pc-badges{top:22px;left:22px}
 .pc-badge{border-radius:999px;background:#fff;padding:5px 10px}
+.pc-badge--sale{background:var(--c-bad);color:#fff}.pc-badge--out{background:var(--c-text);color:var(--c-background)}
 .pc-wish{top:18px;right:18px;transition:transform .35s var(--spring)}
 .pc-wish:active{transform:scale(.8)}
 .pc-body{padding:12px 6px 4px}

@@ -112,3 +112,4 @@ input:focus,select:focus,textarea:focus{box-shadow:none;border-color:var(--c-tex
 .ftr{background:var(--c-primary)}
 .ftr-col h2{font:400 11px/1.2 var(--f-body);letter-spacing:.2em}
 .ftr .logo-text{font-size:22px}
+@media (max-width:860px){.hdr .logo-text{font-size:20px;letter-spacing:.08em}}

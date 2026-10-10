@@ -67,3 +67,4 @@ input:focus,select:focus,textarea:focus{border-color:var(--c-accent)}
 .ftr-col h2{color:var(--c-text)}
 .ftr-social a{border-color:var(--c-line);color:var(--c-accent)}
 .ftr-bottom{border-color:var(--c-line)}
+@media (max-width:860px){.hdr .logo-text{font-size:20px;letter-spacing:.08em}}

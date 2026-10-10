@@ -33,10 +33,10 @@ h1,h2,h3{font-weight:800;text-transform:uppercase;letter-spacing:.005em;line-hei
 .benefit-ic{background:var(--c-primary);color:var(--c-accent);border-radius:3px}
 .sec-head{border-bottom:3px solid var(--c-primary);padding-bottom:10px}
 .sec-head h2{font-size:clamp(24px,2.8vw,34px)}
-.cat-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.cat-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
 .cat-tile{background:#fff;border:2px solid var(--c-primary);border-radius:3px;padding:10px;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:4px 12px}
 .cat-img{width:64px;height:64px;aspect-ratio:1;grid-row:span 2;border-radius:2px}
-.cat-name{font:800 16px/1.1 var(--f-display);text-transform:uppercase}
+.cat-name{font:800 15px/1.1 var(--f-display);text-transform:uppercase;overflow-wrap:anywhere}
 .cat-count{font-family:var(--f-mono);font-size:12px}
 .grid-products{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .pc{background:#fff;border:2px solid #d9d9d4;border-radius:3px;padding:10px;transition:border-color .15s}
