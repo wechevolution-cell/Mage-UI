@@ -1,0 +1,672 @@
+<title>Concept A Atelier</title>
+<script>document.documentElement.lang="el"</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+<style>
+/* Layout: asymmetric editorial grid, oversized serif type, image-led, quiet chrome. Single-theme by design (paper). */
+:root{
+  --paper:#ECEAE5; --paper-2:#E3E0D9; --ink:#151413; --muted:#67635D; --line:#CBC7BF;
+  --accent:#6A1F26; --accent-ink:#F4EFEA; --veil:rgba(21,20,19,.55);
+  --f-display:"Noto Serif Display", "Didot", "Times New Roman", serif;
+  --f-ui:"Commissioner", "Segoe UI", system-ui, sans-serif;
+  --gut:clamp(16px,4vw,56px); --max:1440px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.6 var(--f-ui);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:8px 14px;z-index:100}
+.skip:focus{left:8px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.eyebrow{font:500 11px/1 var(--f-ui);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-display);font-weight:300;text-wrap:balance;margin:0;letter-spacing:-.01em}
+.serif-i{font-style:italic}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;font:500 12px/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--ink);transition:background .35s var(--ease),color .35s var(--ease)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--accent);border-color:var(--accent)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.link-u{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .4s var(--ease);text-decoration:none}
+.link-u:hover{background-size:100% 1px}
+
+/* Mockup ribbon */
+.ribbon{background:var(--ink);color:var(--paper);font-size:12px}
+.ribbon .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding-block:8px}
+.ribbon nav{display:flex;flex-wrap:wrap;gap:4px}
+.ribbon nav a{padding:4px 10px;border:1px solid rgba(236,234,229,.25);text-decoration:none;border-radius:2px}
+.ribbon nav a[aria-current="page"]{background:var(--paper);color:var(--ink)}
+
+/* Header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
+.hdr.scrolled{border-bottom-color:var(--line)}
+.hdr .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px}
+.hdr .left,.hdr .right{display:flex;gap:22px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.hdr .right{justify-content:flex-end}
+.logo{font:400 26px/1 var(--f-display);letter-spacing:.22em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.3}
+.hide-sm{display:inline}
+@media (max-width:720px){.hide-sm{display:none}.logo{font-size:19px;letter-spacing:.16em}.hdr .left,.hdr .right{gap:14px}}
+
+/* Overlay menu */
+.overlay{position:fixed;inset:0;z-index:60;background:var(--ink);color:var(--paper);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease);visibility:hidden}
+.overlay.open{clip-path:inset(0 0 0 0);visibility:visible}
+.overlay .ov-main{padding:calc(env(safe-area-inset-top,0px) + 28px) var(--gut) 40px;display:flex;flex-direction:column;gap:20px;overflow:auto}
+.overlay ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.overlay ol a{font:300 clamp(40px,6.4vw,96px)/1.05 var(--f-display);text-decoration:none;display:inline-block;transition:transform .5s var(--ease),color .3s}
+.overlay ol a:hover{transform:translateX(18px);color:#D9B8B2}
+.overlay .ov-side{border-left:1px solid rgba(236,234,229,.15);padding:calc(env(safe-area-inset-top,0px) + 96px) var(--gut) 40px;display:flex;flex-direction:column;gap:14px;font-size:14px}
+.overlay .close{align-self:flex-start;font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+@media (max-width:860px){.overlay{grid-template-columns:1fr}.overlay .ov-side{border-left:0;border-top:1px solid rgba(236,234,229,.15);padding-top:24px}}
+
+/* Hero */
+.hero{position:relative;padding-top:clamp(20px,4vw,48px)}
+.hero-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gut);align-items:end}
+.hero-copy{grid-column:1 / span 6;grid-row:1;position:relative;z-index:2;padding-bottom:clamp(24px,5vw,72px)}
+.hero h1{font-size:clamp(46px,8.6vw,148px);line-height:.92;margin-top:18px}
+.hero h1 em{display:block;padding-left:12%;color:var(--accent)}
+.hero p.lede{max-width:38ch;color:var(--muted);margin:28px 0 32px;font-size:16px}
+.hero-media{grid-column:7 / -1;grid-row:1;position:relative;margin-left:calc(var(--gut) * -1)}
+.frame{position:relative;overflow:hidden;background:var(--paper-2)}
+.frame svg{display:block;width:100%;height:100%}
+.hero-media .frame{aspect-ratio:4/5;max-height:78vh;width:100%}
+.hero-media .frame svg{transform:scale(1.08);animation:settle 1.8s var(--ease) forwards}
+.hero-media .cap{position:absolute;left:-1px;bottom:24px;background:var(--paper);padding:14px 18px;max-width:240px;font-size:12px;line-height:1.5}
+.hero-media .cap b{display:block;font:400 18px/1.2 var(--f-display);margin-bottom:4px}
+@keyframes settle{to{transform:scale(1)}}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px 40px;border-top:1px solid var(--line);margin-top:clamp(24px,4vw,48px);padding-top:18px;font-size:12px;color:var(--muted)}
+@media (max-width:860px){
+  .hero-copy{grid-column:1 / -1;grid-row:2;padding-bottom:0}
+  .hero-media{grid-column:1 / -1;grid-row:1;margin-left:0}
+  .hero h1 em{padding-left:0}
+}
+
+/* Section scaffolding */
+section.block{padding-block:clamp(56px,9vw,128px)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 40px;margin-bottom:clamp(28px,4vw,56px)}
+.sec-head h2{font-size:clamp(34px,5vw,72px);line-height:1}
+
+/* Category index */
+.index{border-top:1px solid var(--ink)}
+.index a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);text-decoration:none;transition:padding .45s var(--ease),color .3s}
+.index a span:first-child{font:300 clamp(30px,4.4vw,64px)/1 var(--f-display)}
+.index a span:last-child{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.index a:hover{padding-left:20px;color:var(--accent)}
+.peek{position:fixed;width:220px;aspect-ratio:4/5;pointer-events:none;z-index:30;opacity:0;transform:translate(-50%,-50%) scale(.9);transition:opacity .25s,transform .35s var(--ease);overflow:hidden}
+.peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.peek svg{width:100%;height:100%;display:block}
+@media (hover:none){.peek{display:none}}
+
+/* Product cards (large luxury / editorial) */
+.lux-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(28px,4vw,56px) var(--gut)}
+.lux-grid .card:nth-child(4n+1){grid-column:1 / span 5}
+.lux-grid .card:nth-child(4n+2){grid-column:7 / span 6;margin-top:clamp(40px,10vw,160px)}
+.lux-grid .card:nth-child(4n+3){grid-column:2 / span 4}
+.lux-grid .card:nth-child(4n+4){grid-column:7 / span 5}
+@media (max-width:720px){.lux-grid .card:nth-child(n){grid-column:1 / -1;margin-top:0}}
+.card{position:relative}
+.card .media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--paper-2);display:block}
+.card .media svg{position:absolute;inset:0;width:100%;height:100%;transition:opacity .6s var(--ease),transform 1.2s var(--ease)}
+.card .media .alt{opacity:0;transform:scale(1.06)}
+.card:hover .media .alt,.card:focus-within .media .alt{opacity:1;transform:scale(1)}
+.card .badge{position:absolute;top:14px;left:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;background:var(--paper);padding:6px 9px}
+.card .wish{position:absolute;top:10px;right:10px;width:38px;height:38px;display:grid;place-items:center;background:var(--paper);border-radius:50%}
+.card .wish[aria-pressed="true"] .icon{fill:var(--accent);stroke:var(--accent)}
+.card .meta{display:flex;justify-content:space-between;gap:16px;padding-top:14px;align-items:baseline}
+.card h3{font:400 20px/1.25 var(--f-display)}
+.card h3 a{text-decoration:none}
+.card .price{font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.card .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.card .quick{position:absolute;left:14px;right:14px;bottom:14px;background:var(--paper);padding:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;transform:translateY(calc(100% + 20px));transition:transform .45s var(--ease)}
+.card:hover .quick,.card:focus-within .quick{transform:none}
+@media (hover:none){.card .quick{transform:none;position:static;margin-top:10px;border:1px solid var(--ink)}}
+
+/* Editorial story */
+.story{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gut);align-items:center}
+.story .frame{grid-column:1 / span 5;aspect-ratio:3/4}
+.story .txt{grid-column:7 / span 5}
+.story blockquote{margin:0;font:300 clamp(28px,3.6vw,52px)/1.15 var(--f-display)}
+.story p{color:var(--muted);max-width:52ch}
+@media (max-width:860px){.story .frame,.story .txt{grid-column:1 / -1}}
+
+.services{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.services div{padding:28px 20px 28px 0;font-size:13px;color:var(--muted)}
+.services b{display:block;font:400 18px/1.3 var(--f-display);color:var(--ink);margin-bottom:6px}
+@media (max-width:860px){.services{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.newsletter{background:var(--ink);color:var(--paper)}
+.newsletter .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:var(--gut);padding-block:clamp(56px,8vw,112px);align-items:end}
+.newsletter h2{font-size:clamp(34px,5vw,68px);line-height:1}
+.nl-form{display:flex;border-bottom:1px solid var(--paper)}
+.nl-form input{flex:1;min-width:0;background:none;border:0;color:var(--paper);font:inherit;padding:14px 0}
+.nl-form input::placeholder{color:rgba(236,234,229,.6)}
+.nl-consent{display:flex;gap:10px;font-size:12px;color:rgba(236,234,229,.7);margin-top:14px;align-items:flex-start}
+@media (max-width:860px){.newsletter .wrap{grid-template-columns:1fr}}
+
+footer.ftr{padding-block:64px 32px;font-size:13px}
+.ftr-grid{display:grid;grid-template-columns:2fr repeat(3,minmax(0,1fr));gap:32px}
+.ftr-grid h4{font:500 11px/1 var(--f-ui);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.ftr-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ftr-grid a{text-decoration:none}
+.ftr-big{font:300 clamp(56px,14vw,220px)/.85 var(--f-display);letter-spacing:.04em;margin-top:56px;color:var(--paper-2);-webkit-text-stroke:1px var(--line);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+.ftr-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:18px;margin-top:24px;color:var(--muted);font-size:12px}
+@media (max-width:720px){.ftr-grid{grid-template-columns:1fr 1fr}.ftr-grid>div:first-child{grid-column:1 / -1}}
+
+/* Category view */
+.cat-hero{padding-block:clamp(28px,5vw,72px) clamp(20px,3vw,40px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.7fr);gap:var(--gut);align-items:end}
+.cat-hero h1{font-size:clamp(56px,11vw,180px);line-height:.88}
+.cat-hero p{color:var(--muted);max-width:44ch}
+@media (max-width:860px){.cat-hero{grid-template-columns:1fr}}
+.crumbs{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.crumbs a{text-decoration:none}
+.refine{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);z-index:20;background:var(--paper);border-block:1px solid var(--line)}
+.refine .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between;padding-block:12px}
+.refine .chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);padding:9px 14px;font-size:12px;letter-spacing:.06em;border-radius:999px;transition:border-color .2s,background .2s}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:hover{border-color:var(--ink)}
+.sortsel{font:inherit;font-size:12px;background:none;border:0;border-bottom:1px solid var(--ink);padding:6px 2px}
+.cat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px var(--gut);padding-block:40px 80px}
+.cat-grid .insert{grid-column:span 1;background:var(--accent);color:var(--accent-ink);padding:32px;display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:4/5}
+.cat-grid .insert h3{font:300 clamp(28px,2.6vw,40px)/1.1 var(--f-display)}
+@media (max-width:980px){.cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.cat-grid{grid-template-columns:1fr}}
+.pager{display:flex;justify-content:center;gap:6px;padding-bottom:80px;font-variant-numeric:tabular-nums}
+.pager a{min-width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);text-decoration:none;font-size:13px}
+.pager a[aria-current="page"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* Product view */
+.pdp{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--gut);padding-block:24px 80px}
+.pdp-gallery{display:grid;gap:12px}
+.pdp-gallery .frame{aspect-ratio:4/5;cursor:zoom-in}
+.pdp-gallery .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pdp-gallery .frame svg{transition:transform .6s var(--ease)}
+.pdp-gallery .frame.zoom svg{transform:scale(1.8)}
+.pdp-info{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start;display:grid;gap:22px}
+.pdp-info h1{font-size:clamp(36px,4.4vw,64px);line-height:1}
+.pdp-price{font-size:18px;font-variant-numeric:tabular-nums}
+.pdp-price small{color:var(--muted);font-size:12px;margin-left:8px}
+.opt-label{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.swatches{display:flex;gap:10px}
+.swatch{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);position:relative}
+.swatch[aria-checked="true"]::after{content:"";position:absolute;inset:-5px;border:1px solid var(--ink);border-radius:50%}
+.sizes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.size{border:1px solid var(--line);padding:12px 0;font-size:13px;font-variant-numeric:tabular-nums}
+.size[aria-checked="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.size:disabled{color:var(--line);text-decoration:line-through;cursor:not-allowed}
+.buy-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.buy-row .wish{border:1px solid var(--ink);width:54px;display:grid;place-items:center}
+.buy-row .wish[aria-pressed="true"] .icon{fill:var(--accent);stroke:var(--accent)}
+.stock{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.stock i{width:7px;height:7px;border-radius:50%;background:#3E6B4A;display:inline-block}
+details.acc{border-top:1px solid var(--line)}
+details.acc:last-of-type{border-bottom:1px solid var(--line)}
+details.acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;padding:16px 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:16px;transition:transform .3s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc div{padding-bottom:18px;color:var(--muted);font-size:14px}
+details.acc table{width:100%;border-collapse:collapse;font-size:13px}
+details.acc td{padding:6px 0;border-bottom:1px solid var(--line)}
+@media (max-width:860px){.pdp{grid-template-columns:1fr}.pdp-info{position:static}}
+.sticky-buy{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--paper);border-top:1px solid var(--line);padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:space-between;transform:translateY(110%);transition:transform .4s var(--ease)}
+.sticky-buy.on{transform:none}
+.sticky-buy .t{font:400 16px/1.2 var(--f-display);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Drawer */
+.scrim{position:fixed;inset:0;background:var(--veil);z-index:70;opacity:0;pointer-events:none;transition:opacity .4s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);z-index:71;background:var(--paper);transform:translateX(100%);transition:transform .55s var(--ease);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drawer.on{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.drawer header h2{font-size:30px}
+.drawer .items{flex:1;overflow:auto;padding:8px 24px}
+.line{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.line .th{aspect-ratio:4/5;overflow:hidden;background:var(--paper-2)}
+.line .th svg{width:100%;height:100%;display:block}
+.line h3{font:400 17px/1.25 var(--f-display)}
+.line .v{font-size:12px;color:var(--muted)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);margin-top:10px}
+.qty button{width:30px;height:30px}
+.qty span{min-width:24px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums}
+.line .rm{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;display:block}
+.line .p{font-size:14px;font-variant-numeric:tabular-nums;text-align:right}
+.drawer footer{padding:20px 24px calc(20px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:12px}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;font-variant-numeric:tabular-nums}
+.sumrow.total{font:400 22px/1.2 var(--f-display)}
+.ship-note{font-size:12px;color:var(--muted)}
+.empty{padding:48px 0;text-align:center;color:var(--muted)}
+
+/* Checkout */
+.co{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--gut);padding-block:32px 96px}
+.co h1{font-size:clamp(40px,6vw,88px);line-height:.95;margin-bottom:28px}
+.co fieldset{border:0;padding:0;margin:0 0 36px;display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.co legend{font:400 24px/1.2 var(--f-display);margin-bottom:16px;padding:0}
+.field{display:grid;gap:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.field.full{grid-column:1 / -1}
+.field input,.field select{font:400 15px/1.4 var(--f-ui);letter-spacing:0;text-transform:none;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 0;border-radius:0}
+.field input:focus{outline:0;border-bottom-color:var(--ink)}
+.radio-card{grid-column:1 / -1;display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);padding:16px;cursor:pointer}
+.radio-card:has(input:checked){border-color:var(--ink)}
+.radio-card b{display:block;font-weight:500}
+.radio-card span{font-size:13px;color:var(--muted)}
+.co aside{background:var(--paper-2);padding:28px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);display:grid;gap:12px}
+.consent{grid-column:1 / -1;display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:flex-start}
+@media (max-width:860px){.co{grid-template-columns:1fr}.co aside{position:static}.co fieldset{grid-template-columns:1fr}}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);background:var(--ink);color:var(--paper);padding:12px 18px;font-size:13px;z-index:80;transition:transform .45s var(--ease)}
+.toast.on{transform:translate(-50%,0)}
+.note{font-size:11px;color:var(--muted);font-style:italic}
+
+.toast:not(.on),.drawer:not(.on),.cartp:not(.on),.sticky-buy:not(.on){visibility:hidden;transition-property:transform,visibility;transition-delay:0s,.6s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
+
+<div class="ribbon">
+  <div class="wrap">
+    <span><b>Concept A · Atelier</b> · Luxury Editorial Commerce · Mockup. Όλα τα ονόματα, τιμές, εικόνες και κείμενα είναι δείγματα.</span>
+    <nav aria-label="Προβολές mockup">
+      <a href="#home" data-nav="home">Αρχική</a>
+      <a href="#category" data-nav="category">Κατηγορία</a>
+      <a href="#product" data-nav="product">Προϊόν</a>
+      <a href="#checkout" data-nav="checkout">Ταμείο</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <div class="left">
+      <button id="menuBtn" aria-expanded="false" aria-controls="overlay" style="display:flex;gap:10px;align-items:center">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/></svg><span class="hide-sm">Μενού</span>
+      </button>
+      <a href="#category" class="link-u hide-sm">Νέα σεζόν</a>
+    </div>
+    <a class="logo" href="#home" aria-label="Αρχική σελίδα">Maison Λύρα</a>
+    <div class="right">
+      <button aria-label="Αναζήτηση"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+      <button aria-label="Αγαπημένα" class="hide-sm"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+      <button id="cartBtn" aria-controls="drawer">Καλάθι (<span id="cartCount">0</span>)</button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Μενού">
+  <div class="ov-main">
+    <button class="close" id="menuClose"><svg class="icon" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg>Κλείσιμο</button>
+    <ol>
+      <li><a href="#category" data-close>Γυναικεία</a></li>
+      <li><a href="#category" data-close>Ανδρικά</a></li>
+      <li><a href="#category" data-close>Αξεσουάρ</a></li>
+      <li><a href="#category" data-close>Κοσμήματα</a></li>
+      <li><a href="#category" data-close>Αρώματα</a></li>
+    </ol>
+  </div>
+  <div class="ov-side">
+    <span class="eyebrow" style="color:#B9B3AA">Εξυπηρέτηση</span>
+    <a class="link-u" href="#home">Αποστολές & επιστροφές</a>
+    <a class="link-u" href="#home">Οδηγός μεγεθών</a>
+    <a class="link-u" href="#home">Επικοινωνία</a>
+    <a class="link-u" href="#home">Ο λογαριασμός μου</a>
+    <p class="note" style="color:#B9B3AA;margin-top:auto">Τα στοιχεία μενού προέρχονται από τον Menu Builder του διαχειριστή.</p>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- HOME -->
+<div data-view="home">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Φθινόπωρο / Χειμώνας</span>
+          <h1>Ραμμένα<br>με χρόνο <em class="serif-i">και ύφος.</em></h1>
+          <p class="lede">Μια συλλογή από μαλλί, λινό και δέρμα σε λίγα, προσεγμένα κομμάτια. Κείμενο δείγμα, επαληθεύστε πριν τη δημοσίευση.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a class="btn btn-solid" href="#category">Δείτε τη συλλογή</a>
+            <a class="btn btn-line" href="#product">Το παλτό της σεζόν</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="frame" id="heroArt"></div>
+          <div class="cap"><b>Παλτό από μαλλί</b>Hero εικόνα: ανεβαίνει από τον διαχειριστή (Homepage CMS).</div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span>Δωρεάν αποστολή άνω των 150 € (δείγμα)</span>
+        <span>Επιστροφές εντός 14 ημερών (δείγμα)</span>
+        <span>Αντικαταβολή ή τραπεζική κατάθεση</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="catsT">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="catsT">Κατηγορίες</h2>
+        <span class="eyebrow">Περάστε τον κέρσορα για προεπισκόπηση</span>
+      </div>
+      <nav class="index" id="catIndex" aria-label="Κατηγορίες"></nav>
+    </div>
+  </section>
+  <div class="peek" id="peek" aria-hidden="true"></div>
+
+  <section class="block" style="padding-top:0" aria-labelledby="newT">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="newT">Νέες <span class="serif-i">αφίξεις</span></h2>
+        <a class="link-u eyebrow" style="color:var(--ink)" href="#category">Όλα τα προϊόντα →</a>
+      </div>
+      <div class="lux-grid" id="newGrid"></div>
+    </div>
+  </section>
+
+  <section class="block" style="background:var(--paper-2)">
+    <div class="wrap story">
+      <div class="frame" id="storyArt"></div>
+      <div class="txt">
+        <span class="eyebrow">Το εργαστήριο</span>
+        <blockquote style="margin-top:18px">Λιγότερα κομμάτια, φτιαγμένα για να κρατήσουν περισσότερο.</blockquote>
+        <p>Ενότητα «Αξίες / Ιστορία» από το Homepage CMS. Κείμενο δείγμα, επαληθεύστε πριν τη δημοσίευση.</p>
+        <a class="btn btn-line" href="#home" style="margin-top:12px">Η ιστορία μας</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-block:clamp(40px,6vw,72px)">
+    <div class="wrap services">
+      <div><b>Αποστολή</b>Σε όλη την Ελλάδα. Κόστος και χρόνοι: ορίζονται από τον διαχειριστή.</div>
+      <div><b>Επιστροφές</b>Πολιτική επιστροφών: κείμενο δείγμα.</div>
+      <div><b>Πληρωμή</b>Αντικαταβολή ή τραπεζική κατάθεση.</div>
+      <div><b>Εξυπηρέτηση</b>Τηλέφωνο & email από τις ρυθμίσεις καταστήματος.</div>
+    </div>
+  </section>
+
+  <section class="newsletter" aria-labelledby="nlT">
+    <div class="wrap">
+      <h2 id="nlT">Γραφτείτε για τις<br><span class="serif-i">νέες συλλογές.</span></h2>
+      <form class="nl" onsubmit="event.preventDefault();toast('Ευχαριστούμε. Η εγγραφή καταγράφηκε (demo).')">
+        <label for="nlEmail" class="eyebrow" style="color:#B9B3AA">Email</label>
+        <div class="nl-form">
+          <input id="nlEmail" type="email" required placeholder="you@example.gr" autocomplete="email">
+          <button class="eyebrow" style="color:var(--paper)">Εγγραφή →</button>
+        </div>
+        <label class="nl-consent"><input type="checkbox" required id="nlConsent"> Συμφωνώ με την πολιτική απορρήτου και την αποστολή ενημερώσεων.</label>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- CATEGORY -->
+<div data-view="category" hidden>
+  <div class="wrap cat-hero">
+    <div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#home">Αρχική</a>/<span>Γυναικεία</span></nav>
+      <h1 style="margin-top:14px">Γυναι<span class="serif-i">κεία</span></h1>
+    </div>
+    <p>Περιγραφή κατηγορίας για SEO/AEO από τον διαχειριστή: σύντομη, πραγματική απάντηση για το τι περιλαμβάνει η κατηγορία. Κείμενο δείγμα.</p>
+  </div>
+  <div class="refine">
+    <div class="wrap">
+      <div class="chips" role="group" aria-label="Φίλτρα">
+        <button class="chip" aria-pressed="true">Όλα</button>
+        <button class="chip" aria-pressed="false">Πανωφόρια</button>
+        <button class="chip" aria-pressed="false">Φορέματα</button>
+        <button class="chip" aria-pressed="false">Πλεκτά</button>
+        <button class="chip" aria-pressed="false">Μέγεθος ▾</button>
+        <button class="chip" aria-pressed="false">Χρώμα ▾</button>
+      </div>
+      <div style="display:flex;gap:18px;align-items:center;font-size:12px">
+        <span style="color:var(--muted)" id="catCount"></span>
+        <label for="sortA" class="eyebrow">Ταξινόμηση</label>
+        <select id="sortA" class="sortsel"><option>Νεότερα</option><option>Τιμή: χαμηλή → υψηλή</option><option>Τιμή: υψηλή → χαμηλή</option></select>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="cat-grid" id="catGrid"></div>
+    <nav class="pager" aria-label="Σελίδες"><a href="#category" aria-current="page">1</a><a href="#category">2</a><a href="#category">3</a><a href="#category">→</a></nav>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<div data-view="product" hidden>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" style="padding-top:24px"><a href="#home">Αρχική</a>/<a href="#category">Γυναικεία</a>/<span id="pCrumb"></span></nav>
+    <div class="pdp">
+      <div class="pdp-gallery" id="pGallery"></div>
+      <div class="pdp-info" id="pInfo"></div>
+    </div>
+    <section style="padding-bottom:96px" aria-labelledby="relT">
+      <div class="sec-head"><h2 id="relT" style="font-size:clamp(30px,4vw,56px)">Ολοκληρώστε <span class="serif-i">το σύνολο</span></h2></div>
+      <div class="cat-grid" id="relGrid" style="padding-top:0"></div>
+    </section>
+  </div>
+  <div class="sticky-buy" id="stickyBuy"><span class="t" id="sbTitle"></span><button class="btn btn-solid" id="sbAdd" style="padding:14px 20px">Προσθήκη</button></div>
+</div>
+
+<!-- CHECKOUT -->
+<div data-view="checkout" hidden>
+  <div class="wrap co">
+    <form id="coForm" onsubmit="event.preventDefault();toast('Η παραγγελία καταχωρήθηκε (demo). Θα λάβετε email επιβεβαίωσης.')">
+      <h1>Ταμείο</h1>
+      <fieldset>
+        <legend>Στοιχεία επικοινωνίας</legend>
+        <label class="field full">Email<input type="email" id="coEmail" autocomplete="email" required></label>
+        <label class="field">Όνομα<input id="coFirst" autocomplete="given-name" required></label>
+        <label class="field">Επώνυμο<input id="coLast" autocomplete="family-name" required></label>
+        <label class="field full">Τηλέφωνο<input id="coPhone" type="tel" autocomplete="tel" required></label>
+      </fieldset>
+      <fieldset>
+        <legend>Διεύθυνση αποστολής</legend>
+        <label class="field full">Οδός & αριθμός<input id="coAddr" autocomplete="street-address" required></label>
+        <label class="field">Πόλη<input id="coCity" autocomplete="address-level2" required></label>
+        <label class="field">Τ.Κ.<input id="coZip" autocomplete="postal-code" inputmode="numeric" required></label>
+        <label class="field full">Περιοχή αποστολής
+          <select id="coZone"><option>Ηπειρωτική Ελλάδα</option><option>Νησιά</option><option>Κύπρος</option></select>
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Πληρωμή</legend>
+        <label class="radio-card"><input type="radio" name="pay" id="payCod" checked><div><b>Αντικαταβολή</b><span>Πληρωμή κατά την παράδοση. Τυχόν χρέωση ορίζεται από τον διαχειριστή.</span></div></label>
+        <label class="radio-card"><input type="radio" name="pay" id="payBank"><div><b>Τραπεζική κατάθεση</b><span>Τα στοιχεία λογαριασμού εμφανίζονται μετά την παραγγελία.</span></div></label>
+        <label class="consent"><input type="checkbox" required id="coTerms"> Έχω διαβάσει και αποδέχομαι τους Όρους χρήσης και την Πολιτική απορρήτου.</label>
+      </fieldset>
+      <button class="btn btn-solid" style="width:100%">Ολοκλήρωση παραγγελίας</button>
+    </form>
+    <aside aria-label="Σύνοψη παραγγελίας">
+      <h2 style="font-size:28px">Η παραγγελία σας</h2>
+      <div id="coItems"></div>
+      <div class="sumrow"><span>Υποσύνολο</span><span id="coSub"></span></div>
+      <div class="sumrow"><span>Αποστολή</span><span id="coShip"></span></div>
+      <div class="sumrow total"><span>Σύνολο</span><span id="coTotal"></span></div>
+      <p class="note">Οι τιμές περιλαμβάνουν ΦΠΑ. Κόστος αποστολής: δείγμα.</p>
+    </aside>
+  </div>
+</div>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <a class="logo" href="#home" style="font-size:22px">Maison Λύρα</a>
+        <p style="color:var(--muted);max-width:36ch;margin-top:14px">Στοιχεία επιχείρησης, διεύθυνση και ωράριο από τις ρυθμίσεις καταστήματος. Δείγμα.</p>
+      </div>
+      <div><h4>Κατάστημα</h4><ul><li><a class="link-u" href="#category">Γυναικεία</a></li><li><a class="link-u" href="#category">Ανδρικά</a></li><li><a class="link-u" href="#category">Αξεσουάρ</a></li></ul></div>
+      <div><h4>Βοήθεια</h4><ul><li><a class="link-u" href="#home">Αποστολές</a></li><li><a class="link-u" href="#home">Επιστροφές</a></li><li><a class="link-u" href="#home">Επικοινωνία</a></li></ul></div>
+      <div><h4>Νομικά</h4><ul><li><a class="link-u" href="#home">Όροι χρήσης</a></li><li><a class="link-u" href="#home">Απόρρητο</a></li><li><a class="link-u" href="#home">Cookies</a></li></ul></div>
+    </div>
+    <div class="ftr-big" aria-hidden="true">Maison Λύρα</div>
+    <div class="ftr-bottom"><span>© Maison Λύρα (δείγμα)</span><span>Powered by wechevo e-shop</span></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerT" aria-hidden="true">
+  <header><h2 id="drawerT">Καλάθι</h2><button id="drawerClose" aria-label="Κλείσιμο καλαθιού"><svg class="icon" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></button></header>
+  <div class="items" id="drawerItems"></div>
+  <footer>
+    <p class="ship-note" id="shipNote"></p>
+    <div class="sumrow total"><span>Υποσύνολο</span><span id="drawerSub"></span></div>
+    <a class="btn btn-solid" href="#checkout" data-close-drawer>Ταμείο</a>
+    <button class="btn btn-line" data-close-drawer>Συνέχεια αγορών</button>
+  </footer>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const fmt=n=>n.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const FREE=150, SHIP=5;
+
+const tones=["#D6CFC3","#C7CBC4","#D5CBC6","#C9C3B9","#BEC2C6","#D2C7B5","#C4BDB6","#CFC9BF"];
+const shapes={
+  coat:'<path d="M150 120q50-22 100 0l42 40 10 270H98l10-270z"/><path d="M200 112v318" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none"/><path d="M168 118l32 70 32-70" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>',
+  dress:'<path d="M178 104h44l10 74 70 252H98l70-252z"/><path d="M168 178h64" stroke="rgba(255,255,255,.3)" stroke-width="2"/>',
+  bag:'<path d="M158 220q0-70 42-70t42 70" fill="none" stroke-width="10"/><rect x="118" y="214" width="164" height="190" rx="10"/><rect x="186" y="256" width="28" height="14" rx="3" fill="rgba(255,255,255,.35)"/>',
+  ring:'<circle cx="200" cy="280" r="76" fill="none" stroke-width="16"/><path d="M178 196l22-30 22 30-22 18z" fill="rgba(255,255,255,.55)"/>',
+  bottle:'<rect x="180" y="128" width="40" height="40" rx="4"/><rect x="132" y="168" width="136" height="220" rx="18"/><rect x="156" y="250" width="88" height="44" fill="rgba(255,255,255,.35)"/>',
+  scarf:'<path d="M110 150q90 50 180 0v40q-90 50-180 0zM190 186l-30 210h44l26-200" />',
+  shirt:'<path d="M152 120l48 16 48-16 50 44-26 34-20-14v246H148V184l-20 14-26-34z"/><path d="M200 136v294" stroke="rgba(255,255,255,.3)" stroke-width="2"/>',
+  shoe:'<path d="M90 330q10-40 60-44l70-6q40 0 70 26l30 22q12 14-4 22H96q-12 0-6-20z"/><path d="M96 352h232" stroke="rgba(255,255,255,.35)" stroke-width="4"/>'
+};
+function art(kind,tone,ink="#3A342E",detail=false){
+  const t=detail?'transform="translate(200 260) scale(1.7) translate(-200 -260)"':'';
+  return `<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικόνα προϊόντος (δείγμα)"><defs><radialGradient id="g${kind}${detail?1:0}${tone.slice(1)}" cx="35%" cy="25%" r="80%"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><rect width="400" height="500" fill="${tone}"/><rect width="400" height="500" fill="url(#g${kind}${detail?1:0}${tone.slice(1)})"/><g fill="${ink}" stroke="${ink}" ${t}>${shapes[kind]}</g><rect y="440" width="400" height="60" fill="rgba(0,0,0,.05)"/></svg>`;
+}
+
+const products=[
+ {id:1,name:"Παλτό από μαλλί",sub:"Μαλλί & κασμίρ",price:420,kind:"coat",tone:0,ink:"#3B3530",badge:"Νέο"},
+ {id:2,name:"Λινό φόρεμα",sub:"100% λινό",price:185,kind:"dress",tone:1,ink:"#5A2A2C"},
+ {id:3,name:"Δερμάτινη τσάντα ώμου",sub:"Φυτικά δεψασμένο δέρμα",price:310,kind:"bag",tone:2,ink:"#4A2C22"},
+ {id:4,name:"Ασημένιο δαχτυλίδι",sub:"Ασήμι 925",price:95,kind:"ring",tone:4,ink:"#8E9196"},
+ {id:5,name:"Eau de Parfum 50 ml",sub:"Ξύλινες νότες",price:120,kind:"bottle",tone:5,ink:"#6A1F26",badge:"Περιορισμένο"},
+ {id:6,name:"Μεταξωτό φουλάρι",sub:"Μετάξι",price:85,kind:"scarf",tone:3,ink:"#6A1F26"},
+ {id:7,name:"Πουκάμισο ποπλίνα",sub:"Βαμβάκι",price:140,kind:"shirt",tone:6,ink:"#F1EEE8"},
+ {id:8,name:"Δερμάτινα μοκασίνια",sub:"Δέρμα μοσχαριού",price:230,kind:"shoe",tone:7,ink:"#2E2925"}
+];
+const colors=[{n:"Μαύρο",c:"#1C1A18"},{n:"Καμηλό",c:"#A07C55"},{n:"Μπορντό",c:"#6A1F26"}];
+const sizes=["XS","S","M","L","XL"];
+let current=products[0], selColor=0, selSize=2, cart=[], wish=new Set();
+
+function card(p){
+  return `<article class="card">
+    <a class="media" href="#product" data-pid="${p.id}" aria-label="${p.name}">${art(p.kind,tones[p.tone],p.ink)}<span class="alt" style="position:absolute;inset:0">${art(p.kind,tones[(p.tone+3)%8],p.ink,true)}</span></a>
+    ${p.badge?`<span class="badge">${p.badge}</span>`:''}
+    <button class="wish" aria-label="Προσθήκη στα αγαπημένα" aria-pressed="${wish.has(p.id)}" data-wish="${p.id}"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+    <button class="quick" data-add="${p.id}">Γρήγορη προσθήκη · M</button>
+    <div class="meta"><div><h3><a href="#product" data-pid="${p.id}">${p.name}</a></h3><div class="sub">${p.sub}</div></div><span class="price">${fmt(p.price)}</span></div>
+  </article>`;
+}
+function renderHome(){
+  $('#heroArt').innerHTML=art('coat','#CFC6B8','#3B3530');
+  $('#storyArt').innerHTML=art('scarf','#C9BEB0','#6A1F26',true);
+  const cats=[["Γυναικεία","coat",0],["Ανδρικά","shirt",6],["Αξεσουάρ","bag",2],["Κοσμήματα","ring",4],["Αρώματα","bottle",5]];
+  $('#catIndex').innerHTML=cats.map(([n,k,t])=>`<a href="#category" data-peek="${k}" data-tone="${t}"><span>${n}</span><span>Εξερεύνηση</span></a>`).join('');
+  $('#newGrid').innerHTML=products.slice(0,4).map(card).join('');
+}
+function renderCategory(){
+  const list=products.map(card);
+  list.splice(4,0,`<div class="insert"><span class="eyebrow" style="color:#E6CFCB">Banner κατηγορίας</span><h3>Πλεκτά που φοριούνται όλο τον χρόνο.</h3><a class="btn" style="border-color:var(--accent-ink);color:var(--accent-ink)" href="#category">Ανακαλύψτε</a></div>`);
+  $('#catGrid').innerHTML=list.join('');
+  $('#catCount').textContent=products.length+' προϊόντα (δείγμα)';
+}
+function renderProduct(){
+  const p=current;
+  $('#pCrumb').textContent=p.name;
+  $('#pGallery').innerHTML=`<div class="frame" data-zoom>${art(p.kind,tones[p.tone],p.ink)}</div><div class="row"><div class="frame" data-zoom>${art(p.kind,tones[(p.tone+2)%8],p.ink,true)}</div><div class="frame" data-zoom>${art(p.kind,tones[(p.tone+5)%8],p.ink)}</div></div>`;
+  $('#pInfo').innerHTML=`
+    <span class="eyebrow">${p.sub}</span>
+    <h1>${p.name}</h1>
+    <div class="pdp-price">${fmt(p.price)}<small>Περιλαμβάνεται ΦΠΑ</small></div>
+    <p style="color:var(--muted);margin:0">Σύντομη περιγραφή προϊόντος από τον διαχειριστή. Κείμενο δείγμα, επαληθεύστε πριν τη δημοσίευση.</p>
+    <div><div class="opt-label"><span>Χρώμα: <b id="cName">${colors[selColor].n}</b></span></div>
+      <div class="swatches" role="radiogroup" aria-label="Χρώμα">${colors.map((c,i)=>`<button class="swatch" role="radio" aria-checked="${i===selColor}" aria-label="${c.n}" data-color="${i}" style="background:${c.c}"></button>`).join('')}</div></div>
+    <div><div class="opt-label"><span>Μέγεθος</span><a class="link-u" href="#product">Οδηγός μεγεθών</a></div>
+      <div class="sizes" role="radiogroup" aria-label="Μέγεθος">${sizes.map((s,i)=>`<button class="size" role="radio" aria-checked="${i===selSize}" data-size="${i}" ${i===4?'disabled aria-disabled="true" title="Εξαντλημένο"':''}>${s}</button>`).join('')}</div></div>
+    <div class="buy-row"><button class="btn btn-solid" id="pAdd">Προσθήκη στο καλάθι</button><button class="wish" aria-label="Αγαπημένα" aria-pressed="${wish.has(p.id)}" data-wish="${p.id}"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+    <div class="stock"><i></i> Διαθέσιμο · Αποστολή σε 1–3 εργάσιμες (δείγμα) · SKU ML-${String(p.id).padStart(4,'0')}</div>
+    <div>
+      <details class="acc" open><summary>Περιγραφή</summary><div>Πλήρης περιγραφή προϊόντος (rich text από τον διαχειριστή). Κείμενο δείγμα.</div></details>
+      <details class="acc"><summary>Χαρακτηριστικά</summary><div><table><tr><td>Σύνθεση</td><td>${p.sub}</td></tr><tr><td>Χώρα κατασκευής</td><td>Δείγμα</td></tr><tr><td>Φροντίδα</td><td>Δείγμα</td></tr></table></div></details>
+      <details class="acc"><summary>Αποστολή & επιστροφές</summary><div>Κείμενο από τις ρυθμίσεις αποστολών/επιστροφών του καταστήματος.</div></details>
+    </div>`;
+  $('#sbTitle').textContent=p.name+' · '+fmt(p.price);
+  $('#relGrid').innerHTML=products.filter(x=>x.id!==p.id).slice(0,3).map(card).join('');
+}
+
+function add(id,qty=1){
+  const p=products.find(x=>x.id===id);
+  const v=(p.kind==='ring'||p.kind==='bottle')?'':colors[selColor].n+' / '+sizes[selSize];
+  const ex=cart.find(l=>l.id===id&&l.v===v);
+  ex?ex.qty+=qty:cart.push({id,v,qty});
+  renderCart(); openDrawer();
+}
+function subtotal(){return cart.reduce((s,l)=>s+products.find(p=>p.id===l.id).price*l.qty,0)}
+function renderCart(){
+  const n=cart.reduce((s,l)=>s+l.qty,0); $('#cartCount').textContent=n;
+  const sub=subtotal();
+  $('#drawerItems').innerHTML=cart.length?cart.map((l,i)=>{const p=products.find(x=>x.id===l.id);return `<div class="line"><div class="th">${art(p.kind,tones[p.tone],p.ink)}</div><div><h3>${p.name}</h3><div class="v">${l.v||'Ένα μέγεθος'}</div><div class="qty" role="group" aria-label="Ποσότητα"><button data-q="${i}" data-d="-1" aria-label="Μείωση">−</button><span>${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Αύξηση">+</button></div><button class="rm" data-rm="${i}">Αφαίρεση</button></div><div class="p">${fmt(p.price*l.qty)}</div></div>`}).join(''):'<p class="empty">Το καλάθι σας είναι άδειο.</p>';
+  $('#drawerSub').textContent=fmt(sub);
+  $('#shipNote').textContent=sub>=FREE?'Δικαιούστε δωρεάν αποστολή.':`Προσθέστε ${fmt(FREE-sub)} για δωρεάν αποστολή (όριο δείγμα).`;
+  $('#coItems').innerHTML=cart.length?cart.map(l=>{const p=products.find(x=>x.id===l.id);return `<div class="sumrow"><span>${p.name} × ${l.qty}</span><span>${fmt(p.price*l.qty)}</span></div>`}).join(''):'<p class="note">Το καλάθι είναι άδειο. Προσθέστε προϊόντα για να δείτε τη σύνοψη.</p>';
+  const ship=sub>=FREE||!sub?0:SHIP;
+  $('#coSub').textContent=fmt(sub); $('#coShip').textContent=ship?fmt(ship):'Δωρεάν'; $('#coTotal').textContent=fmt(sub+ship);
+}
+function openDrawer(){$('#drawer').classList.add('on');$('#scrim').classList.add('on');$('#drawer').setAttribute('aria-hidden','false');setTimeout(()=>$('#drawerClose').focus(),300)}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#scrim').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true')}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2600)}
+
+function route(){
+  const v=location.hash.slice(1)||'home';
+  const views=['home','category','product','checkout'];
+  const view=views.includes(v)?v:'home';
+  $$('[data-view]').forEach(s=>s.hidden=s.dataset.view!==view);
+  $$('[data-nav]').forEach(a=>a.dataset.nav===view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  if(view==='product')renderProduct();
+  $('#stickyBuy').classList.remove('on');
+  window.scrollTo(0,0);
+}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-pid],[data-add],[data-wish],[data-q],[data-rm],[data-color],[data-size],[data-close],[data-close-drawer],#pAdd,#sbAdd,.chip,[data-zoom]');
+  if(!t)return;
+  if(t.dataset.pid){current=products.find(p=>p.id==t.dataset.pid);selColor=0;selSize=2;if(location.hash==='#product'){e.preventDefault();renderProduct();scrollTo(0,0)}}
+  if(t.dataset.add){e.preventDefault();add(+t.dataset.add)}
+  if(t.dataset.wish){const id=+t.dataset.wish;wish.has(id)?wish.delete(id):wish.add(id);$$(`[data-wish="${id}"]`).forEach(b=>b.setAttribute('aria-pressed',wish.has(id)));toast(wish.has(id)?'Προστέθηκε στα αγαπημένα':'Αφαιρέθηκε από τα αγαπημένα')}
+  if(t.dataset.q){const l=cart[+t.dataset.q];l.qty=Math.max(1,l.qty+ +t.dataset.d);renderCart()}
+  if(t.dataset.rm){cart.splice(+t.dataset.rm,1);renderCart()}
+  if(t.dataset.color){selColor=+t.dataset.color;$$('[data-color]').forEach(b=>b.setAttribute('aria-checked',b===t));$('#cName').textContent=colors[selColor].n}
+  if(t.dataset.size){selSize=+t.dataset.size;$$('[data-size]').forEach(b=>b.setAttribute('aria-checked',b===t))}
+  if(t.id==='pAdd'||t.id==='sbAdd')add(current.id);
+  if(t.hasAttribute('data-close'))closeMenu();
+  if(t.hasAttribute('data-close-drawer'))closeDrawer();
+  if(t.classList.contains('chip')){$$('.chip',t.parentElement).forEach(c=>c.setAttribute('aria-pressed',c===t))}
+  if(t.hasAttribute('data-zoom'))t.classList.toggle('zoom');
+});
+function openMenu(){$('#overlay').classList.add('open');$('#menuBtn').setAttribute('aria-expanded','true');setTimeout(()=>$('#menuClose').focus(),200)}
+function closeMenu(){$('#overlay').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded','false')}
+$('#menuBtn').onclick=openMenu; $('#menuClose').onclick=closeMenu;
+$('#cartBtn').onclick=openDrawer; $('#drawerClose').onclick=closeDrawer; $('#scrim').onclick=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeMenu()}});
+
+// Category hover preview (desktop only)
+const peek=$('#peek');
+document.addEventListener('mousemove',e=>{peek.style.left=e.clientX+'px';peek.style.top=e.clientY+'px'});
+document.addEventListener('mouseover',e=>{const a=e.target.closest('[data-peek]');if(a){peek.innerHTML=art(a.dataset.peek,tones[a.dataset.tone],'#3B3530');peek.classList.add('on')}});
+document.addEventListener('mouseout',e=>{if(e.target.closest('[data-peek]'))peek.classList.remove('on')});
+
+addEventListener('scroll',()=>{
+  $('#hdr').classList.toggle('scrolled',scrollY>8);
+  if(location.hash==='#product'){const r=$('#pAdd')?.getBoundingClientRect();$('#stickyBuy').classList.toggle('on',!!r&&r.bottom<0)}
+},{passive:true});
+addEventListener('hashchange',route);
+renderHome(); renderCategory(); renderCart(); route();
+</script>

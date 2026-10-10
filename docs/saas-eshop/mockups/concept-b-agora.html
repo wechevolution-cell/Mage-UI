@@ -1,0 +1,717 @@
+<title>Concept B Agora</title>
+<script>document.documentElement.lang="el"</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Sofia+Sans+Condensed:wght@600;700;800;900&display=swap">
+<style>
+/* Layout: dense modular 12-col commerce grid, search-first, bento promos, filter sidebar. Speed over spectacle. Single-theme by design. */
+:root{
+  --bg:#EEF1F6; --surface:#FFFFFF; --navy:#0D1A3A; --navy-2:#16275A; --ink:#0B1324; --muted:#586179; --line:#D9DEE8;
+  --accent:#FF5A1F; --accent-dk:#E04A12; --ok:#0F7A55; --warn:#B45309; --chipbg:#E6EBF4;
+  --f-head:"Sofia Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --r:8px; --gut:clamp(16px,2.4vw,32px); --max:1360px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,select,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#fff;padding:8px 14px;z-index:100}
+.skip:focus{left:8px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance;line-height:1.05}
+.icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r);font-weight:600;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-dk)}
+.btn-ghost{border:1px solid var(--line);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--ink)}
+.note{font-size:11px;color:var(--muted)}
+
+.ribbon{background:#000;color:#fff;font-size:12px}
+.ribbon .wrap{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:center;padding-block:7px}
+.ribbon nav{display:flex;gap:4px;flex-wrap:wrap}
+.ribbon nav a{padding:3px 10px;border-radius:99px;border:1px solid #333}
+.ribbon nav a[aria-current="page"]{background:var(--accent);border-color:var(--accent)}
+
+/* Header */
+.util{background:var(--navy);color:#C6CEE4;font-size:12px}
+.util .wrap{display:flex;justify-content:space-between;gap:12px;padding-block:6px;flex-wrap:wrap}
+.util span{display:inline-flex;gap:6px;align-items:center}
+.main-hdr{background:var(--navy);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:40;border-top:1px solid rgba(255,255,255,.08)}
+.main-hdr .wrap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;height:68px}
+.logo{font:900 26px/1 var(--f-head);letter-spacing:.01em;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:28px;height:28px;border-radius:6px;background:var(--accent);display:grid;place-items:center;font-style:normal;font-size:18px}
+.search{position:relative;display:flex;background:#fff;border-radius:var(--r);height:46px;color:var(--ink)}
+.search select{border:0;background:var(--chipbg);border-radius:var(--r) 0 0 var(--r);padding:0 10px;font-size:13px;max-width:150px}
+.search input{flex:1;min-width:0;border:0;padding:0 14px;background:none}
+.search input:focus{outline:none}
+.search:focus-within{box-shadow:0 0 0 3px var(--accent)}
+.search button{background:var(--accent);color:#fff;width:52px;border-radius:0 var(--r) var(--r) 0;display:grid;place-items:center}
+.suggest{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border-radius:var(--r);box-shadow:0 12px 40px rgba(13,26,58,.25);padding:8px;display:none;z-index:50}
+.search:focus-within .suggest{display:block}
+.suggest a{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px;border-radius:6px}
+.suggest a:hover{background:var(--bg)}
+.suggest .th{width:44px;height:44px;border-radius:6px;overflow:hidden;background:var(--bg)}
+.suggest .th svg{width:100%;height:100%}
+.suggest h4{margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:4px 8px}
+.hdr-actions{display:flex;gap:6px}
+.hdr-actions a,.hdr-actions button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;padding:6px 10px;border-radius:var(--r);position:relative;color:#fff}
+.hdr-actions a:hover,.hdr-actions button:hover{background:var(--navy-2)}
+.count{position:absolute;top:0;right:4px;background:var(--accent);color:#fff;font:700 11px/18px var(--f-body);min-width:18px;height:18px;border-radius:9px;text-align:center;padding:0 4px}
+.cart-total{font-weight:600}
+.catbar{background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:30}
+.catbar .wrap{display:flex;gap:4px;align-items:center;height:48px;overflow-x:auto;scrollbar-width:none}
+.catbar .wrap::-webkit-scrollbar{display:none}
+.catbar a,.catbar button{white-space:nowrap;padding:8px 12px;border-radius:6px;font-weight:500;font-size:13px}
+.catbar a:hover{background:var(--bg)}
+.allcats{background:var(--ink);color:#fff;display:flex;gap:8px;align-items:center}
+.catbar .deal{color:var(--accent);font-weight:600}
+.mega{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 24px 40px rgba(13,26,58,.12);display:none}
+.mega.open{display:block}
+.mega .wrap{display:grid;grid-template-columns:240px repeat(3,minmax(0,1fr)) 260px;gap:24px;padding-block:20px 28px}
+.mega .side{display:grid;gap:2px;border-right:1px solid var(--line);padding-right:12px}
+.mega .side a{padding:9px 12px;border-radius:6px;display:flex;justify-content:space-between}
+.mega .side a.on,.mega .side a:hover{background:var(--bg);color:var(--accent)}
+.mega h4{font:700 15px/1 var(--f-head);text-transform:uppercase;letter-spacing:.04em;margin:8px 0 10px}
+.mega ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;color:var(--muted)}
+.mega ul a:hover{color:var(--ink);text-decoration:underline}
+.mega .promo{background:var(--navy);color:#fff;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+@media (max-width:980px){.mega .wrap{grid-template-columns:1fr 1fr}.mega .side,.mega .promo{display:none}}
+@media (max-width:820px){
+  .main-hdr .wrap{grid-template-columns:auto 1fr;height:auto;padding-block:10px;row-gap:10px}
+  .search{grid-column:1 / -1;order:3}
+  .search select{display:none}
+  .hdr-actions{justify-self:end}
+  .hdr-actions .lbl{display:none}
+  .util .ship2{display:none}
+}
+
+/* Home: bento */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:12px;padding-block:16px}
+.tile{border-radius:12px;overflow:hidden;position:relative;background:var(--surface);padding:22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-width:0}
+.tile.big{grid-column:span 7;grid-row:span 2;background:var(--navy);color:#fff;padding:32px}
+.tile.big h1{font-size:clamp(36px,4.6vw,68px);font-weight:800;max-width:12ch;letter-spacing:-.01em}
+.tile.big p{color:#C6CEE4;max-width:40ch}
+.tile.big .art{position:absolute;right:-20px;bottom:-30px;width:min(52%,380px);aspect-ratio:1}
+.tile.big .art svg{width:100%;height:100%}
+.tile.mid{grid-column:span 5;background:var(--accent);color:#fff}
+.tile.mid h2,.tile.sm h2{font-size:clamp(24px,2.4vw,34px);font-weight:800}
+.tile.sm{grid-column:span 5}
+.tile .mini-art{position:absolute;right:12px;bottom:8px;width:120px;height:120px}
+.tile .mini-art svg{width:100%;height:100%}
+.tile .lbl{font:700 12px/1 var(--f-body);text-transform:uppercase;letter-spacing:.1em;opacity:.8}
+.tile .z{position:relative;z-index:1}
+@media (max-width:900px){.tile.big,.tile.mid,.tile.sm{grid-column:1 / -1}.tile.big{grid-row:auto;min-height:340px}.tile.big .art{width:46%}}
+.props{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:24px}
+.props div{background:var(--surface);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:center;font-size:13px}
+.props b{display:block;font-size:14px}
+@media (max-width:900px){.props{grid-template-columns:1fr 1fr}}
+.sec{padding-block:20px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+.sec-head h2{font-size:clamp(24px,2.6vw,34px);font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+.sec-head a{color:var(--accent);font-weight:600;white-space:nowrap}
+.cat-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(120px,1fr);gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.cat-rail a{background:var(--surface);border-radius:var(--r);padding:14px 10px;text-align:center;font-weight:600;font-size:13px;scroll-snap-align:start;border:1px solid transparent;transition:border-color .15s}
+.cat-rail a:hover{border-color:var(--accent)}
+.cat-rail .ci{width:64px;height:64px;margin:0 auto 8px;border-radius:50%;background:var(--bg);display:grid;place-items:center;color:var(--navy)}
+.cat-rail .ci .icon{width:30px;height:30px}
+.deal-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.timer{display:flex;gap:4px;font:800 18px/1 var(--f-head)}
+.timer span{background:var(--ink);color:#fff;border-radius:4px;padding:6px 7px;min-width:34px;text-align:center}
+
+/* Compact marketplace product card */
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:820px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pc{background:var(--surface);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:8px;position:relative;border:1px solid transparent;transition:border-color .15s,box-shadow .15s;min-width:0}
+.pc:hover{border-color:var(--line);box-shadow:0 8px 24px rgba(13,26,58,.08)}
+.pc .media{aspect-ratio:1;border-radius:6px;background:var(--bg);overflow:hidden;display:block;position:relative}
+.pc .media svg{width:100%;height:100%;display:block;transition:transform .3s}
+.pc:hover .media svg{transform:scale(1.04)}
+.badges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;z-index:1}
+.bdg{font:700 11px/1 var(--f-body);padding:4px 6px;border-radius:4px;background:var(--accent);color:#fff}
+.bdg.new{background:var(--navy)}
+.pc .wish{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.12);z-index:1}
+.pc .wish .icon{width:16px;height:16px}
+.wish[aria-pressed="true"] .icon{fill:var(--accent);stroke:var(--accent)}
+.pc .brand{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pc h3{font:500 14px/1.35 var(--f-body);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.pc .specs{display:flex;flex-wrap:wrap;gap:4px}
+.pc .specs span{font-size:11px;background:var(--chipbg);border-radius:4px;padding:2px 6px;color:var(--muted)}
+.pc .stock{font-size:12px;color:var(--ok);display:flex;gap:6px;align-items:center}
+.pc .stock.low{color:var(--warn)}
+.pc .stock i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pc .buy{display:flex;align-items:end;justify-content:space-between;gap:8px;margin-top:auto}
+.price{font:800 22px/1 var(--f-head)}
+.price s{display:block;font:400 12px/1.4 var(--f-body);color:var(--muted)}
+.qadd{width:40px;height:40px;border-radius:var(--r);background:var(--accent);color:#fff;display:grid;place-items:center;flex:none;transition:background .15s,transform .15s}
+.qadd:hover{background:var(--accent-dk)}
+.qadd.done{background:var(--ok)}
+.cmp{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.brands{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.brands span{background:var(--surface);border-radius:var(--r);height:64px;display:grid;place-items:center;font:800 18px/1 var(--f-head);color:#9AA3B8;letter-spacing:.06em}
+@media (max-width:820px){.brands{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Category */
+.crumbs{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding-block:14px}
+.crumbs a:hover{color:var(--accent)}
+.plp{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;padding-bottom:48px}
+.filters{background:var(--surface);border-radius:var(--r);padding:16px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px);display:grid;gap:4px;max-height:calc(100vh - 100px);overflow:auto}
+.filters h2{font-size:20px;font-weight:800;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.fgroup{border-top:1px solid var(--line);padding-block:12px}
+.fgroup h3{font:600 13px/1 var(--f-body);margin-bottom:10px}
+.fgroup label{display:flex;gap:8px;align-items:center;padding:4px 0;font-size:13px;cursor:pointer}
+.fgroup label span.c{margin-left:auto;color:var(--muted);font-size:12px}
+.fgroup input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.range{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.range input{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:13px}
+.toolbar{background:var(--surface);border-radius:var(--r);padding:10px 12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.toolbar h1{font-size:clamp(26px,3vw,36px);font-weight:800}
+.toolbar .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toolbar select{border:1px solid var(--line);border-radius:6px;height:38px;padding:0 10px;background:#fff}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{width:38px;height:36px;display:grid;place-items:center}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.active-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.active-chips button{background:var(--chipbg);border-radius:99px;padding:5px 10px;font-size:12px;display:flex;gap:6px;align-items:center}
+.grid.list{grid-template-columns:1fr}
+.grid.list .pc{display:grid;grid-template-columns:160px minmax(0,1fr) auto;align-items:center;gap:16px}
+.grid.list .pc .buy{flex-direction:column;align-items:end}
+.filter-btn{display:none}
+.pager{display:flex;gap:6px;justify-content:center;margin-top:20px}
+.pager a{min-width:40px;height:40px;display:grid;place-items:center;border-radius:6px;background:var(--surface);font-weight:600}
+.pager a[aria-current="page"]{background:var(--ink);color:#fff}
+@media (max-width:900px){
+  .plp{grid-template-columns:1fr}
+  .filters{position:fixed;inset:auto 0 0 0;top:auto;max-height:80vh;border-radius:16px 16px 0 0;z-index:75;transform:translateY(105%);transition:transform .3s;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .filters.open{transform:none}
+  .filter-btn{display:inline-flex}
+  .grid.list .pc{grid-template-columns:100px minmax(0,1fr)}
+  .grid.list .pc .buy{grid-column:1 / -1;flex-direction:row}
+}
+
+/* Product */
+.pdp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 300px;gap:16px;padding-bottom:16px}
+.panel{background:var(--surface);border-radius:var(--r);padding:16px;min-width:0}
+.gal{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px}
+.thumbs{display:grid;gap:8px;align-content:start}
+.thumbs button{aspect-ratio:1;border-radius:6px;overflow:hidden;border:2px solid transparent;background:var(--bg)}
+.thumbs button[aria-current="true"]{border-color:var(--accent)}
+.thumbs svg{width:100%;height:100%;display:block}
+.stage{aspect-ratio:1;border-radius:6px;background:var(--bg);overflow:hidden;position:relative;cursor:crosshair}
+.stage svg{width:100%;height:100%;display:block;transition:transform .1s;transform-origin:var(--zx,50%) var(--zy,50%)}
+.stage:hover svg{transform:scale(2)}
+.stage .hint{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.9);font-size:11px;padding:3px 7px;border-radius:4px}
+.pinfo{display:grid;gap:14px;align-content:start}
+.pinfo h1{font-size:clamp(28px,2.8vw,40px);font-weight:800}
+.meta-row{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}
+.opt h3{font:600 13px/1 var(--f-body);margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt-btn{border:1.5px solid var(--line);border-radius:6px;padding:8px 12px;font-weight:500;font-size:13px;background:#fff;display:flex;gap:8px;align-items:center}
+.opt-btn[aria-checked="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.opt-btn i{width:16px;height:16px;border-radius:50%;border:1px solid var(--line)}
+.opt-btn small{color:var(--muted);font-size:11px}
+.keyspecs{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px}
+.keyspecs div{background:var(--bg);border-radius:6px;padding:8px 10px}
+.keyspecs b{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.buybox{display:grid;gap:12px;align-content:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px)}
+.buybox .price{font-size:40px}
+.instock{color:var(--ok);font-weight:600;display:flex;gap:6px;align-items:center}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:var(--r);height:44px}
+.qty button{width:40px;height:100%;font-size:18px}
+.qty input{width:44px;text-align:center;border:0;font-weight:600}
+.buyrow{display:grid;grid-template-columns:auto 1fr;gap:8px}
+.info-list{display:grid;gap:10px;font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+.info-list div{display:flex;gap:10px}
+.info-list b{display:block}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{padding:12px 16px;font-weight:600;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--accent)}
+.tabpanel{padding:18px 4px;max-width:80ch}
+.spec-table{width:100%;border-collapse:collapse;font-size:13px}
+.spec-table th{text-align:left;font-weight:500;color:var(--muted);width:40%}
+.spec-table th,.spec-table td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.spec-table tr:nth-child(odd){background:var(--bg)}
+.bundle{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 240px;gap:12px;align-items:stretch}
+.bundle .pc{border-color:var(--line)}
+.bundle .sum{background:var(--bg);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+@media (max-width:1100px){.pdp{grid-template-columns:1fr 1fr}.buybox{grid-column:1 / -1;position:static}}
+@media (max-width:820px){.pdp{grid-template-columns:1fr}.gal{grid-template-columns:1fr}.thumbs{grid-auto-flow:column;grid-template-columns:repeat(4,64px);order:2}.bundle{grid-template-columns:1fr 1fr}.bundle .sum{grid-column:1 / -1}}
+.sticky-buy{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--surface);box-shadow:0 -6px 20px rgba(13,26,58,.12);padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom,0px));transform:translateY(110%);transition:transform .25s}
+.sticky-buy.on{transform:none}
+.sticky-buy .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:0}
+.sticky-buy .t{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Drawer + toast + fly */
+.scrim{position:fixed;inset:0;background:rgba(11,19,36,.5);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:71;transform:translateX(100%);transition:transform .28s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drawer.on{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--line)}
+.drawer header h2{font-size:24px;font-weight:800;text-transform:uppercase}
+.freebar{padding:12px 16px;background:var(--bg);font-size:13px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);transition:width .4s}
+.drawer .items{flex:1;overflow:auto;padding:0 16px}
+.line{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.line .th{width:64px;height:64px;border-radius:6px;background:var(--bg);overflow:hidden}
+.line .th svg{width:100%;height:100%}
+.line h3{font:500 13px/1.3 var(--f-body)}
+.line .v{font-size:12px;color:var(--muted)}
+.line .qty{height:32px;margin-top:6px;width:max-content}
+.line .qty button{width:30px;font-size:15px}
+.line .qty span{min-width:24px;text-align:center;font-weight:600}
+.line .p{font:800 17px/1 var(--f-head);text-align:right}
+.line .rm{font-size:12px;color:var(--muted);text-decoration:underline;margin-top:6px}
+.drawer footer{padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:10px}
+.sumrow{display:flex;justify-content:space-between;font-size:14px}
+.sumrow.total{font:800 22px/1 var(--f-head)}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.toast{position:fixed;right:16px;top:calc(env(safe-area-inset-top,0px) + 16px);z-index:80;background:var(--surface);border-radius:var(--r);box-shadow:0 12px 40px rgba(13,26,58,.25);padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:min(360px,calc(100% - 32px));transform:translateX(calc(100% + 32px));transition:transform .25s;border-left:4px solid var(--ok)}
+.toast.on{transform:none}
+.toast .th{width:44px;height:44px;border-radius:6px;overflow:hidden;background:var(--bg);flex:none}
+.toast .th svg{width:100%;height:100%}
+.fly{position:fixed;width:28px;height:28px;border-radius:50%;background:var(--accent);z-index:90;pointer-events:none;box-shadow:0 4px 12px rgba(255,90,31,.5)}
+
+/* Checkout */
+.co{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;padding-block:8px 48px}
+.co h1{font-size:clamp(28px,3vw,40px);font-weight:800;text-transform:uppercase;margin-bottom:12px}
+.step{background:var(--surface);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.step-h{display:flex;gap:12px;align-items:center;padding:14px 16px;font:800 20px/1 var(--f-head);text-transform:uppercase;width:100%;text-align:left}
+.step-h .n{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:15px}
+.step.done .step-h .n{background:var(--ok)}
+.step-b{padding:4px 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.step:not(.open) .step-b{display:none}
+.field{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+.field.full{grid-column:1 / -1}
+.field input,.field select{height:44px;border:1px solid var(--line);border-radius:6px;padding:0 12px;font-weight:400;color:var(--ink);font-size:14px;background:#fff}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,90,31,.15)}
+.rc{grid-column:1 / -1;display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer}
+.rc:has(input:checked){border-color:var(--accent);background:#FFF6F2}
+.rc input{accent-color:var(--accent)}
+.rc .pr{margin-left:auto;font-weight:600}
+.rc span{font-size:12px;color:var(--muted);display:block}
+.co aside{background:var(--surface);border-radius:var(--r);padding:16px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px);display:grid;gap:10px}
+.coupon{display:flex;gap:6px}
+.coupon input{flex:1;min-width:0;height:40px;border:1px solid var(--line);border-radius:6px;padding:0 10px}
+@media (max-width:900px){.co{grid-template-columns:1fr}.co aside{position:static}.step-b{grid-template-columns:1fr}}
+
+footer.ftr{background:var(--navy);color:#C6CEE4;margin-top:32px}
+.ftr .wrap{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:24px;padding-block:40px}
+.ftr h4{color:#fff;font:700 16px/1 var(--f-head);text-transform:uppercase;letter-spacing:.04em;margin:0 0 12px}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
+.ftr a:hover{color:#fff}
+.ftr .bottom{border-top:1px solid rgba(255,255,255,.1);font-size:12px}
+.ftr .bottom .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;padding-block:14px;gap:8px}
+.pay-icons{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.pay-icons span{background:rgba(255,255,255,.08);border-radius:4px;padding:5px 8px;font-size:11px}
+@media (max-width:820px){.ftr .wrap{grid-template-columns:1fr 1fr}.ftr .wrap>div:first-child{grid-column:1 / -1}}
+
+.toast:not(.on),.drawer:not(.on),.cartp:not(.on),.sticky-buy:not(.on){visibility:hidden;transition-property:transform,visibility;transition-delay:0s,.6s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
+<div class="ribbon"><div class="wrap">
+  <span><b>Concept B · Agora</b> · Marketplace / Tech Commerce · Mockup. Όλα τα ονόματα, τιμές, εικόνες και κείμενα είναι δείγματα.</span>
+  <nav aria-label="Προβολές mockup"><a href="#home" data-nav="home">Αρχική</a><a href="#category" data-nav="category">Κατηγορία</a><a href="#product" data-nav="product">Προϊόν</a><a href="#checkout" data-nav="checkout">Ταμείο</a></nav>
+</div></div>
+
+<div class="util"><div class="wrap">
+  <span><svg class="icon" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Δωρεάν αποστολή άνω των 50 € (δείγμα)</span>
+  <span class="ship2">Εξυπηρέτηση: τηλέφωνο από τις ρυθμίσεις · Δευ–Παρ (δείγμα)</span>
+</div></div>
+<header class="main-hdr"><div class="wrap">
+  <a class="logo" href="#home" aria-label="Αρχική"><i>V</i>VOLTA</a>
+  <form class="search" role="search" onsubmit="event.preventDefault();location.hash='category'">
+    <label for="sCat" class="sr" hidden>Κατηγορία</label>
+    <select id="sCat" aria-label="Κατηγορία αναζήτησης"><option>Όλες οι κατηγορίες</option><option>Ήχος</option><option>Κινητά</option><option>Υπολογιστές</option><option>Εργαλεία</option></select>
+    <input id="sQ" type="search" placeholder="Αναζήτηση προϊόντος, μάρκας ή κωδικού…" aria-label="Αναζήτηση" autocomplete="off">
+    <button aria-label="Αναζήτηση"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    <div class="suggest" id="suggest" role="listbox" aria-label="Προτάσεις"></div>
+  </form>
+  <div class="hdr-actions">
+    <a href="#home" aria-label="Λογαριασμός"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg><span class="lbl">Λογαριασμός</span></a>
+    <a href="#home" aria-label="Αγαπημένα"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="lbl">Αγαπημένα</span><span class="count" id="wishCount" hidden>0</span></a>
+    <button id="cartBtn" aria-label="Καλάθι"><svg class="icon" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg><span class="lbl cart-total num" id="cartTotalHdr">0,00 €</span><span class="count" id="cartCount">0</span></button>
+  </div>
+</div></header>
+<nav class="catbar" aria-label="Κατηγορίες">
+  <div class="wrap">
+    <button class="allcats" id="megaBtn" aria-expanded="false" aria-controls="mega"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Όλες οι κατηγορίες</button>
+    <a href="#category">Ήχος</a><a href="#category">Κινητά</a><a href="#category">Υπολογιστές</a><a href="#category">Gaming</a><a href="#category">Smart Home</a><a href="#category">Εργαλεία</a><a href="#category">Μικροσυσκευές</a><a href="#category" class="deal">Προσφορές</a>
+  </div>
+  <div class="mega" id="mega">
+    <div class="wrap">
+      <div class="side"><a class="on" href="#category">Ήχος <span>›</span></a><a href="#category">Κινητά <span>›</span></a><a href="#category">Υπολογιστές <span>›</span></a><a href="#category">Gaming <span>›</span></a><a href="#category">Εργαλεία <span>›</span></a></div>
+      <div><h4>Ακουστικά</h4><ul><li><a href="#category">Over-ear</a></li><li><a href="#category">True wireless</a></li><li><a href="#category">Gaming headsets</a></li><li><a href="#category">Αθλητικά</a></li></ul></div>
+      <div><h4>Ηχεία</h4><ul><li><a href="#category">Bluetooth</a></li><li><a href="#category">Soundbars</a></li><li><a href="#category">Smart speakers</a></li></ul></div>
+      <div><h4>Αξεσουάρ</h4><ul><li><a href="#category">Καλώδια</a></li><li><a href="#category">Θήκες</a></li><li><a href="#category">Φορτιστές</a></li></ul></div>
+      <div class="promo"><span class="note" style="color:#C6CEE4">Banner μενού (CMS)</span><b style="font:800 24px/1.05 var(--f-head)">Ακουστικά με ακύρωση θορύβου</b><a href="#product" class="btn btn-accent">Δείτε τα</a></div>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- HOME -->
+<div data-view="home" class="wrap">
+  <div class="bento">
+    <article class="tile big">
+      <div class="z">
+        <span class="lbl">Hero · Homepage CMS</span>
+        <h1 style="margin-top:12px">Ο ήχος σου, χωρίς θόρυβο.</h1>
+        <p style="margin-top:12px">Ασύρματα ακουστικά με ενεργή ακύρωση θορύβου. Κείμενο δείγμα, επαληθεύστε πριν τη δημοσίευση.</p>
+      </div>
+      <div class="z" style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-accent" href="#product">Αγορά τώρα</a><a class="btn" style="border:1px solid rgba(255,255,255,.3);color:#fff" href="#category">Όλα τα ακουστικά</a></div>
+      <div class="art" id="heroArt" aria-hidden="true"></div>
+    </article>
+    <article class="tile mid">
+      <span class="lbl z">Banner 1</span>
+      <h2 class="z" style="max-width:12ch">Smart Home: ξεκίνα με ένα ηχείο</h2>
+      <a class="z" href="#category" style="font-weight:600">Δες τα προϊόντα →</a>
+      <div class="mini-art" id="midArt" aria-hidden="true"></div>
+    </article>
+    <article class="tile sm">
+      <span class="lbl z" style="color:var(--muted)">Banner 2</span>
+      <h2 class="z" style="max-width:12ch">Εργαλεία για κάθε δουλειά</h2>
+      <a class="z" href="#category" style="font-weight:600;color:var(--accent)">Εργαλεία →</a>
+      <div class="mini-art" id="smArt" aria-hidden="true"></div>
+    </article>
+  </div>
+  <div class="props">
+    <div><svg class="icon" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/></svg><span><b>Γρήγορη αποστολή</b>Χρόνοι από ρυθμίσεις</span></div>
+    <div><svg class="icon" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg><span><b>Επιστροφές</b>Πολιτική: δείγμα</span></div>
+    <div><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span><b>Αντικαταβολή</b>ή τραπεζική κατάθεση</span></div>
+    <div><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><span><b>Εγγύηση</b>Όροι κατασκευαστή</span></div>
+  </div>
+  <section class="sec" aria-labelledby="rcT">
+    <div class="sec-head"><h2 id="rcT">Δημοφιλείς κατηγορίες</h2><a href="#category">Όλες →</a></div>
+    <div class="cat-rail" id="catRail"></div>
+  </section>
+  <section class="sec" aria-labelledby="dealT">
+    <div class="sec-head"><div class="deal-head"><h2 id="dealT">Προσφορές ημέρας</h2><div class="timer num" aria-label="Λήγει σε"><span id="tH">08</span><span id="tM">42</span><span id="tS">10</span></div></div><a href="#category">Όλες οι προσφορές →</a></div>
+    <div class="grid" id="dealGrid"></div>
+  </section>
+  <section class="sec" aria-labelledby="brT">
+    <div class="sec-head"><h2 id="brT">Μάρκες</h2></div>
+    <div class="brands"><span>ΜΑΡΚΑ</span><span>ΜΑΡΚΑ</span><span>ΜΑΡΚΑ</span><span>ΜΑΡΚΑ</span><span>ΜΑΡΚΑ</span><span>ΜΑΡΚΑ</span></div>
+    <p class="note" style="margin-top:6px">Λογότυπα μαρκών ανεβαίνουν από τον διαχειριστή. Δεν εμφανίζονται πραγματικές μάρκες στο mockup.</p>
+  </section>
+</div>
+
+<!-- CATEGORY -->
+<div data-view="category" class="wrap" hidden>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#home">Αρχική</a>›<a href="#category">Ήχος</a>›<span>Ακουστικά</span></nav>
+  <div class="plp">
+    <aside class="filters" id="filters" aria-label="Φίλτρα">
+      <h2>Φίλτρα <button class="note filter-btn" id="filtersClose" style="font-size:13px">Κλείσιμο ✕</button></h2>
+      <div class="fgroup"><h3>Τύπος</h3>
+        <label><input type="checkbox" id="f1" checked> Over-ear <span class="c">8</span></label>
+        <label><input type="checkbox" id="f2"> True wireless <span class="c">12</span></label>
+        <label><input type="checkbox" id="f3"> Gaming <span class="c">5</span></label>
+      </div>
+      <div class="fgroup"><h3>Τιμή (€)</h3><div class="range"><input id="pmin" inputmode="numeric" placeholder="Από" aria-label="Ελάχιστη τιμή"><input id="pmax" inputmode="numeric" placeholder="Έως" aria-label="Μέγιστη τιμή"></div></div>
+      <div class="fgroup"><h3>Διαθεσιμότητα</h3>
+        <label><input type="checkbox" id="f4" checked> Άμεσα διαθέσιμο</label>
+        <label><input type="checkbox" id="f5"> Κατόπιν παραγγελίας</label>
+      </div>
+      <div class="fgroup"><h3>Χαρακτηριστικά</h3>
+        <label><input type="checkbox" id="f6"> Ακύρωση θορύβου <span class="c">9</span></label>
+        <label><input type="checkbox" id="f7"> Bluetooth 5.3 <span class="c">14</span></label>
+        <label><input type="checkbox" id="f8"> Μικρόφωνο <span class="c">11</span></label>
+      </div>
+      <div class="fgroup"><h3>Μάρκα</h3>
+        <label><input type="checkbox" id="f9"> Μάρκα Α <span class="c">6</span></label>
+        <label><input type="checkbox" id="f10"> Μάρκα Β <span class="c">4</span></label>
+      </div>
+      <p class="note">Τα φίλτρα δημιουργούνται αυτόματα από τα attributes προϊόντων. Οι αριθμοί είναι δείγματα.</p>
+    </aside>
+    <div style="min-width:0">
+      <div class="toolbar">
+        <div><h1>Ακουστικά</h1><span class="note num">1–10 από 25 ενεργά προϊόντα (δείγμα)</span></div>
+        <div class="tools">
+          <button class="btn btn-ghost filter-btn" id="filtersOpen"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Φίλτρα</button>
+          <label for="sortB" class="note">Ταξινόμηση</label>
+          <select id="sortB"><option>Δημοφιλέστερα</option><option>Τιμή ↑</option><option>Τιμή ↓</option><option>Νεότερα</option></select>
+          <div class="seg" role="group" aria-label="Προβολή"><button aria-pressed="true" data-layout="grid" aria-label="Πλέγμα"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg></button><button aria-pressed="false" data-layout="list" aria-label="Λίστα"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
+        </div>
+      </div>
+      <div class="active-chips"><button>Over-ear ✕</button><button>Άμεσα διαθέσιμο ✕</button><button style="background:none;color:var(--accent);font-weight:600">Καθαρισμός</button></div>
+      <div class="grid" id="catGrid"></div>
+      <nav class="pager num" aria-label="Σελίδες"><a href="#category" aria-current="page">1</a><a href="#category">2</a><a href="#category">3</a><a href="#category">›</a></nav>
+      <section class="panel" style="margin-top:20px" aria-labelledby="seoT">
+        <h2 id="seoT" style="font-size:22px;font-weight:800">Πώς να διαλέξετε ακουστικά</h2>
+        <p style="color:var(--muted);max-width:80ch">Κείμενο SEO/AEO κατηγορίας με σύντομη απάντηση και FAQ από τον διαχειριστή. Κείμενο δείγμα.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<div data-view="product" class="wrap" hidden>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#home">Αρχική</a>›<a href="#category">Ήχος</a>›<a href="#category">Ακουστικά</a>›<span id="pCrumb"></span></nav>
+  <div class="pdp">
+    <div class="panel"><div class="gal"><div class="thumbs" id="thumbs"></div><div class="stage" id="stage"><span class="hint">Hover για zoom</span></div></div></div>
+    <div class="panel pinfo" id="pinfo"></div>
+    <div class="panel buybox" id="buybox"></div>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="t1">Περιγραφή</button><button role="tab" aria-selected="false" data-tab="t2">Τεχνικά χαρακτηριστικά</button><button role="tab" aria-selected="false" data-tab="t3">Συχνές ερωτήσεις</button><button role="tab" aria-selected="false" data-tab="t4">Αποστολή & επιστροφές</button></div>
+    <div class="tabpanel" id="t1" role="tabpanel"><p>Πλήρης περιγραφή από τον διαχειριστή (rich text). Κείμενο δείγμα, επαληθεύστε πριν τη δημοσίευση.</p></div>
+    <div class="tabpanel" id="t2" role="tabpanel" hidden><table class="spec-table" id="specTable"></table></div>
+    <div class="tabpanel" id="t3" role="tabpanel" hidden><p><b>Ερώτηση δείγμα;</b><br>Απάντηση δείγμα. Οι FAQ εμφανίζονται και ως FAQPage structured data.</p></div>
+    <div class="tabpanel" id="t4" role="tabpanel" hidden><p>Κείμενο από ρυθμίσεις αποστολής/επιστροφών.</p></div>
+  </div>
+  <section class="panel" style="margin-bottom:16px" aria-labelledby="bT">
+    <div class="sec-head"><h2 id="bT">Συχνά αγοράζονται μαζί</h2></div>
+    <div class="bundle" id="bundle"></div>
+  </section>
+  <section class="sec" aria-labelledby="relT"><div class="sec-head"><h2 id="relT">Σχετικά προϊόντα</h2></div><div class="grid" id="relGrid"></div></section>
+  <div class="sticky-buy" id="stickyBuy"><div class="wrap"><span class="t" id="sbTitle"></span><span class="price num" id="sbPrice"></span><button class="btn btn-accent" id="sbAdd">Στο καλάθι</button></div></div>
+</div>
+
+<!-- CHECKOUT -->
+<div data-view="checkout" class="wrap" hidden>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#home">Αρχική</a>›<span>Ταμείο</span></nav>
+  <div class="co">
+    <form id="coForm" onsubmit="event.preventDefault();toastMsg('Η παραγγελία καταχωρήθηκε (demo).')">
+      <h1>Ολοκλήρωση αγοράς</h1>
+      <div class="step open" id="s1"><button type="button" class="step-h" data-step="s1"><span class="n">1</span>Στοιχεία & διεύθυνση</button>
+        <div class="step-b">
+          <label class="field full">Email<input id="bEmail" type="email" autocomplete="email" required></label>
+          <label class="field">Όνομα<input id="bFirst" autocomplete="given-name"></label>
+          <label class="field">Επώνυμο<input id="bLast" autocomplete="family-name"></label>
+          <label class="field">Τηλέφωνο<input id="bPhone" type="tel" autocomplete="tel"></label>
+          <label class="field">Τ.Κ.<input id="bZip" autocomplete="postal-code" inputmode="numeric"></label>
+          <label class="field full">Διεύθυνση<input id="bAddr" autocomplete="street-address"></label>
+          <label class="field">Πόλη<input id="bCity" autocomplete="address-level2"></label>
+          <label class="field">Νομός<select id="bReg"><option>Αττική</option><option>Θεσσαλονίκη</option><option>Άλλος νομός</option></select></label>
+          <label class="field full" style="flex-direction:row;display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" id="bInv" style="height:auto"> Θέλω τιμολόγιο</label>
+          <button type="button" class="btn btn-accent" data-next="s2" style="grid-column:1 / -1">Συνέχεια στην αποστολή</button>
+        </div></div>
+      <div class="step" id="s2"><button type="button" class="step-h" data-step="s2"><span class="n">2</span>Τρόπος αποστολής</button>
+        <div class="step-b">
+          <label class="rc"><input type="radio" name="ship" id="sh1" checked><div><b>Courier στο σπίτι</b><span>1–3 εργάσιμες (δείγμα)</span></div><span class="pr num">3,50 €</span></label>
+          <label class="rc"><input type="radio" name="ship" id="sh2"><div><b>Παραλαβή από το κατάστημα</b><span>Διεύθυνση από ρυθμίσεις</span></div><span class="pr">Δωρεάν</span></label>
+          <button type="button" class="btn btn-accent" data-next="s3" style="grid-column:1 / -1">Συνέχεια στην πληρωμή</button>
+        </div></div>
+      <div class="step" id="s3"><button type="button" class="step-h" data-step="s3"><span class="n">3</span>Πληρωμή</button>
+        <div class="step-b">
+          <label class="rc"><input type="radio" name="pay" id="p1" checked><div><b>Αντικαταβολή</b><span>Πληρωμή στον courier</span></div></label>
+          <label class="rc"><input type="radio" name="pay" id="p2"><div><b>Τραπεζική κατάθεση</b><span>Αποστολή μετά την πίστωση</span></div></label>
+          <label class="rc" style="opacity:.55;cursor:not-allowed"><input type="radio" name="pay" id="p3" disabled><div><b>Κάρτα (Stripe / Viva)</b><span>Σε επόμενη φάση</span></div></label>
+          <label class="field full" style="display:flex;gap:8px;align-items:flex-start;font-weight:400"><input type="checkbox" required id="bTerms" style="height:auto;margin-top:3px"> Αποδέχομαι τους Όρους χρήσης και την Πολιτική απορρήτου</label>
+          <button class="btn btn-accent" style="grid-column:1 / -1;height:52px;font-size:16px">Ολοκλήρωση παραγγελίας</button>
+        </div></div>
+    </form>
+    <aside aria-label="Σύνοψη">
+      <h2 style="font-size:22px;font-weight:800;text-transform:uppercase">Σύνοψη</h2>
+      <div id="coItems"></div>
+      <div class="coupon"><input id="coupon" placeholder="Κωδικός κουπονιού (μελλοντικό)" aria-label="Κουπόνι" disabled><button class="btn btn-ghost" disabled type="button">OK</button></div>
+      <div class="sumrow"><span>Υποσύνολο</span><span class="num" id="coSub"></span></div>
+      <div class="sumrow"><span>Αποστολή</span><span class="num" id="coShip"></span></div>
+      <div class="sumrow total"><span>Σύνολο</span><span class="num" id="coTotal"></span></div>
+      <span class="note">Περιλαμβάνεται ΦΠΑ 24%.</span>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div><a class="logo" href="#home" style="color:#fff"><i>V</i>VOLTA</a><p style="font-size:13px;margin-top:12px;max-width:36ch">Στοιχεία επιχείρησης, ΑΦΜ, διεύθυνση & ωράριο από τις ρυθμίσεις καταστήματος (δείγμα).</p><div class="pay-icons"><span>Αντικαταβολή</span><span>Τραπεζική κατάθεση</span></div></div>
+    <div><h4>Κατηγορίες</h4><ul><li><a href="#category">Ήχος</a></li><li><a href="#category">Κινητά</a></li><li><a href="#category">Υπολογιστές</a></li><li><a href="#category">Εργαλεία</a></li></ul></div>
+    <div><h4>Εξυπηρέτηση</h4><ul><li><a href="#home">Τρόποι αποστολής</a></li><li><a href="#home">Επιστροφές</a></li><li><a href="#home">Συχνές ερωτήσεις</a></li><li><a href="#home">Επικοινωνία</a></li></ul></div>
+    <div><h4>Νομικά</h4><ul><li><a href="#home">Όροι χρήσης</a></li><li><a href="#home">Απόρρητο</a></li><li><a href="#home">Cookies</a></li></ul></div>
+  </div>
+  <div class="bottom"><div class="wrap"><span>© VOLTA (δείγμα)</span><span>Powered by wechevo e-shop</span></div></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerT" aria-hidden="true">
+  <header><h2 id="drawerT">Καλάθι</h2><button id="drawerClose" aria-label="Κλείσιμο"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+  <div class="freebar" id="freebar"></div>
+  <div class="items" id="drawerItems"></div>
+  <footer>
+    <div class="sumrow total"><span>Σύνολο</span><span class="num" id="drawerSub"></span></div>
+    <a class="btn btn-accent" href="#checkout" data-close-drawer style="height:50px">Ολοκλήρωση αγοράς</a>
+    <button class="btn btn-ghost" data-close-drawer>Συνέχεια αγορών</button>
+  </footer>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const fmt=n=>n.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const FREE=50;
+const icons={
+ audio:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+ phone:'<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>',
+ laptop:'<rect x="5" y="5" width="14" height="10" rx="1"/><path d="M3 19h18"/>',
+ game:'<rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 13.5h.01"/>',
+ home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
+ tool:'<path d="M14 6l4 4-9 9H5v-4z"/><path d="M13 7l4 4"/>',
+ watch:'<rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7V3h6v4M9 17v4h6v-4"/>',
+ cam:'<rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 7l2-3h4l2 3"/>'
+};
+// Product renders (technical, clean studio)
+function art(kind,col="#1B2440",bg="#E7EBF2"){
+  const S={
+   headphones:`<path d="M110 230v-30a90 90 0 0 1 180 0v30" fill="none" stroke="${col}" stroke-width="18" stroke-linecap="round"/><rect x="82" y="220" width="60" height="96" rx="26" fill="${col}"/><rect x="258" y="220" width="60" height="96" rx="26" fill="${col}"/><rect x="96" y="240" width="20" height="56" rx="8" fill="#FF5A1F"/>`,
+   earbuds:`<ellipse cx="150" cy="210" rx="44" ry="50" fill="${col}"/><rect x="138" y="240" width="24" height="80" rx="12" fill="${col}"/><ellipse cx="250" cy="210" rx="44" ry="50" fill="${col}"/><rect x="238" y="240" width="24" height="80" rx="12" fill="${col}"/><rect x="120" y="300" width="160" height="60" rx="28" fill="#fff" stroke="${col}" stroke-width="4"/>`,
+   phone:`<rect x="140" y="80" width="120" height="240" rx="22" fill="${col}"/><rect x="150" y="96" width="100" height="208" rx="14" fill="#3A63FF"/><circle cx="200" cy="106" r="4" fill="${col}"/>`,
+   laptop:`<rect x="100" y="110" width="200" height="130" rx="8" fill="${col}"/><rect x="110" y="120" width="180" height="110" rx="3" fill="#3A63FF"/><path d="M80 250h240l-14 22H94z" fill="${col}"/>`,
+   speaker:`<rect x="140" y="90" width="120" height="220" rx="56" fill="${col}"/><circle cx="200" cy="230" r="38" fill="#2C3657"/><circle cx="200" cy="230" r="14" fill="#FF5A1F"/><circle cx="200" cy="140" r="16" fill="#2C3657"/>`,
+   watch:`<rect x="168" y="80" width="64" height="70" rx="10" fill="#2C3657"/><rect x="168" y="250" width="64" height="70" rx="10" fill="#2C3657"/><rect x="140" y="140" width="120" height="120" rx="30" fill="${col}"/><rect x="152" y="152" width="96" height="96" rx="22" fill="#0B1324"/><path d="M200 200V170M200 200l20 12" stroke="#FF5A1F" stroke-width="6" stroke-linecap="round"/>`,
+   drill:`<path d="M110 150h150a30 30 0 0 1 0 60H200l-10 110h-50l20-110h-50z" fill="${col}"/><rect x="290" y="168" width="60" height="24" fill="#8A93A8"/><rect x="140" y="300" width="70" height="40" rx="6" fill="#FF5A1F"/>`,
+   camera:`<rect x="90" y="140" width="220" height="150" rx="16" fill="${col}"/><rect x="130" y="118" width="60" height="30" rx="6" fill="${col}"/><circle cx="210" cy="215" r="54" fill="#2C3657"/><circle cx="210" cy="215" r="30" fill="#3A63FF"/>`
+  };
+  return `<svg viewBox="0 0 400 400" role="img" aria-label="Εικόνα προϊόντος (δείγμα)"><rect width="400" height="400" fill="${bg}"/><ellipse cx="200" cy="350" rx="130" ry="14" fill="rgba(11,19,36,.08)"/>${S[kind]}</svg>`;
+}
+const products=[
+ {id:1,name:"Ασύρματα ακουστικά over-ear με ακύρωση θορύβου",brand:"Μάρκα Α",price:149,old:179,kind:"headphones",specs:["ANC","BT 5.3","40 ώρες"],stock:12,badge:"-17%"},
+ {id:2,name:"True wireless ακουστικά με θήκη φόρτισης",brand:"Μάρκα Β",price:69,kind:"earbuds",specs:["IPX4","BT 5.3"],stock:3,badge:"Νέο"},
+ {id:3,name:"Smartphone 6,5\" 128GB",brand:"Μάρκα Γ",price:329,kind:"phone",specs:["128GB","5G"],stock:20},
+ {id:4,name:"Laptop 14\" 16GB RAM 512GB SSD",brand:"Μάρκα Δ",price:799,old:899,kind:"laptop",specs:["16GB","512GB"],stock:5,badge:"-11%"},
+ {id:5,name:"Φορητό ηχείο Bluetooth αδιάβροχο",brand:"Μάρκα Β",price:59,kind:"speaker",specs:["IP67","12 ώρες"],stock:30},
+ {id:6,name:"Smartwatch με GPS και μέτρηση παλμών",brand:"Μάρκα Α",price:189,kind:"watch",specs:["GPS","AMOLED"],stock:2},
+ {id:7,name:"Δραπανοκατσάβιδο μπαταρίας 18V",brand:"Μάρκα Ε",price:119,kind:"drill",specs:["18V","2 μπαταρίες"],stock:9},
+ {id:8,name:"Mirrorless κάμερα με φακό kit",brand:"Μάρκα Γ",price:649,kind:"camera",specs:["24MP","4K"],stock:4},
+ {id:9,name:"Ακουστικά gaming με μικρόφωνο",brand:"Μάρκα Δ",price:79,kind:"headphones",specs:["7.1","USB"],stock:15,col:"#3A2C66"},
+ {id:10,name:"Mini ηχείο smart home",brand:"Μάρκα Ε",price:45,kind:"speaker",specs:["Wi-Fi"],stock:22,col:"#4A5470"}
+];
+let current=products[0],cart=[],wish=new Set(),selColor=0,selVar=0;
+const colorsB=[{n:"Μαύρο",c:"#1B2440"},{n:"Ασημί",c:"#AEB6C6"},{n:"Μπλε",c:"#2A4DD8"}];
+const vars=[{n:"Standard",d:0},{n:"Με θήκη μεταφοράς",d:20}];
+
+function pc(p){
+  return `<article class="pc">
+    <div class="badges">${p.badge?`<span class="bdg ${p.badge==='Νέο'?'new':''}">${p.badge}</span>`:''}</div>
+    <button class="wish" data-wish="${p.id}" aria-pressed="${wish.has(p.id)}" aria-label="Αγαπημένα"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+    <a class="media" href="#product" data-pid="${p.id}" aria-label="${p.name}">${art(p.kind,p.col)}</a>
+    <div style="min-width:0;display:grid;gap:6px">
+      <span class="brand">${p.brand}</span>
+      <h3><a href="#product" data-pid="${p.id}">${p.name}</a></h3>
+      <div class="specs">${p.specs.map(s=>`<span>${s}</span>`).join('')}</div>
+      <span class="stock ${p.stock<=3?'low':''}"><i></i>${p.stock<=3?'Τελευταία τεμάχια':'Άμεσα διαθέσιμο'}</span>
+      <label class="cmp"><input type="checkbox" id="cmp${p.id}${Math.random().toString(36).slice(2,6)}"> Σύγκριση</label>
+    </div>
+    <div class="buy"><span class="price num">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</span><button class="qadd" data-add="${p.id}" aria-label="Προσθήκη στο καλάθι"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>
+  </article>`;
+}
+function renderHome(){
+  $('#heroArt').innerHTML=art('headphones','#E7EBF2','transparent').replace('fill="#E7EBF2"/>','fill="transparent"/>');
+  $('#midArt').innerHTML=art('speaker','#0D1A3A','transparent');
+  $('#smArt').innerHTML=art('drill','#0D1A3A','transparent');
+  const cats=[["Ήχος","audio"],["Κινητά","phone"],["Υπολογιστές","laptop"],["Gaming","game"],["Smart Home","home"],["Εργαλεία","tool"],["Wearables","watch"],["Φωτογραφία","cam"]];
+  $('#catRail').innerHTML=cats.map(([n,i])=>`<a href="#category"><span class="ci"><svg class="icon" viewBox="0 0 24 24">${icons[i]}</svg></span>${n}</a>`).join('');
+  $('#dealGrid').innerHTML=products.slice(0,5).map(pc).join('');
+  $('#suggest').innerHTML='<h4>Προτάσεις</h4>'+products.slice(0,3).map(p=>`<a href="#product" data-pid="${p.id}"><span class="th">${art(p.kind,p.col)}</span><span>${p.name}</span><b class="num">${fmt(p.price)}</b></a>`).join('')+'<h4>Κατηγορίες</h4><a href="#category"><span></span><span>Ακουστικά › Over-ear</span><span></span></a>';
+}
+function renderCategory(){$('#catGrid').innerHTML=products.map(pc).join('')}
+function renderProduct(){
+  const p=current, price=p.price+vars[selVar].d;
+  $('#pCrumb').textContent=p.name;
+  const views=[0,1,2,3];
+  $('#thumbs').innerHTML=views.map(i=>`<button aria-current="${i===0}" data-thumb="${i}" aria-label="Εικόνα ${i+1}">${art(p.kind,colorsB[selColor].c,['#E7EBF2','#DDE3EE','#F2F4F8','#E2E6EE'][i])}</button>`).join('');
+  $('#stage').innerHTML=art(p.kind,colorsB[selColor].c)+'<span class="hint">Hover για zoom</span>';
+  $('#pinfo').innerHTML=`
+    <span class="brand note" style="text-transform:uppercase;letter-spacing:.08em">${p.brand}</span>
+    <h1>${p.name}</h1>
+    <div class="meta-row"><span>SKU: VL-${String(p.id).padStart(5,'0')}</span><span>EAN: δείγμα</span><span>Δεν υπάρχουν ακόμη αξιολογήσεις</span></div>
+    <div class="opt"><h3>Χρώμα: ${colorsB[selColor].n}</h3><div class="opts" role="radiogroup" aria-label="Χρώμα">${colorsB.map((c,i)=>`<button class="opt-btn" role="radio" aria-checked="${i===selColor}" data-color="${i}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div></div>
+    <div class="opt"><h3>Έκδοση</h3><div class="opts" role="radiogroup" aria-label="Έκδοση">${vars.map((v,i)=>`<button class="opt-btn" role="radio" aria-checked="${i===selVar}" data-var="${i}">${v.n}<small>${v.d?'+'+fmt(v.d):''}</small></button>`).join('')}</div></div>
+    <div class="keyspecs">${p.specs.map((s,i)=>`<div><b>${['Χαρακτηριστικό','Συνδεσιμότητα','Αυτονομία'][i]||'Χαρακτηριστικό'}</b>${s}</div>`).join('')}<div><b>Εγγύηση</b>Δείγμα</div></div>`;
+  $('#buybox').innerHTML=`
+    <span class="price num">${p.old?`<s>${fmt(p.old+vars[selVar].d)}</s>`:''}${fmt(price)}</span>
+    <span class="note">Με ΦΠΑ 24%</span>
+    <span class="instock"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>${p.stock<=3?'Τελευταία '+p.stock+' τεμάχια':'Άμεσα διαθέσιμο'}</span>
+    <div class="buyrow"><div class="qty" role="group" aria-label="Ποσότητα"><button data-pq="-1" aria-label="Μείωση">−</button><input id="pQty" value="1" inputmode="numeric" aria-label="Ποσότητα"><button data-pq="1" aria-label="Αύξηση">+</button></div><button class="btn btn-accent" id="pAdd" style="height:44px">Προσθήκη στο καλάθι</button></div>
+    <div style="display:flex;gap:8px"><button class="btn btn-ghost" data-wish="${p.id}" aria-pressed="${wish.has(p.id)}" style="flex:1"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>Αγαπημένα</button><button class="btn btn-ghost" style="flex:1">Σύγκριση</button></div>
+    <div class="info-list">
+      <div><svg class="icon" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/></svg><span><b>Παράδοση 1–3 εργάσιμες</b>Δωρεάν άνω των 50 € (δείγμα)</span></div>
+      <div><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span><b>Πληρωμή</b>Αντικαταβολή ή τραπεζική κατάθεση</span></div>
+      <div><svg class="icon" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg><span><b>Επιστροφές</b>Πολιτική καταστήματος (δείγμα)</span></div>
+    </div>`;
+  $('#specTable').innerHTML=[["Μάρκα",p.brand],["Κωδικός","VL-"+String(p.id).padStart(5,'0')],...p.specs.map((s,i)=>["Χαρακτηριστικό "+(i+1),s]),["Βάρος","Δείγμα"],["Διαστάσεις","Δείγμα"]].map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td></tr>`).join('');
+  const b=[p,...products.filter(x=>x.id!==p.id&&x.price<100).slice(0,2)];
+  $('#bundle').innerHTML=b.map(x=>`<article class="pc"><a class="media" href="#product" data-pid="${x.id}">${art(x.kind,x.col)}</a><label class="cmp" style="color:var(--ink)"><input type="checkbox" checked data-bundle="${x.price}" id="bd${x.id}"> <span style="font-size:13px">${x.name}</span></label><span class="price num" style="font-size:18px">${fmt(x.price)}</span></article>`).join('')+`<div class="sum"><span class="note">Σύνολο για ${b.length} προϊόντα</span><span class="price num" id="bundleTotal" style="font-size:30px">${fmt(b.reduce((s,x)=>s+x.price,0))}</span><button class="btn btn-accent" id="bundleAdd">Προσθήκη επιλεγμένων</button></div>`;
+  $('#relGrid').innerHTML=products.filter(x=>x.id!==p.id).slice(0,5).map(pc).join('');
+  $('#sbTitle').textContent=p.name; $('#sbPrice').textContent=fmt(price);
+}
+function add(id,qty=1,src){
+  const p=products.find(x=>x.id===id);
+  const v=id===current.id&&location.hash==='#product'?colorsB[selColor].n+' · '+vars[selVar].n:'';
+  const ex=cart.find(l=>l.id===id&&l.v===v); ex?ex.qty+=qty:cart.push({id,v,qty,price:p.price+(v?vars[selVar].d:0)});
+  if(src)fly(src);
+  renderCart(); toastAdd(p);
+}
+function fly(src){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const a=src.getBoundingClientRect(),b=$('#cartBtn').getBoundingClientRect();
+  const d=document.createElement('div');d.className='fly';document.body.appendChild(d);
+  d.animate([{left:a.left+a.width/2-14+'px',top:a.top+a.height/2-14+'px',transform:'scale(1)'},{left:b.left+b.width/2-14+'px',top:b.top+'px',transform:'scale(.4)',opacity:.6}],{duration:600,easing:'cubic-bezier(.5,-0.2,.7,1)'}).onfinish=()=>{d.remove();$('#cartBtn').animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:250})};
+  src.classList.add('done');setTimeout(()=>src.classList.remove('done'),900);
+}
+const sub=()=>cart.reduce((s,l)=>s+l.price*l.qty,0);
+function renderCart(){
+  const n=cart.reduce((s,l)=>s+l.qty,0),s=sub();
+  $('#cartCount').textContent=n;$('#cartTotalHdr').textContent=fmt(s);
+  $('#freebar').innerHTML=(s>=FREE?'<b>Δικαιούστε δωρεάν αποστολή</b>':`Ακόμη <b class="num">${fmt(FREE-s)}</b> για δωρεάν αποστολή`)+`<div class="bar"><i style="width:${Math.min(100,s/FREE*100)}%"></i></div>`;
+  $('#drawerItems').innerHTML=cart.length?cart.map((l,i)=>{const p=products.find(x=>x.id===l.id);return `<div class="line"><div class="th">${art(p.kind,p.col)}</div><div style="min-width:0"><h3>${p.name}</h3>${l.v?`<div class="v">${l.v}</div>`:''}<div class="qty" role="group" aria-label="Ποσότητα"><button data-q="${i}" data-d="-1" aria-label="Μείωση">−</button><span class="num">${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Αύξηση">+</button></div><button class="rm" data-rm="${i}">Αφαίρεση</button></div><div class="p num">${fmt(l.price*l.qty)}</div></div>`}).join(''):'<p class="empty">Το καλάθι σας είναι άδειο.</p>';
+  $('#drawerSub').textContent=fmt(s);
+  $('#coItems').innerHTML=cart.length?cart.map(l=>{const p=products.find(x=>x.id===l.id);return `<div class="line" style="grid-template-columns:48px minmax(0,1fr) auto"><div class="th" style="width:48px;height:48px">${art(p.kind,p.col)}</div><div style="min-width:0"><h3>${p.name}</h3><div class="v">× ${l.qty}</div></div><div class="p num" style="font-size:15px">${fmt(l.price*l.qty)}</div></div>`}).join(''):'<p class="note">Το καλάθι είναι άδειο. Προσθέστε προϊόντα για να δείτε τη σύνοψη.</p>';
+  const ship=!s||s>=FREE?0:3.5;
+  $('#coSub').textContent=fmt(s);$('#coShip').textContent=ship?fmt(ship):'Δωρεάν';$('#coTotal').textContent=fmt(s+ship);
+}
+function toastAdd(p){const t=$('#toast');t.innerHTML=`<span class="th">${art(p.kind,p.col)}</span><span style="min-width:0"><b>Προστέθηκε στο καλάθι</b><br><span class="note">${p.name}</span><br><button style="color:var(--accent);font-weight:600" onclick="openDrawer()">Προβολή καλαθιού →</button></span>`;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3200)}
+function toastMsg(m){const t=$('#toast');t.innerHTML=`<b>${m}</b>`;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3000)}
+function openDrawer(){$('#drawer').classList.add('on');$('#scrim').classList.add('on');$('#drawer').setAttribute('aria-hidden','false');$('#toast').classList.remove('on')}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#scrim').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true');$('#filters').classList.remove('open')}
+function route(){
+  const v=location.hash.slice(1)||'home',view=['home','category','product','checkout'].includes(v)?v:'home';
+  $$('[data-view]').forEach(s=>s.hidden=s.dataset.view!==view);
+  $$('[data-nav]').forEach(a=>a.dataset.nav===view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  if(view==='product')renderProduct();
+  $('#mega').classList.remove('open');$('#megaBtn').setAttribute('aria-expanded','false');
+  $('#stickyBuy').classList.remove('on');scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-pid],[data-add],[data-wish],[data-q],[data-rm],[data-color],[data-var],[data-thumb],[data-pq],[data-tab],[data-layout],[data-next],[data-step],[data-close-drawer],#pAdd,#sbAdd,#bundleAdd');
+  if(!t)return;
+  if(t.dataset.pid){current=products.find(p=>p.id==t.dataset.pid);selColor=0;selVar=0;document.activeElement.blur();if(location.hash==='#product'){e.preventDefault();renderProduct();scrollTo(0,0)}}
+  if(t.dataset.add){e.preventDefault();add(+t.dataset.add,1,t)}
+  if(t.dataset.wish){const id=+t.dataset.wish;wish.has(id)?wish.delete(id):wish.add(id);$$(`[data-wish="${id}"]`).forEach(b=>b.setAttribute('aria-pressed',wish.has(id)));$('#wishCount').hidden=!wish.size;$('#wishCount').textContent=wish.size}
+  if(t.dataset.q){const l=cart[+t.dataset.q];l.qty=Math.max(1,l.qty+ +t.dataset.d);renderCart()}
+  if(t.dataset.rm){cart.splice(+t.dataset.rm,1);renderCart()}
+  if(t.dataset.color){selColor=+t.dataset.color;renderProduct()}
+  if(t.dataset.var){selVar=+t.dataset.var;renderProduct()}
+  if(t.dataset.thumb){$$('[data-thumb]').forEach(b=>b.setAttribute('aria-current',b===t));$('#stage').innerHTML=t.innerHTML+'<span class="hint">Hover για zoom</span>'}
+  if(t.dataset.pq){const q=$('#pQty');q.value=Math.max(1,(+q.value||1)+ +t.dataset.pq)}
+  if(t.dataset.tab){$$('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b===t));$$('.tabpanel').forEach(p=>p.hidden=p.id!==t.dataset.tab)}
+  if(t.dataset.layout){$$('[data-layout]').forEach(b=>b.setAttribute('aria-pressed',b===t));$('#catGrid').classList.toggle('list',t.dataset.layout==='list')}
+  if(t.dataset.next||t.dataset.step){const id=t.dataset.next||t.dataset.step;$$('.step').forEach(s=>{if(t.dataset.next&&s.classList.contains('open'))s.classList.add('done');s.classList.toggle('open',s.id===id)})}
+  if(t.hasAttribute('data-close-drawer'))closeDrawer();
+  if(t.id==='pAdd')add(current.id,+$('#pQty').value||1,t);
+  if(t.id==='sbAdd')add(current.id,1,t);
+  if(t.id==='bundleAdd'){$$('[data-bundle]').forEach((c,i)=>{if(c.checked){const id=+c.id.slice(2);add(id,1)}});fly(t)}
+});
+document.addEventListener('change',e=>{if(e.target.dataset.bundle!==undefined){$('#bundleTotal').textContent=fmt($$('[data-bundle]').filter(c=>c.checked).reduce((s,c)=>s+ +c.dataset.bundle,0))}});
+$('#megaBtn').onclick=()=>{const o=$('#mega').classList.toggle('open');$('#megaBtn').setAttribute('aria-expanded',o)};
+$('#cartBtn').onclick=openDrawer;$('#drawerClose').onclick=closeDrawer;$('#scrim').onclick=closeDrawer;
+$('#filtersOpen').onclick=()=>{$('#filters').classList.add('open');$('#scrim').classList.add('on')};
+$('#filtersClose').onclick=closeDrawer;
+$('#stage').addEventListener('mousemove',e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty('--zx',(e.clientX-r.left)/r.width*100+'%');e.currentTarget.style.setProperty('--zy',(e.clientY-r.top)/r.height*100+'%')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();$('#mega').classList.remove('open')}});
+addEventListener('scroll',()=>{if(location.hash==='#product'){const r=$('#pAdd')?.getBoundingClientRect();$('#stickyBuy').classList.toggle('on',!!r&&r.bottom<0)}},{passive:true});
+let secs=8*3600+42*60+10;setInterval(()=>{secs=Math.max(0,secs-1);$('#tH').textContent=String(secs/3600|0).padStart(2,'0');$('#tM').textContent=String(secs%3600/60|0).padStart(2,'0');$('#tS').textContent=String(secs%60).padStart(2,'0')},1000);
+addEventListener('hashchange',route);
+renderHome();renderCategory();renderCart();route();
+</script>
